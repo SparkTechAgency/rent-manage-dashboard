@@ -1,13 +1,13 @@
 import { baseApi } from "../baseApi";
 
 const accessToken = localStorage.getItem("accessToken");
-// console.log(accessToken);
+console.log(accessToken);
 
 const settingsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     changePassword: builder.mutation({
       query: (data) => {
-        const accessToken = localStorage.getItem("accessToken");
+        // const accessToken = localStorage.getItem("accessToken");
         return {
           url: "/auth/change-password",
           method: "PATCH",
@@ -20,25 +20,15 @@ const settingsApi = baseApi.injectEndpoints({
       },
     }),
     getSettings: builder.query({
-      query: () => {
-        const accessToken = localStorage.getItem("accessToken");
-        // console.log(accessToken);
-        if (!accessToken) {
-          console.error("Access token not found.");
-        }
-        return {
-          url: "/settings",
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        };
-      },
+      query: () => ({
+        url: "/setting",
+        method: "GET",
+      }),
       providesTags: ["settings"],
     }),
     addSettings: builder.mutation({
       query: (data) => ({
-        url: "/settings/",
+        url: "/setting",
         method: "POST",
         body: data,
         headers: {
@@ -49,13 +39,13 @@ const settingsApi = baseApi.injectEndpoints({
     }),
     updateSettings: builder.mutation({
       query: (data) => ({
-        url: "/settings",
+        url: "/setting",
         method: "PATCH",
         body: data,
-        headers: {
-          // "content-type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
+        // headers: {
+        //   "content-type": "application/json",
+        //   Authorization: `Bearer ${accessToken}`,
+        // },
         invalidatesTags: ["settings"],
       }),
     }),

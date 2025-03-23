@@ -1,11 +1,4 @@
-// import Cookies from "universal-cookie";
 import { baseApi } from "../baseApi";
-
-// const cookie = new Cookies();
-// const accessToken = cookie.get("accessToken");
-
-// const accessToken = localStorage.getItem('accessToken');
-// console.log('accessToken admin', accessToken);
 
 const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -220,16 +213,16 @@ export const {
   useSignInMutation,
   useForgetPasswordMutation,
   useVerifyOtpMutation,
-  useResetPasswordMutation,
   useResendOtpMutation,
-  useProfileQuery,
-  useGetAllUserQuery,
-  useUpdatePassWordMutation,
-  useUpdateProfileMutation,
-  useSingleUserQuery,
-  useChangePasswordMutation,
-  useGetAllProviderQuery,
-  useGetAllWorkerQuery,
-  useCreateAdminMutation,
-  useBlockedUserMutation,
+  useResetPasswordMutation,
+  //   useProfileQuery,
+  //   useGetAllUserQuery,
+  //   useUpdatePassWordMutation,
+  //   useUpdateProfileMutation,
+  //   useSingleUserQuery,
+  //   useChangePasswordMutation,
+  //   useGetAllProviderQuery,
+  //   useGetAllWorkerQuery,
+  //   useCreateAdminMutation,
+  //   useBlockedUserMutation,
 } = authApi;

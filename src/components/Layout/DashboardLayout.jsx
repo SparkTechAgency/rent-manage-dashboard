@@ -1,15 +1,16 @@
 import Topbar from "../Shared/Topbar";
-import logo from "/images/4 1.png";
+
+// import logo from "/images/logo.png";
 import dashboardLogo from "../../../public/images/dashboard-logo/dashboard.svg";
-import users from "../../../public/images/dashboard-logo/users.svg";
-// import user from "../../../public/images/dashboard-logo/user.svg";
-import setting from "../../../public/images/dashboard-logo/Setting.svg";
+import user from "../../../public/images/dashboard-logo/user.svg";
+import business from "../../../public/images/dashboard-logo/business.svg";
+import service from "../../../public/images/dashboard-logo/beauty.svg";
+import income from "../../../public/images/dashboard-logo/income.svg";
+// import policyScreen from "../../../public/images/dashboard-logo/policyScreen.svg";
+import setting from "../../../public/images/dashboard-logo/setting.svg";
+import profile from "../../../public/images/dashboard-logo/profile.svg";
 import logout from "../../../public/images/dashboard-logo/logout.svg";
-import QRCodeGenerated from "../../../public/images/dashboard-logo/Group 75.svg";
-import shop from "../../../public/images/dashboard-logo/shop.svg";
-import orderReceved from "../../../public/images/dashboard-logo/orderReceved.svg";
-import premiumSubscription from "../../../public/images/dashboard-logo/premiumSubscription.svg";
-import scanStatistics from "../../../public/images/dashboard-logo/Group 76.svg";
+
 import {
   Link,
   NavLink,
@@ -20,460 +21,214 @@ import {
 import { ConfigProvider, Layout, Menu } from "antd";
 import Sider from "antd/es/layout/Sider";
 import { Content, Header } from "antd/es/layout/layout";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { AllImages } from "../../../public/images/AllImages";
 
 const DashboardLayout = () => {
-  const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
+  const pathSegment = location.pathname.split("/").pop();
+  const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
-  const [openKeys, setOpenKeys] = useState([]);
 
-  // Function to check if any submenu under "Stories" is active
-  const isSubMenuActive = (paths) => {
-    return paths.some((path) => location.pathname.includes(path));
-  };
-
-  // Detect active menu item and open the corresponding submenu
+  // Use effect to handle screen resizing
   useEffect(() => {
-    if (
-      isSubMenuActive([
-        "settings/change-password",
-        "settings/about-us",
-        "settings/terms-of-service",
-        "settings/privacy-policy",
-      ])
-    ) {
-      setOpenKeys(["settings"]);
-    }
-  }, [location]);
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setCollapsed(true);
+      } else {
+        setCollapsed(false);
+      }
+    };
 
-  // handleLogout function
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
-    // cookie.remove("authToken", { path: "/" });
 
     navigate("/signin", { replace: true });
   };
 
+  const adminMenuItems = [
+    {
+      key: "dashboard",
+      icon: <img src={dashboardLogo} alt="dashboard" width={20} />,
+      label: <NavLink to="dashboard">Dashboard</NavLink>,
+    },
+    {
+      key: "properties",
+      icon: <img src={business} alt="properties" width={20} />,
+      label: <NavLink to="business">Properties</NavLink>,
+    },
+    {
+      key: "users",
+      label: <span className="text-base-color">Users</span>,
+      icon: <img src={user} alt="user" width={16} height={16} />,
+      children: [
+        {
+          key: "landlord",
+          icon: <span>&#8226;</span>,
+          label: <NavLink to="deposit">Landlord</NavLink>,
+        },
+        {
+          key: "tenant",
+          icon: <span>&#8226;</span>,
+          label: <NavLink to="withdraw">Tenant</NavLink>,
+        },
+      ],
+    },
+
+    {
+      key: "announcement",
+      icon: <img src={service} alt="income" width={16} height={16} />,
+      label: <NavLink to="services">Announcement</NavLink>,
+    },
+    {
+      key: "terms-and-condition",
+      icon: <img src={income} alt="income" width={16} height={16} />,
+      label: <NavLink to="earning">Terms and Condition</NavLink>,
+    },
+
+    {
+      key: "privacy-policy",
+      icon: <img src={setting} alt="dashboard" width={16} height={16} />,
+      label: <NavLink to="policy-screen">Privacy Policy</NavLink>,
+    },
+    {
+      key: "about-us",
+      icon: <img src={profile} alt="dashboard" width={16} height={16} />,
+      label: <NavLink to="profile">About Us</NavLink>,
+    },
+    {
+      key: "change-password",
+      icon: <img src={profile} alt="dashboard" width={16} height={16} />,
+      label: <NavLink to="profile">Change Password</NavLink>,
+    },
+    // {
+    //   key: "settings",
+    //   label: <span className="text-base-color"> Settings</span>,
+    //   icon: <img src={setting} alt="dashboard" width={16} height={16} />,
+    //   children: [
+    //     {
+    //       key: "change-password",
+    //       icon: <span>&#8226;</span>,
+    //       label: (
+    //         <NavLink to="settings/change-password">Change Password</NavLink>
+    //       ),
+    //     },
+    //     {
+    //       key: "about-us",
+    //       icon: <span>&#8226;</span>,
+    //       label: <NavLink to="about-us">About Us</NavLink>,
+    //     },
+    //     {
+    //       key: "terms-of-service",
+    //       icon: <span>&#8226;</span>,
+    //       label: <NavLink to="terms-of-service">Terms & Condition</NavLink>,
+    //     },
+    //     {
+    //       key: "privacy-policy",
+    //       icon: <span>&#8226;</span>,
+    //       label: <NavLink to="privacy-policy">Privacy Policy</NavLink>,
+    //     },
+    //   ],
+    // },
+    {
+      key: "logout",
+      icon: (
+        <img
+          src={logout}
+          alt="dashboard"
+          width={16}
+          height={16}
+          style={{ color: "#222222", fontSize: "16px" }}
+        />
+      ),
+      label: (
+        <div>
+          <NavLink onClick={handleLogout} to="/signin">
+            Logout
+          </NavLink>
+        </div>
+      ),
+    },
+  ];
+
   return (
-    <div className="h-screen">
-      <Layout className="min-h-[100vh]">
+    <div className="h-screen !bg-white ">
+      <Layout className="!relative !bg-white">
         <Sider
-          width={240}
-          theme="light"
+          width={270}
           trigger={null}
           collapsible
           collapsed={collapsed}
           style={{
-            background: "#d3e6f9",
-            // color:'black'
-            // marginRight: "10px",
-            // borderRadius: "5px",
+            background: "#FFEBF1",
+            // boxShadow: "0px 0px 5px #00000040",
+            position: "sticky",
+            top: 10,
+            height: "98vh",
+            overflowY: "auto",
           }}
+          className="!rounded-3xl ml-3"
         >
           <Link to="/">
             <img
-              src={logo}
+              src={AllImages.logo}
               alt="logo"
-              width={140}
-              height={140}
-              className="my-7 mx-auto rounded-lg"
+              width={150}
+              height={150}
+              className="my-7 mx-auto"
             />
           </Link>
+
           <ConfigProvider
             theme={{
-              // components: {
-              //   Button: {
-              //     defaultHoverBg: "#97C6EA",
-              //     defaultHoverColor: "#1A1A1A",
-              //   },
-              // },
               token: {
-                colorBgBase: "rgb(211,230,249)",
-                colorInfo: "#023E8A",
+                colorBgBase: "#FFC0D3",
+                colorInfo: "#FFC0D3",
               },
             }}
           >
             <Menu
-              theme="light"
               mode="inline"
-              openKeys={openKeys}
-              onOpenChange={(keys) => setOpenKeys(keys)}
-              selectedKeys={[location.pathname]}
+              defaultSelectedKeys={pathSegment}
               style={{
                 backgroundColor: "transparent",
                 border: "none",
-                // color:"black"
+                paddingLeft: "6px",
+                paddingRight: "6px",
               }}
-              items={[
-                {
-                  key: "dashboard",
-                  icon: (
-                    <img
-                      src={dashboardLogo}
-                      alt="dashboard"
-                      className={`h-5 menu-icon ${
-                        location.pathname.includes("dashboard")
-                          ? "active-icon"
-                          : ""
-                      }`}
-                    />
-                  ),
-                  label: (
-                    <NavLink
-                      to="dashboard"
-                      className={({ isActive }) =>
-                        isActive
-                          ? "active-menu-item font-semibold"
-                          : "font-semibold"
-                      }
-                    >
-                      Dashboard
-                    </NavLink>
-                  ),
-                },
-                {
-                  key: "users",
-                  icon: (
-                    <img
-                      src={users}
-                      alt="users"
-                      className={`h-5 menu-icon ${
-                        location.pathname.includes("users") ? "active-icon" : ""
-                      }`}
-                    />
-                  ),
-                  label: (
-                    <NavLink
-                      to="users"
-                      className={({ isActive }) =>
-                        isActive
-                          ? "active-menu-item font-semibold"
-                          : " font-semibold"
-                      }
-                    >
-                      Users
-                    </NavLink>
-                  ),
-                },
-                {
-                  key: "qr-code-generated",
-                  icon: (
-                    <img
-                      src={QRCodeGenerated}
-                      alt="qr-code-generated"
-                      className={`h-5 menu-icon ${
-                        location.pathname.includes("qr-code-generated")
-                          ? "active-icon"
-                          : ""
-                      }`}
-                    />
-                  ),
-                  label: (
-                    <NavLink
-                      to="qr-code-generated"
-                      className={({ isActive }) =>
-                        isActive
-                          ? "active-menu-item font-semibold"
-                          : " font-semibold"
-                      }
-                    >
-                      QR Code Generated
-                    </NavLink>
-                  ),
-                },
-                {
-                  key: "shop",
-                  icon: (
-                    <img
-                      src={shop}
-                      alt="shop"
-                      className={`h-5 menu-icon ${
-                        location.pathname.includes("shop") ? "active-icon" : ""
-                      }`}
-                    />
-                  ),
-                  label: (
-                    <NavLink
-                      to="shop"
-                      className={({ isActive }) =>
-                        isActive
-                          ? "active-menu-item font-semibold"
-                          : " font-semibold"
-                      }
-                    >
-                      Shop
-                    </NavLink>
-                  ),
-                },
-                {
-                  key: "orders-received",
-                  icon: (
-                    <img
-                      src={orderReceved}
-                      alt="orders-received"
-                      className={`h-5 menu-icon ${
-                        location.pathname.includes("orders-received")
-                          ? "active-icon"
-                          : ""
-                      }`}
-                    />
-                  ),
-                  label: (
-                    <NavLink
-                      to="orders-received"
-                      className={({ isActive }) =>
-                        isActive
-                          ? "active-menu-item font-semibold"
-                          : " font-semibold"
-                      }
-                    >
-                      Orders Received
-                    </NavLink>
-                  ),
-                },
-                {
-                  key: "subscriptions",
-                  icon: (
-                    <img
-                      src={premiumSubscription}
-                      alt="subscriptions"
-                      className={`h-5 menu-icon ${
-                        location.pathname.includes("subscriptions")
-                          ? "active-icon"
-                          : ""
-                      }`}
-                    />
-                  ),
-                  label: (
-                    <NavLink
-                      to="subscriptions"
-                      className={({ isActive }) =>
-                        isActive
-                          ? "active-menu-item font-semibold"
-                          : " font-semibold"
-                      }
-                    >
-                      Subscriptions
-                    </NavLink>
-                  ),
-                },
-                {
-                  key: "scan-statistics",
-                  icon: (
-                    <img
-                      src={scanStatistics}
-                      alt="scan-statistics"
-                      className={`h-5 menu-icon ${
-                        location.pathname.includes("scan-statistics")
-                          ? "active-icon"
-                          : ""
-                      }`}
-                    />
-                  ),
-                  label: (
-                    <NavLink
-                      to="scan-statistics"
-                      className={({ isActive }) =>
-                        isActive
-                          ? "active-menu-item font-semibold"
-                          : " font-semibold"
-                      }
-                    >
-                      Scan Statistics
-                    </NavLink>
-                  ),
-                },
-                {
-                  key: "premium-subscription",
-                  icon: (
-                    <img
-                      src={premiumSubscription}
-                      alt="premium-subscription"
-                      className={`h-5 menu-icon ${
-                        location.pathname.includes("premium-subscription")
-                          ? "active-icon"
-                          : ""
-                      }`}
-                    />
-                  ),
-                  label: (
-                    <NavLink
-                      to="premium-subscription"
-                      className={({ isActive }) =>
-                        isActive
-                          ? "active-menu-item font-semibold"
-                          : " font-semibold"
-                      }
-                    >
-                      Premium Subscription
-                    </NavLink>
-                  ),
-                },
-                {
-                  key: "settings",
-                  icon: (
-                    <img
-                      src={setting}
-                      alt="settings"
-                      width={15}
-                      height={15}
-                      className="menu-icon"
-                      // className={`menu-icon ${
-                      //   isSubMenuActive(["all-stories", "story-request"])
-                      //     ? "active-icon"
-                      //     : ""
-                      // }`}
-                    />
-                  ),
-                  label: (
-                    <span
-                      // className={
-                      //   isSubMenuActive(["all-stories", "story-request"])
-                      //     ? "active-menu-item"
-                      //     : ""
-                      // }
-                      className="text-black active:bg-black active:text-black font-semibold"
-                    >
-                      Setting
-                    </span>
-                  ),
-                  children: [
-                    {
-                      key: "settings/change-password",
-                      icon: <span>&#8226;</span>,
-                      label: (
-                        <NavLink
-                          to="settings/change-password"
-                          className={({ isActive }) =>
-                            isActive
-                              ? "active-menu-item font-semibold"
-                              : " font-semibold"
-                          }
-                        >
-                          Change Password
-                        </NavLink>
-                      ),
-                    },
-                    {
-                      key: "settings/about-us",
-                      icon: <span>&#8226;</span>,
-                      label: (
-                        <NavLink
-                          to="settings/about-us"
-                          className={({ isActive }) =>
-                            isActive
-                              ? "active-menu-item font-semibold"
-                              : " font-semibold"
-                          }
-                        >
-                          About Us
-                        </NavLink>
-                      ),
-                    },
-                    {
-                      key: "settings/terms-and-condition",
-                      icon: <span>&#8226;</span>,
-                      label: (
-                        <NavLink
-                          to="settings/terms-of-service"
-                          className={({ isActive }) =>
-                            isActive
-                              ? "active-menu-item font-semibold"
-                              : " font-semibold"
-                          }
-                        >
-                          Terms Of Service
-                        </NavLink>
-                      ),
-                    },
-                    {
-                      key: "settings/privacy-policy",
-                      icon: <span>&#8226;</span>,
-                      label: (
-                        <NavLink
-                          to="settings/privacy-policy"
-                          className={({ isActive }) =>
-                            isActive
-                              ? "active-menu-item font-semibold"
-                              : " font-semibold"
-                          }
-                        >
-                          Privacy And Policy
-                        </NavLink>
-                      ),
-                    },
-                  ],
-                },
-                // {
-                //   key: "dashboard/create-admin",
-                //   icon: (
-                //     <img
-                //       src={user}
-                //       alt="dashboard/create-admin"
-                //       className={`h-5 menu-icon ${
-                //         location.pathname.includes("dashboard/create-admin")
-                //           ? "active-icon "
-                //           : " "
-                //       }`}
-                //     />
-                //   ),
-                //   label: (
-                //     <NavLink
-                //       to="dashboard/create-admin"
-                //       className={({ isActive }) =>
-                //         isActive
-                //           ? "active-menu-item font-semibold"
-                //           : " font-semibold"
-                //       }
-                //     >
-                //       Create New Admin
-                //     </NavLink>
-                //   ),
-                // },
-                {
-                  key: "logout",
-                  icon: (
-                    <img
-                      src={logout}
-                      alt="logout"
-                      width={15}
-                      height={15}
-                      className={`menu-icon ${
-                        location.pathname.includes("signin")
-                          ? "active-icon font-semibold"
-                          : " font-semibold"
-                      }`}
-                    />
-                  ),
-                  label: (
-                    <NavLink
-                      onClick={handleLogout}
-                      // to="signin"
-                      className={({ isActive }) =>
-                        isActive ? "menu-item font-semibold" : " font-semibold"
-                      }
-                    >
-                      Logout
-                    </NavLink>
-                  ),
-                },
-              ]}
+              items={adminMenuItems}
             />
           </ConfigProvider>
         </Sider>
-        <Layout style={{ background: "white" }}>
-          <Header style={{ borderRadius: "10px" }}>
+        <Layout>
+          <Header
+            style={{
+              background: "#ffffff",
+              position: "sticky",
+              top: 0,
+              zIndex: 99999,
+            }}
+          >
             <Topbar collapsed={collapsed} setCollapsed={setCollapsed} />
           </Header>
-          <Content style={{ padding: "25px" }}>
-            <Outlet />
+          <Content>
+            <div className="bg-white px-2 xl:px-5 py-4 xl:py-5">
+              <Outlet />
+            </div>
           </Content>
         </Layout>
       </Layout>
     </div>
   );
 };
-
 export default DashboardLayout;

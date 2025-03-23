@@ -1,221 +1,192 @@
-import { Button, ConfigProvider, Form, Input, Select, Upload } from "antd";
-import profileImage from "/images/profileImage.jpg";
+/* eslint-disable no-unused-vars */
+import { Button, ConfigProvider, Form, Input, Typography, Upload } from "antd";
+import profileImage from "/images/profileImage.png";
 import { useEffect, useState } from "react";
-import { LeftOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
-import "react-day-picker/dist/style.css";
-import { jwtDecode } from "jwt-decode";
-import { useSingleUserQuery, useUpdateProfileMutation } from "../../Redux/api/authApi";
-import Swal from "sweetalert2";
+import { EditOutlined } from "@ant-design/icons";
+import { MdOutlineEdit } from "react-icons/md";
+import { AllImages } from "../../../public/images/AllImages";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEditProfileMutation, useUserProfileQuery } from "../../Redux/api/userApi";
+import { toast } from "sonner";
 
 const EditProfile = () => {
   const navigate = useNavigate();
-  const [userUpdateData] = useUpdateProfileMutation();
-  const userToken = localStorage.getItem('accessToken');
-  const userData = jwtDecode(userToken);
-  const {data:singleUserData} = useSingleUserQuery(userData.id);
-  // console.log('singleUserData',singleUserData?.data?.photo);
+  const location = useLocation();
+  const { profileData } = location.state || {};
+  console.log(profileData);
 
-  // const [imageUrl, setImageUrl] = useState('');
+  const { refetch } = useUserProfileQuery();
   const [imageUrl, setImageUrl] = useState(profileImage);
+  const [imageFile, setImageFile] = useState(null);
 
-  const [uploadedFile, setUploadedFile] = useState(null);
-
-  useEffect(() => {
-    if (singleUserData?.data?.photo) {
-      setImageUrl(singleUserData.data.photo); // Update image URL if available
-    }
-  }, [singleUserData]);
-  console.log('imageurl', imageUrl);
-  const handleUploadChange = (info) => {
-    console.log('info', info.file);
-    
-      setImageUrl(info.file); 
-      setUploadedFile(info.file);
-      
-     // If the file is being uploaded, show the preview
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      setImageUrl(e.target.result); // Set the image preview URL
-    };
-    console.log('info.file.originFileObj',info.file.originFileObj)
-    reader.readAsDataURL(info.file); 
-   
-  };
+  const [updateProfile, { isLoading }] = useEditProfileMutation();
 
   const onFinish = async (values) => {
-
-    // Create a FormData object
-    const data = new FormData();
-     // Use the original file for upload
-    if (uploadedFile) {
-      data.append('photo', uploadedFile); // Append the file
+    console.log("onfinish", values);
+    const formData = new FormData();
+    formData.append("fullName", values.fullName);
+    formData.append("email", values.email);
+    if (imageFile) {
+      formData.append("image", imageFile); // Append image for upload
     }
-    data.append('photo', imageUrl); // Append the image URL or file
-    data.append('fullName', values.fullName);
-    data.append('phone', values.phone);
-    data.append('email', values.email);
-
-
-   
-    console.log('updateUserData', data);
 
     try {
-      // Await the mutation response
-      const res = await userUpdateData({ id: userData.id, data }).unwrap();
-      console.log('update res user', res);
-   
-      if (res.success) {
-        Swal.fire({
-          title: "Profile updated successfully",
-          text: "The user has been updated.",
-          icon: "success",
-        });
-        navigate("/profile");
+      const response = await updateProfile(formData).unwrap(); // Send formData to the backend
+      if (response.success) {
+        toast.success("Profile updated successfully!");
+        setImageUrl(imageUrl);
+
+        await refetch();
+        navigate("/profile", { state: { updated: true } });
       } else {
-        Swal.fire({
-          title: "Error",
-          text: "There was an issue updating the user.",
-          icon: "error",
-        });
+        toast.error(response.message || "Failed to update profile.");
       }
     } catch (error) {
-      console.error("Error updating user:", error);
-      if (error.data) {
-        Swal.fire({
-          title: `${error.data.message}`,
-          text: "Something went wrong while updating the profile.",
-          icon: "error",
-        });
-      }
+      console.log("Update error:", error);
+      toast.error("An error occurred while updating the profile.");
     }
   };
-  return (
-    <div className="p-4 lg:p-8 min-h-screen">
-      <div className="flex justify-between items-center mb-8 mx-10 xl:mx-40">
-        <div className="flex items-center">
-          <LeftOutlined
-            className="text-black text-xl mr-4 cursor-pointer"
-            onClick={() => navigate(-1)}
-          />
-          <h2 className="text-black text-2xl font-semibold">Profile Information</h2>
-        </div>
-      </div>
 
-      <div className="bg-white rounded-lg shadow-lg p-6 md:mx-10 xl:mx-40">
-        <div className="relative flex flex-col items-center bg-[#3565A1] p-5 rounded mb-5">
-            <img
-              src={imageUrl}
-              alt="Profile"
-              className="rounded-full md:w-28 md:h-28 lg:h-32 lg:w-32 xl:w-36 xl:h-36 object-cover mb-2"
-            />
-            <Upload
-              name="avatar"
-              showUploadList={false}
-              onChange={handleUploadChange}
-              beforeUpload={() => false} 
-            >
-              <div className="absolute h-5 lg:h-8 w-20  left-[550px] lg:w-24 xl:w-24 inset-0 top-8 xl:top-24 md:top-20  flex items-center justify-center bg-blue-800 bg-opacity-50 rounded-full opacity-100 cursor-pointer">
-                <span className="text-white text-xs lg:text-sm">
-                  Change Image
-                </span>
-              </div>
-            </Upload>
-            <h2 className="text-lg font-bold text-white">{userData.fullName}</h2>
-          </div>
-       
-        <div className="">
-          <div className="flex-1">
-            <ConfigProvider
-              theme={{
-                components: {
-                  Input: {
-                    colorTextPlaceholder: "rgba(255,255,255,0.7)",
-                    // hoverBg: "rgb(113,185,249)",
-                    activeBg: "#3565A1",
-                  },
-                },
-              }}
-            >
-              <Form
-                layout="vertical"
-                id="editProfileForm"
-                onFinish={onFinish}
-                initialValues={{
-                  fullName: userData.fullName,
-                  email: userData.email,
-                  phone: userData.phone,
-                }}
-              >
-                <div className="flex flex-col">
-                  <Form.Item
-                    label={
-                      <label
-                        style={{
-                          color: "black",
-                          fontWeight: "bold",
-                          fontSize: "18px",
-                        }}
-                      >
-                        Full Name
-                      </label>
-                    }
-                    name="fullName"
-                  >
-                    <Input className=" rounded-lg h-10 font-semibold " />
-                  </Form.Item>
-                </div>
-                <Form.Item
-                  label={
-                    <label
-                      style={{
-                        color: "black",
-                        fontWeight: "bold",
-                        fontSize: "18px",
-                      }}
+  return (
+    <div className="min-h-screen bg-primary-color flex justify-center items-center">
+      <Form
+        onFinish={onFinish}
+        layout="vertical"
+        className="bg-transparent w-full"
+      >
+        <div className="py-10 text-base-color rounded-lg h-full w-full lg:w-[70%] mx-auto">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center justify-center gap-8">
+              <div className="mt-12 flex items-center  gap-x-4">
+                <div className="mt-12  relative ">
+                  <div className="rounded-full w-fit border-2 border-secondary-color overflow-hidden">
+                    <img
+                      src={`http://10.0.70.35:8020/${profileData?.image}`}
+                      alt="profile_img"
+                      className="!h-40 !w-40 object-cover"
+                    />
+                  </div>
+                  <Form.Item name="image" className="text-white ">
+                    <Upload
+                      maxCount={1}
+                      listType="picture"
+                      beforeUpload={() => false}
+                      accept="image/*"
+                      multiple={false}
+                      // style={{
+                      //   top: 0,
+                      //   left: 0,
+                      //   width: "100%",
+                      //   height: "100%",
+                      //   opacity: 0,
+                      //   cursor: "pointer",
+                      // }}
                     >
-                      Email
-                    </label>
-                  }
-                  name="email"
-                >
-                  <Input className=" rounded-lg h-10 font-semibold" />
-                </Form.Item>
-                <div className="flex flex-col">
-                  <Form.Item
-                    label={
-                      <label
+                      <Button
                         style={{
-                          color: "black",
-                          fontWeight: "bold",
+                          position: "absolute",
+                          top: "-20px",
+                          left: "130px",
+                          transform: "translate(-50%, -50%)",
+                          zIndex: 1,
+                          opacity: 1,
+                          height: "36px",
+                          width: "36px",
+                          borderRadius: "90px",
                           fontSize: "18px",
                         }}
                       >
-                        Phone Number
-                      </label>
-                    }
-                    name="phone"
-                  >
-                    <Input className="  rounded-lg h-10 font-semibold" />
+                        <EditOutlined style={{ color: "#f5382c" }} />
+                      </Button>
+                    </Upload>
                   </Form.Item>
                 </div>
+                <p className="text-5xl font-semibold">
+                  {profileData?.fullName}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col items-center text-white mt-5">
+            <div className="p-4 w-full">
+              <Typography.Title level={5} style={{ color: "#222222" }}>
+                Email
+              </Typography.Title>
+              <Form.Item
+                initialValue={profileData?.email}
+                name="email"
+                className="text-white "
+              >
+                <Input
+                  suffix={<MdOutlineEdit />}
+                  type="email"
+                  placeholder="Enter your email"
+                  className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border !border-input-color text-base-color hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
+                />
+              </Form.Item>
+              <Typography.Title level={5} style={{ color: "#222222" }}>
+                Full Name
+              </Typography.Title>
+              <Form.Item
+                initialValue={profileData?.fullName}
+                name="fullName"
+                className="text-white"
+              >
+                <Input
+                  suffix={<MdOutlineEdit />}
+                  placeholder="Enter your Name"
+                  className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border !border-input-color text-base-color hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
+                />
+              </Form.Item>
+              {profileData?.address && (
+                <>
+                  <Typography.Title level={5} style={{ color: "#222222" }}>
+                    Address
+                  </Typography.Title>
+                  <Form.Item
+                    initialValue={profileData?.address}
+                    name="address"
+                    className="text-white"
+                  >
+                    <Input
+                      suffix={<MdOutlineEdit />}
+                      placeholder="Enter your address"
+                      className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border !border-input-color text-base-color hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
+                    />
+                  </Form.Item>
+                </>
+              )}
+              {profileData?.phoneNumber && (
+                <>
+                  <Typography.Title level={5} style={{ color: "#222222" }}>
+                    Contact number
+                  </Typography.Title>
+                  <Form.Item
+                    initialValue={profileData?.phoneNumber}
+                    name="phoneNumber"
+                    className="text-white"
+                  >
+                    <Input
+                      suffix={<MdOutlineEdit />}
+                      placeholder="Enter your Contact number"
+                      className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border !border-input-color text-base-color hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
+                    />
+                  </Form.Item>
+                </>
+              )}
+              <Form.Item>
                 <Button
-                  block
-                  form="editProfileForm"
-                  key="submit"
+                  className="w-full py-6 border !border-secondary-color hover:border-secondary-color text-xl !text-primary-color bg-secondary-color hover:!bg-secondary-color font-semibold rounded-2xl mt-8"
                   htmlType="submit"
-                  className="bg-[#013564] text-white h-10 py-5 rounded-xl font-semibold"
-                  style={{background:"#013564"}}
                 >
-                  Save Changes
+                  Save & Change
                 </Button>
-              </Form>
-            </ConfigProvider>
+              </Form.Item>
+            </div>
           </div>
         </div>
-      </div>
+      </Form>
     </div>
   );
 };
-
 export default EditProfile;

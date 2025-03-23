@@ -1,11 +1,12 @@
-import { Button, ConfigProvider, Form, Input, Typography } from "antd";
+import { Button, Form, Input, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useChangePasswordMutation } from "../../../Redux/api/settingsApi";
 import { toast } from "sonner";
 
 const SettingsChangePassword = () => {
   const navigate = useNavigate();
-  const [changePassword] = useChangePasswordMutation();
+  // eslint-disable-next-line no-unused-vars
+  const [changePassword, { isLoading }] = useChangePasswordMutation();
 
   const onFinish = async (values) => {
     console.log("password Values", values);
@@ -49,64 +50,55 @@ const SettingsChangePassword = () => {
     }
   };
   return (
-    <div className="mx-auto bg-transparent py-10 px-5 flex items-center">
-      <div className="w-full lg:w-2/3">
-        <ConfigProvider
-          theme={{
-            components: {
-              Input: {
-                colorTextPlaceholder: "rgba(61,61,61,0.25)",
-              },
-            },
-          }}
-        >
+    <div>
+      <div className="container w-[90%] mx-auto bg-primary-color min-h-[80vh] p-20 flex justify-center items-center">
+        <div className="w-full lg:w-[70%]">
           <Form
             onFinish={onFinish}
             layout="vertical"
             className="bg-transparent w-full"
           >
-            <Typography.Title level={4} style={{ color: "black" }}>
+            <Typography.Title level={4} style={{ color: "#222222" }}>
               Current password
             </Typography.Title>
-            <Form.Item name="currentPassword" className="text-black">
+            <Form.Item
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter your current password!",
+                },
+              ]}
+              name="currentPassword"
+              className="text-white "
+            >
               <Input.Password
                 placeholder="Enter your password"
-                className="py-2 px-3 text-xl bg-transparent border-black text-black hover:bg-transparent hover:border-blue-600 focus:bg-transparent focus:border-blue-700"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your current password!",
-                  },
-                ]}
+                className="py-2 px-3 text-xl  !border-base-color 1text-base-color !bg-transparent"
               />
             </Form.Item>
-            <Typography.Title level={4} style={{ color: "black" }}>
+            <Typography.Title level={4} style={{ color: "#222222" }}>
               New password
             </Typography.Title>
-            <Form.Item name="newPassword" className="text-black">
+            <Form.Item
+              rules={[
+                { required: true, message: "Please enter your new password!" },
+              ]}
+              name="newPassword"
+              className="text-white"
+            >
               <Input.Password
                 placeholder="Enter your password"
-                className="py-2 px-3 text-xl bg-transparent border-black text-black hover:bg-transparent hover:border-blue-600 focus:bg-transparent focus:border-blue-700"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your new password!",
-                  },
-                  { min: 6, message: "Password must be at least 6 characters" },
-                ]}
+                className="py-2 px-3 text-xl  !border-base-color 1text-base-color !bg-transparent"
               />
             </Form.Item>
-            <Typography.Title level={4} style={{ color: "black" }}>
+            <Typography.Title level={4} style={{ color: "#222222" }}>
               Re-enter new Password
             </Typography.Title>
             <Form.Item
               name="reEnterPassword"
-              className="text-black"
+              className="text-white"
               rules={[
-                {
-                  required: true,
-                  message: "Please confirm your new password!",
-                },
+                { required: true, message: "Please confirm your password!" },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
                     if (!value || getFieldValue("newPassword") === value) {
@@ -123,40 +115,20 @@ const SettingsChangePassword = () => {
             >
               <Input.Password
                 placeholder="Enter your password"
-                className="py-2 px-3 text-xl bg-transparent border-black text-black hover:bg-transparent hover:border-blue-600 focus:bg-transparent focus:border-blue-700"
+                className="py-2 px-3 text-xl  !border-base-color 1text-base-color !bg-transparent"
               />
             </Form.Item>
-            {/* <div className="flex justify-end">
-              <Link
-                to="/settings/forgot-password"
-                className="text-[#013564] hover:text-[#1466ad] font-bold text-lg text-right"
-              >
-                Forgot Password?
-              </Link>
-            </div> */}
+
             <Form.Item>
-              <ConfigProvider
-                theme={{
-                  components: {
-                    Button: {
-                      defaultHoverBg: "#10578d",
-                      defaultHoverColor: "white",
-                    },
-                  },
-                }}
+              <Button
+                className="w-full py-6 border !border-secondary-color hover:border-secondary-color text-xl !text-primary-color bg-secondary-color hover:!bg-secondary-color font-semibold rounded-2xl mt-8"
+                htmlType="submit"
               >
-                <Button
-                  className="w-full py-6 border border-[#10578d] hover:border-[#10578d] text-xl text-white font-semibold rounded-2xl mt-10"
-                  htmlType="submit"
-                  style={{ background: "#013564" }}
-                >
-                  Change password
-                </Button>
-              </ConfigProvider>
+                Change password
+              </Button>
             </Form.Item>
-            ;
           </Form>
-        </ConfigProvider>
+        </div>
       </div>
     </div>
   );

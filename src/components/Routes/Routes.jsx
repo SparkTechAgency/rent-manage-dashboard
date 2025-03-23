@@ -1,33 +1,37 @@
 import { createBrowserRouter } from "react-router-dom";
 import ForgotPassword from "../../Pages/Auth/ForgotPassword";
 import Main from "../Layout/Main";
-import Dashboard from "../Dashboard/Dashboard";
 import DashboardLayout from "../Layout/DashboardLayout";
-import PrivacyPolicy from "../Dashboard/settings/PrivacyPolicy";
-import Profile from "../../Pages/Profile/Profile";
-import Logout from "../Dashboard/Logout";
-import Notifications from "../Dashboard/Notifications";
-import EditProfile from "../../Pages/Profile/EditProfile";
-import AboutUs from "../Dashboard/settings/AboutUs";
-import OtpPage from "../../Pages/Auth/OtpPage";
-import SignIn from "../../Pages/Auth/SignIn";
-import ResetPassword from "../../Pages/Auth/ResetPassword";
-import UserDetails from "../Dashboard/UserDetails";
 
+import Dashboard from "../Dashboard/Dashboard";
+import AllUsers from "../Dashboard/Users/Users";
+
+import Profile from "../../Pages/Profile/Profile";
+import EditProfile from "../../Pages/Profile/EditProfile";
+
+import SignIn from "../../Pages/Auth/SignIn";
+import UpdatePassword from "../../Pages/Auth/UpdatePassword";
+
+import OtpPage from "../../Pages/Auth/OtpPage";
 import SettingsChangePassword from "../Dashboard/settings/SettingsChangePassword";
 
-import Users from "../Dashboard/Users";
-import TermsAndCondition from "../Dashboard/settings/TermsAndCondition";
-import CreateAdmin from "../Dashboard/CreateAdmin";
-import QRCodesGenerated from "../Dashboard/QRCodesGenerated/QRCodesGenerated";
-import Shop from "../Dashboard/Shop/Shop";
-import OrdersReceived from "../Dashboard/OrdersReceived/OrdersReceived";
-import PremiumSubscription from "../Dashboard/PremiumSubscription";
-import ScanStatistics from "../Dashboard/ScanStatistics";
-import QRCodeGeneratedDetails from "../Dashboard/QRCodesGenerated/QRCodeGeneratedDetails";
-// import ProtectedRoute from "../ProtectedRoute";
-import OrderDetails from "../Dashboard/OrdersReceived/OrdersDetails";
-import Subscription from "../Dashboard/Subscription";
+import Logout from "../Dashboard/Logout";
+
+import TermsOfService from "../Dashboard/settings/TermsOfService";
+import AboutUs from "../Dashboard/settings/AboutUs";
+import PrivacyPolicy from "../Dashboard/settings/PrivacyPolicy";
+
+import Notifications from "../Dashboard/Notifications";
+import Services from "../Dashboard/Services/Services";
+import ServiceDetails from "../Dashboard/Services/ServiceDetails";
+import Business from "../Dashboard/Business/Business";
+import Deposit from "../Dashboard/Earning/Deposite";
+import Withdraw from "../Dashboard/Earning/Withdraw";
+import PolicyScreen from "../Dashboard/PolicyScreen/PolicyScreen";
+import Earning from "../Dashboard/Earning/Earning";
+import BusinessDetails from "../Dashboard/Business/BusinessDetails";
+
+//
 
 const router = createBrowserRouter([
   {
@@ -38,10 +42,6 @@ const router = createBrowserRouter([
         path: "signin",
         element: <SignIn />,
       },
-      // {
-      //   path: "signup",
-      //   element: <SignUp />,
-      // },
       {
         path: "forgot-password",
         element: <ForgotPassword />,
@@ -52,15 +52,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/reset-password",
-        element: <ResetPassword />,
+        element: <UpdatePassword />,
       },
       {
         path: "",
-        element: (
-          // <ProtectedRoute>
-          <DashboardLayout />
-          // </ProtectedRoute>
-        ),
+        element: <DashboardLayout />,
         children: [
           {
             path: "/",
@@ -71,71 +67,59 @@ const router = createBrowserRouter([
             element: <Dashboard />,
           },
           {
-            path: "user-details",
-            element: <UserDetails />,
-          },
-          {
             path: "users",
-            element: <Users />,
+            element: <AllUsers />,
           },
           {
-            path: "qr-code-generated",
-            element: <QRCodesGenerated />,
+            path: "business",
+            element: <Business />,
           },
           {
-            path: "qr-code-generated/:id",
-            element: <QRCodeGeneratedDetails />,
+            path: "business/:id",
+            element: <BusinessDetails />,
           },
           {
-            path: "shop",
-            element: <Shop />,
+            path: "services",
+            element: <Services />,
           },
           {
-            path: "orders-received",
-            element: <OrdersReceived />,
+            path: "services/:id",
+            element: <ServiceDetails />,
           },
           {
-            path: "orders-received-details/:id",
-            element: <OrderDetails />,
+            path: "earning",
+            element: <Earning />,
           },
           {
-            path: "premium-subscription",
-            element: <PremiumSubscription />,
+            path: "deposit",
+            element: <Deposit />,
           },
           {
-            path: "scan-statistics",
-            element: <ScanStatistics />,
+            path: "withdraw",
+            element: <Withdraw />,
           },
           {
-            path: "subscriptions",
-            element: <Subscription />,
+            path: "policy-screen",
+            element: <PolicyScreen />,
           },
           {
             path: "profile",
             element: <Profile />,
           },
           {
-            path: "dashboard/create-admin",
-            element: <CreateAdmin />,
-          },
-          {
-            path: "edit-profile",
+            path: "profile/edit-profile",
             element: <EditProfile />,
           },
           {
-            path: "notifications",
-            element: <Notifications />,
-          },
-          {
-            path: "settings/privacy-policy",
+            path: "privacy-policy",
             element: <PrivacyPolicy />,
           },
           {
-            path: "settings/terms-of-service",
-            element: <TermsAndCondition />,
+            path: "terms-of-service",
+            element: <TermsOfService />,
           },
           {
-            path: "settings/about-us",
+            path: "about-us",
             element: <AboutUs />,
           },
           // {
@@ -157,6 +141,10 @@ const router = createBrowserRouter([
           {
             path: "logout",
             element: <Logout />,
+          },
+          {
+            path: "notifications",
+            element: <Notifications />,
           },
         ],
       },
