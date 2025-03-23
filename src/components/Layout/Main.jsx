@@ -1,12 +1,14 @@
+import { ConfigProvider } from "antd";
 import { Outlet } from "react-router-dom";
+import { mainTheme } from "../../theme";
 
 const Main = () => {
   return (
-    // <ConfigProvider>
-    <div>
-      <Outlet />
-    </div>
-    // </ConfigProvider>
+    <ConfigProvider theme={mainTheme}>
+      <div>
+        <Outlet />
+      </div>
+    </ConfigProvider>
   );
 };
 
