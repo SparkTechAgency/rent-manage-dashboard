@@ -1,57 +1,57 @@
 import { Button, Form, Input, Typography } from "antd";
-import { useNavigate } from "react-router-dom";
-import { useChangePasswordMutation } from "../../../Redux/api/settingsApi";
-import { toast } from "sonner";
+// import { useNavigate } from "react-router-dom";
+// import { useChangePasswordMutation } from "../../../Redux/api/settingsApi";
+// import { toast } from "sonner";
 
-const SettingsChangePassword = () => {
-  const navigate = useNavigate();
+const ChangePassword = () => {
+  // const navigate = useNavigate();
   // eslint-disable-next-line no-unused-vars
-  const [changePassword, { isLoading }] = useChangePasswordMutation();
+  // const [changePassword, { isLoading }] = useChangePasswordMutation();
 
   const onFinish = async (values) => {
     console.log("password Values", values);
-    try {
-      const data = {
-        oldPassword: values.currentPassword,
-        newPassword: values.newPassword,
-      };
-      console.log("Request payload:", data);
+    // try {
+    //   const data = {
+    //     oldPassword: values.currentPassword,
+    //     newPassword: values.newPassword,
+    //   };
+    //   console.log("Request payload:", data);
 
-      // const token = localStorage.getItem("authToken");
-      // if (!token) {
-      //   toast.error("Session expired. Please start the reset process again.");
-      //   navigate("/forgot-password");
-      //   return;
-      // }
+    //   // const token = localStorage.getItem("authToken");
+    //   // if (!token) {
+    //   //   toast.error("Session expired. Please start the reset process again.");
+    //   //   navigate("/forgot-password");
+    //   //   return;
+    //   // }
 
-      const response = await changePassword(data).unwrap();
-      console.log("Response:", response);
+    //   const response = await changePassword(data).unwrap();
+    //   console.log("Response:", response);
 
-      if (response.success) {
-        toast.success("Password updated successfully!");
-        navigate("/signin");
-      } else {
-        toast.error(response.message || "Failed to update password.");
-      }
-    } catch (error) {
-      console.log("Error updating password:", error);
-      toast.error(
-        error?.data?.message || "An error occurred while updating the password."
-      );
-      // if (error.response) {
-      //   console.error("Validation error details:", error.response.data);
-      //   toast.error(
-      //     error.response.data.message ||
-      //       "Failed to update password. Please try again."
-      //   );
-      // } else {
-      //   toast.error("An unexpected error occurred. Please try again.");
-      // }
-    }
+    //   if (response.success) {
+    //     toast.success("Password updated successfully!");
+    //     navigate("/signin");
+    //   } else {
+    //     toast.error(response.message || "Failed to update password.");
+    //   }
+    // } catch (error) {
+    //   console.log("Error updating password:", error);
+    //   toast.error(
+    //     error?.data?.message || "An error occurred while updating the password."
+    //   );
+    //   // if (error.response) {
+    //   //   console.error("Validation error details:", error.response.data);
+    //   //   toast.error(
+    //   //     error.response.data.message ||
+    //   //       "Failed to update password. Please try again."
+    //   //   );
+    //   // } else {
+    //   //   toast.error("An unexpected error occurred. Please try again.");
+    //   // }
+    // }
   };
   return (
     <div>
-      <div className="container w-[90%] mx-auto bg-primary-color min-h-[80vh] p-20 flex justify-center items-center">
+      <div className="container w-[90%] mx-auto bg-[#d2e8fffb] min-h-[80vh] p-20 flex justify-center items-center">
         <div className="w-full lg:w-[70%]">
           <Form
             onFinish={onFinish}
@@ -121,7 +121,7 @@ const SettingsChangePassword = () => {
 
             <Form.Item>
               <Button
-                className="w-full py-6 border !border-secondary-color hover:border-secondary-color text-xl !text-primary-color bg-secondary-color hover:!bg-secondary-color font-semibold rounded-2xl mt-8"
+                className="w-full py-6 border !border-[#007BFF] hover:border-secondary-color text-xl !text-primary-color bg-[#007BFF] hover:!bg-[#007BFF] font-semibold rounded-2xl mt-8"
                 htmlType="submit"
               >
                 Change password
@@ -134,4 +134,4 @@ const SettingsChangePassword = () => {
   );
 };
 
-export default SettingsChangePassword;
+export default ChangePassword;

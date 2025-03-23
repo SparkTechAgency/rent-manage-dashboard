@@ -11,25 +11,19 @@ import EditProfile from "../../Pages/Profile/EditProfile";
 
 import SignIn from "../../Pages/Auth/SignIn";
 import UpdatePassword from "../../Pages/Auth/UpdatePassword";
-
 import OtpPage from "../../Pages/Auth/OtpPage";
-import SettingsChangePassword from "../Dashboard/settings/SettingsChangePassword";
-
 import Logout from "../Dashboard/Logout";
 
-import TermsOfService from "../Dashboard/settings/TermsOfService";
-import AboutUs from "../Dashboard/settings/AboutUs";
-import PrivacyPolicy from "../Dashboard/settings/PrivacyPolicy";
+import AboutUs from "../Dashboard/AboutUs";
 
 import Notifications from "../Dashboard/Notifications";
-import Services from "../Dashboard/Services/Services";
-import ServiceDetails from "../Dashboard/Services/ServiceDetails";
-import Business from "../Dashboard/Business/Business";
-import Deposit from "../Dashboard/Earning/Deposite";
-import Withdraw from "../Dashboard/Earning/Withdraw";
-import PolicyScreen from "../Dashboard/PolicyScreen/PolicyScreen";
-import Earning from "../Dashboard/Earning/Earning";
-import BusinessDetails from "../Dashboard/Business/BusinessDetails";
+import TermsAndConditions from "../Dashboard/Terms&Conditions";
+import Announcement from "../Dashboard/Announcement";
+import ChangePassword from "../Dashboard/ChangePassword";
+import PrivacyPolicy from "../Dashboard/PrivacyPolicy";
+import Properties from "../Dashboard/Properties";
+import Landlord from "../Dashboard/Users/Landlord";
+import Tenant from "../Dashboard/Users/Tenant";
 
 //
 
@@ -69,38 +63,36 @@ const router = createBrowserRouter([
           {
             path: "users",
             element: <AllUsers />,
+            children: [
+              {
+                path: "landlord",
+                element: <Landlord />,
+              },
+              {
+                path: "tenant",
+                element: <Tenant />,
+              },
+            ],
           },
           {
-            path: "business",
-            element: <Business />,
+            path: "announcement",
+            element: <Announcement />,
           },
           {
-            path: "business/:id",
-            element: <BusinessDetails />,
+            path: "properties",
+            element: <Properties />,
           },
           {
-            path: "services",
-            element: <Services />,
+            path: "terms-and-condition",
+            element: <TermsAndConditions />,
           },
           {
-            path: "services/:id",
-            element: <ServiceDetails />,
+            path: "privacy-policy",
+            element: <PrivacyPolicy />,
           },
           {
-            path: "earning",
-            element: <Earning />,
-          },
-          {
-            path: "deposit",
-            element: <Deposit />,
-          },
-          {
-            path: "withdraw",
-            element: <Withdraw />,
-          },
-          {
-            path: "policy-screen",
-            element: <PolicyScreen />,
+            path: "about-us",
+            element: <AboutUs />,
           },
           {
             path: "profile",
@@ -111,33 +103,9 @@ const router = createBrowserRouter([
             element: <EditProfile />,
           },
           {
-            path: "privacy-policy",
-            element: <PrivacyPolicy />,
+            path: "change-password",
+            element: <ChangePassword />,
           },
-          {
-            path: "terms-of-service",
-            element: <TermsOfService />,
-          },
-          {
-            path: "about-us",
-            element: <AboutUs />,
-          },
-          // {
-          //   path: "settings/forgot-password",
-          //   element: <SettingsForgotPassword />,
-          // },
-          {
-            path: "settings/change-password",
-            element: <SettingsChangePassword />,
-          },
-          // {
-          //   path: "settings/update-password",
-          //   element: <SettingsUpdatePassword />,
-          // },
-          // {
-          //   path: "settings/otp-page",
-          //   element: <SettingsOtpPage />,
-          // },
           {
             path: "logout",
             element: <Logout />,

@@ -66,8 +66,8 @@ const Dashboard = () => {
       <div>
         <div>
           {/* Card Items */}
-          <div className="grid grid-cols-1 items-start lg:grid-cols-2 gap-5 mt-8 w-full">
-            <div className="flex gap-5 flex-wrap rounded-lg bg-[#FE5C8E] border border-[#FE5C8E] py-2 px-1 lg:p-5 items-center  flex-1">
+          <div className="flex items-center gap-5 mt-8 w-full">
+            <div className="flex gap-5 flex-wrap rounded-lg bg-[#007BFF] border border-[#007BFF] py-2 px-1 lg:p-5 items-center flex-1">
               <div className="flex gap-2 xl:gap-4 items-center">
                 <div className="p-3 w-fit">
                   <img
@@ -78,7 +78,7 @@ const Dashboard = () => {
                 </div>
                 <div className="text-start">
                   <p className="text-xs lg:text-base xl:text-2xl text-primary-color mb-1">
-                    Total customer
+                    Total Tenant
                   </p>
                   <p className="text-sm lg:text-base xl:text-3xl font-medium text-primary-color">
                     {allCustomer?.data?.allCustomerCount}
@@ -86,16 +86,46 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-            <div className="flex gap-5 flex-wrap rounded-lg bg-[#FEF2F5] border border-secondary-color py-2 px-1 xl:p-5 items-center  flex-1">
+            <div className="flex gap-5 flex-wrap rounded-lg bg-[#007BFF] border border-[#007BFF] py-2 px-1 xl:p-5 items-center  flex-1">
               <div className="flex gap-2 xl:gap-4 items-center">
                 <div className="p-3  w-fit">
                   <img src={AllIcons.person} className="h-10 w-10" alt="" />
                 </div>
                 <div className="text-start">
-                  <p className="text-xs lg:text-sm xl:text-2xl text-secondary-color mb-1">
-                    Total Business
+                  <p className="text-xs lg:text-sm xl:text-2xl text-primary-color mb-1">
+                    Total Landlord
                   </p>
-                  <p className="text-sm lg:text-base xl:text-3xl font-medium text-secondary-color">
+                  <p className="text-sm lg:text-base xl:text-3xl font-medium text-primary-color">
+                    {allCustomer?.data?.allBusinessCount}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-5 flex-wrap rounded-lg bg-[#007BFF] border border-[#007BFF] py-2 px-1 xl:p-5 items-center  flex-1">
+              <div className="flex gap-2 xl:gap-4 items-center">
+                <div className="p-3  w-fit">
+                  <img src={AllIcons.person} className="h-10 w-10" alt="" />
+                </div>
+                <div className="text-start">
+                  <p className="text-xs lg:text-sm xl:text-2xl text-primary-color mb-1">
+                    Total Revenue
+                  </p>
+                  <p className="text-sm lg:text-base xl:text-3xl font-medium text-primary-color">
+                    {allCustomer?.data?.allBusinessCount}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-5 flex-wrap rounded-lg bg-[#007BFF] border border-[#007BFF] py-2 px-1 xl:p-5 items-center  flex-1">
+              <div className="flex gap-2 xl:gap-4 items-center">
+                <div className="p-3  w-fit">
+                  <img src={AllIcons.person} className="h-10 w-10" alt="" />
+                </div>
+                <div className="text-start">
+                  <p className="text-xs lg:text-sm xl:text-2xl text-primary-color mb-1">
+                    Total Properties
+                  </p>
+                  <p className="text-sm lg:text-base xl:text-3xl font-medium text-primary-color">
                     {allCustomer?.data?.allBusinessCount}
                   </p>
                 </div>

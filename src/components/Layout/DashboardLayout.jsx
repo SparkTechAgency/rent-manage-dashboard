@@ -65,7 +65,7 @@ const DashboardLayout = () => {
     {
       key: "properties",
       icon: <img src={business} alt="properties" width={20} />,
-      label: <NavLink to="business">Properties</NavLink>,
+      label: <NavLink to="properties">Properties</NavLink>,
     },
     {
       key: "users",
@@ -75,12 +75,12 @@ const DashboardLayout = () => {
         {
           key: "landlord",
           icon: <span>&#8226;</span>,
-          label: <NavLink to="deposit">Landlord</NavLink>,
+          label: <NavLink to="users/landlord">Landlord</NavLink>,
         },
         {
           key: "tenant",
           icon: <span>&#8226;</span>,
-          label: <NavLink to="withdraw">Tenant</NavLink>,
+          label: <NavLink to="users/tenant">Tenant</NavLink>,
         },
       ],
     },
@@ -88,28 +88,28 @@ const DashboardLayout = () => {
     {
       key: "announcement",
       icon: <img src={service} alt="income" width={16} height={16} />,
-      label: <NavLink to="services">Announcement</NavLink>,
+      label: <NavLink to="announcement">Announcement</NavLink>,
     },
     {
       key: "terms-and-condition",
       icon: <img src={income} alt="income" width={16} height={16} />,
-      label: <NavLink to="earning">Terms and Condition</NavLink>,
+      label: <NavLink to="terms-and-condition">Terms and Condition</NavLink>,
     },
 
     {
       key: "privacy-policy",
       icon: <img src={setting} alt="dashboard" width={16} height={16} />,
-      label: <NavLink to="policy-screen">Privacy Policy</NavLink>,
+      label: <NavLink to="privacy-policy">Privacy Policy</NavLink>,
     },
     {
       key: "about-us",
       icon: <img src={profile} alt="dashboard" width={16} height={16} />,
-      label: <NavLink to="profile">About Us</NavLink>,
+      label: <NavLink to="about-us">About Us</NavLink>,
     },
     {
       key: "change-password",
       icon: <img src={profile} alt="dashboard" width={16} height={16} />,
-      label: <NavLink to="profile">Change Password</NavLink>,
+      label: <NavLink to="change-password">Change Password</NavLink>,
     },
     // {
     //   key: "settings",
@@ -170,14 +170,14 @@ const DashboardLayout = () => {
           collapsible
           collapsed={collapsed}
           style={{
-            background: "#FFEBF1",
+            background: "#007BFF",
             // boxShadow: "0px 0px 5px #00000040",
-            position: "sticky",
-            top: 10,
-            height: "98vh",
+            // position: "sticky",
+
+            height: "100vh",
             overflowY: "auto",
           }}
-          className="!rounded-3xl ml-3"
+          className=""
         >
           <Link to="/">
             <img
@@ -213,7 +213,7 @@ const DashboardLayout = () => {
         <Layout>
           <Header
             style={{
-              background: "#ffffff",
+              background: "#007BFF",
               position: "sticky",
               top: 0,
               zIndex: 99999,
