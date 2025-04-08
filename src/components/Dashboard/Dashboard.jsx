@@ -1,25 +1,29 @@
 import { ConfigProvider, Select } from "antd";
-import Area_Chart from "../Chart/AreaChart";
+// import Area_Chart from "../Chart/AreaChart";
 import { Link } from "react-router-dom";
 
 import { AllIcons } from "../../../public/images/AllImages";
+import { LiaHandHoldingUsdSolid } from "react-icons/lia";
+import { FaHouseChimneyUser } from "react-icons/fa6";
+import { FaLandmark } from "react-icons/fa";
+
 import { useState } from "react";
 
 import ViewUserModal from "../UI/ViewCustomerModal";
 import DeleteUserModal from "../UI/DeleteUserModal";
 import RecentUserTable from "../Tables/RecentUserTable";
-import HourArea_Chart from "../Chart/HourAreaChart";
+// import HourArea_Chart from "../Chart/HourAreaChart";
 import IncomeBarChart from "../Chart/IncomeBarChart";
-import { useAllCustomerQuery } from "../../Redux/api/dashboardApi";
+// import { useAllCustomerQuery } from "../../Redux/api/dashboardApi";
 import { useAllUsersQuery } from "../../Redux/api/userApi";
 
 const Dashboard = () => {
-  const { data: allCustomer } = useAllCustomerQuery();
+  // const { data: allCustomer } = useAllCustomerQuery();
   // eslint-disable-next-line no-unused-vars
   const { data: allUsers, loadingUser, refetch } = useAllUsersQuery();
-  const [selectedYear, setSelectedYear] = useState("2024");
-  const [selectedHour, setSelectedHour] = useState("24hour");
-  const [selectedDays, setSelectedDays] = useState("7day");
+  const [selectedYear, setSelectedYear] = useState("2025");
+  // const [selectedHour, setSelectedHour] = useState("24hour");
+  // const [selectedDays, setSelectedDays] = useState("7day");
 
   const userData = allUsers?.data;
   console.log(userData);
@@ -81,7 +85,7 @@ const Dashboard = () => {
                     Total Tenant
                   </p>
                   <p className="text-sm lg:text-base xl:text-3xl font-medium text-primary-color">
-                    {allCustomer?.data?.allCustomerCount}
+                    {/* {allCustomer?.data?.allCustomerCount} */} 10
                   </p>
                 </div>
               </div>
@@ -89,14 +93,15 @@ const Dashboard = () => {
             <div className="flex gap-5 flex-wrap rounded-lg bg-[#007BFF] border border-[#007BFF] py-2 px-1 xl:p-5 items-center  flex-1">
               <div className="flex gap-2 xl:gap-4 items-center">
                 <div className="p-3  w-fit">
-                  <img src={AllIcons.person} className="h-10 w-10" alt="" />
+                  {/* <img src={AllIcons.person} className="h-10 w-10" alt="" /> */}
+                  <FaHouseChimneyUser className="h-8 w-8 text-primary-color" />
                 </div>
                 <div className="text-start">
                   <p className="text-xs lg:text-sm xl:text-2xl text-primary-color mb-1">
                     Total Landlord
                   </p>
                   <p className="text-sm lg:text-base xl:text-3xl font-medium text-primary-color">
-                    {allCustomer?.data?.allBusinessCount}
+                    {/* {allCustomer?.data?.allBusinessCount} */} 50
                   </p>
                 </div>
               </div>
@@ -104,14 +109,15 @@ const Dashboard = () => {
             <div className="flex gap-5 flex-wrap rounded-lg bg-[#007BFF] border border-[#007BFF] py-2 px-1 xl:p-5 items-center  flex-1">
               <div className="flex gap-2 xl:gap-4 items-center">
                 <div className="p-3  w-fit">
-                  <img src={AllIcons.person} className="h-10 w-10" alt="" />
+                  {/* <img src={AllIcons.person} className="h-10 w-10" alt="" /> */}
+                  <LiaHandHoldingUsdSolid className="h-10 w-10 text-primary-color font-extrabold" />
                 </div>
                 <div className="text-start">
                   <p className="text-xs lg:text-sm xl:text-2xl text-primary-color mb-1">
                     Total Revenue
                   </p>
                   <p className="text-sm lg:text-base xl:text-3xl font-medium text-primary-color">
-                    {allCustomer?.data?.allBusinessCount}
+                    {/* {allCustomer?.data?.allBusinessCount} */} $ 5000
                   </p>
                 </div>
               </div>
@@ -119,14 +125,15 @@ const Dashboard = () => {
             <div className="flex gap-5 flex-wrap rounded-lg bg-[#007BFF] border border-[#007BFF] py-2 px-1 xl:p-5 items-center  flex-1">
               <div className="flex gap-2 xl:gap-4 items-center">
                 <div className="p-3  w-fit">
-                  <img src={AllIcons.person} className="h-10 w-10" alt="" />
+                  {/* <img src={AllIcons.person} className="h-10 w-10" alt="" /> */}
+                  <FaLandmark className="h-8 w-8 text-primary-color" />
                 </div>
                 <div className="text-start">
                   <p className="text-xs lg:text-sm xl:text-2xl text-primary-color mb-1">
                     Total Properties
                   </p>
                   <p className="text-sm lg:text-base xl:text-3xl font-medium text-primary-color">
-                    {allCustomer?.data?.allBusinessCount}
+                    {/* {allCustomer?.data?.allBusinessCount} */} 20
                   </p>
                 </div>
               </div>
@@ -136,11 +143,11 @@ const Dashboard = () => {
           {/* graphs */}
           <div className="mt-8 w-full">
             <div
-              className="w-full p-3 bg-[#FFFFFF] rounded-lg border border-input-color"
+              className="w-full p-3 bg-[#FFFFFF] rounded-lg border border-[#D35400]"
               //
             >
               <div className="flex justify-between text-base-color mt-4">
-                <p className="text-2xl sm:text-3xl mb-5">Income</p>
+                <p className="text-2xl sm:text-3xl mb-5">Revenue</p>
                 <div>
                   <ConfigProvider
                     theme={{
@@ -171,7 +178,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 items-start lg:grid-cols-2 gap-5 mt-8 w-full">
+          {/* <div className="grid grid-cols-1 items-start lg:grid-cols-2 gap-5 mt-8 w-full">
             <div
               className="w-full p-3 bg-[#FFFFFF] rounded-lg border border-input-color"
               //
@@ -235,15 +242,17 @@ const Dashboard = () => {
                 <HourArea_Chart selectedHour={selectedHour} />
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className="flex flex-col lg:flex-row gap-4 mt-5">
             <div className="bg-[#FFFFFF] rounded flex-1 p-3">
               <div className="flex justify-between items-center mx-3 py-2">
-                <p className="text-2xl font-semibold text-base-color">Users</p>
+                <p className="text-2xl font-semibold text-base-color">
+                  Property List
+                </p>
                 <div>
                   <Link to="/users">
-                    <p className="bg-[#FEF2F5] border border-secondary-color text-[#FE5C8E] px-3 py-1 rounded-lg">
+                    <p className="bg-[#fadcc8] border border-secondary-color font-semibold text-[#D35400] px-3 py-1 rounded-lg">
                       See All
                     </p>
                   </Link>

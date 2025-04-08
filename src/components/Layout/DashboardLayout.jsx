@@ -1,15 +1,25 @@
 import Topbar from "../Shared/Topbar";
 
 // import logo from "/images/logo.png";
-import dashboardLogo from "../../../public/images/dashboard-logo/dashboard.svg";
-import user from "../../../public/images/dashboard-logo/user.svg";
-import business from "../../../public/images/dashboard-logo/business.svg";
-import service from "../../../public/images/dashboard-logo/beauty.svg";
-import income from "../../../public/images/dashboard-logo/income.svg";
+// import dashboardLogo from "../../../public/images/dashboard-logo/dashboard.svg";
+// import user from "../../../public/images/dashboard-logo/user.svg";
+// import business from "../../../public/images/dashboard-logo/business.svg";
+// import service from "../../../public/images/dashboard-logo/beauty.svg";
+// import income from "../../../public/images/dashboard-logo/income.svg";
 // import policyScreen from "../../../public/images/dashboard-logo/policyScreen.svg";
-import setting from "../../../public/images/dashboard-logo/setting.svg";
-import profile from "../../../public/images/dashboard-logo/profile.svg";
-import logout from "../../../public/images/dashboard-logo/logout.svg";
+// import setting from "../../../public/images/dashboard-logo/setting.svg";
+// import profile from "../../../public/images/dashboard-logo/profile.svg";
+// import logout from "../../../public/images/dashboard-logo/logout.svg";
+
+import { MdOutlineDashboard } from "react-icons/md";
+import { BsFillHousesFill } from "react-icons/bs";
+import { FaUsers } from "react-icons/fa";
+import { GrAnnounce } from "react-icons/gr";
+import { VscTerminalUbuntu } from "react-icons/vsc";
+import { SiGnuprivacyguard } from "react-icons/si";
+import { BsInfoCircleFill } from "react-icons/bs";
+import { TbPasswordUser } from "react-icons/tb";
+import { VscSignOut } from "react-icons/vsc";
 
 import {
   Link,
@@ -59,57 +69,93 @@ const DashboardLayout = () => {
   const adminMenuItems = [
     {
       key: "dashboard",
-      icon: <img src={dashboardLogo} alt="dashboard" width={20} />,
-      label: <NavLink to="dashboard">Dashboard</NavLink>,
+      icon: <MdOutlineDashboard size={25} />,
+      label: (
+        <NavLink className="font-semibold" to="dashboard">
+          Dashboard
+        </NavLink>
+      ),
     },
     {
       key: "properties",
-      icon: <img src={business} alt="properties" width={20} />,
-      label: <NavLink to="properties">Properties</NavLink>,
+      icon: <BsFillHousesFill size={25} backgroundColor="white" />,
+      label: (
+        <NavLink className="font-semibold" to="properties">
+          Properties
+        </NavLink>
+      ),
     },
     {
       key: "users",
-      label: <span className="text-base-color">Users</span>,
-      icon: <img src={user} alt="user" width={16} height={16} />,
+      label: <span className="text-white font-semibold">Users</span>,
+      icon: <FaUsers size={25} />,
       children: [
         {
           key: "landlord",
           icon: <span>&#8226;</span>,
-          label: <NavLink to="users/landlord">Landlord</NavLink>,
+          label: (
+            <NavLink className="font-semibold" to="users/landlord">
+              Landlord
+            </NavLink>
+          ),
         },
         {
           key: "tenant",
           icon: <span>&#8226;</span>,
-          label: <NavLink to="users/tenant">Tenant</NavLink>,
+          label: (
+            <NavLink className="font-semibold" to="users/tenant">
+              Tenant
+            </NavLink>
+          ),
         },
       ],
     },
 
     {
       key: "announcement",
-      icon: <img src={service} alt="income" width={16} height={16} />,
-      label: <NavLink to="announcement">Announcement</NavLink>,
+      icon: <GrAnnounce size={25} />,
+      label: (
+        <NavLink className="font-semibold" to="announcement">
+          Announcement
+        </NavLink>
+      ),
     },
     {
       key: "terms-and-condition",
-      icon: <img src={income} alt="income" width={16} height={16} />,
-      label: <NavLink to="terms-and-condition">Terms and Condition</NavLink>,
+      icon: <VscTerminalUbuntu size={25} />,
+      label: (
+        <NavLink className="font-semibold" to="terms-and-condition">
+          Terms and Condition
+        </NavLink>
+      ),
     },
 
     {
       key: "privacy-policy",
-      icon: <img src={setting} alt="dashboard" width={16} height={16} />,
-      label: <NavLink to="privacy-policy">Privacy Policy</NavLink>,
+      icon: <SiGnuprivacyguard size={25} />,
+      label: (
+        <NavLink className="font-semibold" to="privacy-policy">
+          Privacy Policy
+        </NavLink>
+      ),
     },
     {
       key: "about-us",
-      icon: <img src={profile} alt="dashboard" width={16} height={16} />,
-      label: <NavLink to="about-us">About Us</NavLink>,
+      icon: <BsInfoCircleFill size={25} />,
+      label: (
+        <NavLink className="font-semibold" to="about-us">
+          About Us
+        </NavLink>
+      ),
     },
     {
       key: "change-password",
-      icon: <img src={profile} alt="dashboard" width={16} height={16} />,
-      label: <NavLink to="change-password">Change Password</NavLink>,
+      icon: <TbPasswordUser size={25} />,
+      label: (
+        <NavLink className="font-semibold" to="change-password">
+          Change Password
+        </NavLink>
+      ),
     },
     // {
     //   key: "settings",
@@ -142,18 +188,14 @@ const DashboardLayout = () => {
     // },
     {
       key: "logout",
-      icon: (
-        <img
-          src={logout}
-          alt="dashboard"
-          width={16}
-          height={16}
-          style={{ color: "#222222", fontSize: "16px" }}
-        />
-      ),
+      icon: <VscSignOut size={25} />,
       label: (
         <div>
-          <NavLink onClick={handleLogout} to="/signin">
+          <NavLink
+            className="font-semibold"
+            onClick={handleLogout}
+            to="/signin"
+          >
             Logout
           </NavLink>
         </div>

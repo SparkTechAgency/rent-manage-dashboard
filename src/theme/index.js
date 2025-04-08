@@ -5,7 +5,7 @@ export const mainTheme = {
       itemActiveBg: "#FDFDFD",
       itemActiveColor: "#FDFDFD",
       itemHoverColor: "#18191B",
-      itemColor: "#18191B",
+      itemColor: "#ffffff",
       itemSelectedBg: "#FDFDFD",
       itemSelectedColor: "#18191B",
     },
@@ -47,7 +47,7 @@ export const mainTheme = {
       colorText: "#18191B",
     },
     Table: {
-      headerBg: "#FE5C8E",
+      headerBg: "#007BFF",
       colorBgContainer: "#FFFFFF",
       colorText: "#232323",
       borderColor: "#DFE1E3",
