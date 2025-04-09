@@ -1,0 +1,32 @@
+[
+  {
+    "serial": 1,
+    "fullName": "John Doe",
+    "email": "johndoe@example.com",
+    "joiningDate": "2022-01-15"
+  },
+  {
+    "serial": 2,
+    "fullName": "Jane Smith",
+    "email": "janesmith@example.com",
+    "joiningDate": "2021-06-20"
+  },
+  {
+    "serial": 3,
+    "fullName": "Michael Brown",
+    "email": "michaelbrown@example.com",
+    "joiningDate": "2023-03-10"
+  },
+  {
+    "serial": 4,
+    "fullName": "Emily Clark",
+    "email": "emilyclark@example.com",
+    "joiningDate": "2020-11-02"
+  },
+  {
+    "serial": 5,
+    "fullName": "David Lee",
+    "email": "davidlee@example.com",
+    "joiningDate": "2024-02-05"
+  }
+]

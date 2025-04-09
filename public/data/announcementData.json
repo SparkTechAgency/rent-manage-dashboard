@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "title": "Rent Increase Notice",
+    "description": "We would like to inform all tenants about the upcoming rent increase effective from next month. Please refer to the updated rent agreement for more details.",
+    "status": "Active",
+    "date": "2025-04-01"
+  },
+  {
+    "id": 2,
+    "title": "Maintenance Schedule - April 2025",
+    "description": "Routine maintenance will be conducted in all buildings during the first week of April. Ensure access to your apartment for our maintenance team.",
+    "status": "Active",
+    "date": "2025-03-28"
+  },
+  {
+    "id": 3,
+    "title": "Holiday Notice",
+    "description": "Please be informed that the office will be closed from April 7th to April 9th in observance of the national holiday. Any urgent matters should be reported before the holiday period.",
+    "status": "Archived",
+    "date": "2025-03-25"
+  },
+  {
+    "id": 4,
+    "title": "Upcoming Property Inspection",
+    "description": "A routine property inspection is scheduled for all units on April 15th. Please ensure your apartment is accessible and any maintenance concerns are reported beforehand.",
+    "status": "Active",
+    "date": "2025-04-03"
+  },
+  {
+    "id": 5,
+    "title": "New Parking Policy",
+    "description": "Effective immediately, all tenants must register their vehicles with the building management office to receive parking permits. Please visit the office by April 10th to avoid fines.",
+    "status": "Active",
+    "date": "2025-03-30"
+  }
+]
