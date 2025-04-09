@@ -4,7 +4,7 @@ import Main from "../Layout/Main";
 import DashboardLayout from "../Layout/DashboardLayout";
 
 import Dashboard from "../Dashboard/Dashboard";
-import AllUsers from "../Dashboard/Users/Users";
+// import AllUsers from "../Dashboard/Users/Users";
 
 import Profile from "../../Pages/Profile/Profile";
 import EditProfile from "../../Pages/Profile/EditProfile";
@@ -61,19 +61,19 @@ const router = createBrowserRouter([
             element: <Dashboard />,
           },
           {
-            path: "users",
-            element: <AllUsers />,
-            children: [
-              {
-                path: "landlord",
-                element: <Landlord />,
-              },
-              {
-                path: "tenant",
-                element: <Tenant />,
-              },
-            ],
+            path: "/landlord",
+            element: <Landlord />,
           },
+          {
+            path: "/tenant",
+            element: <Tenant />,
+          },
+          // {
+          //   path: "",
+          //   element: <AllUsers />,
+          //   children: [],
+          // },
+
           {
             path: "announcement",
             element: <Announcement />,

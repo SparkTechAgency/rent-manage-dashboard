@@ -1,10 +1,15 @@
 /* eslint-disable react/prop-types */
-import { Button, Space, Table, Tooltip } from "antd";
+import { Button, ConfigProvider, Space, Table, Tooltip } from "antd";
 import dayjs from "dayjs";
 import { GoEye } from "react-icons/go";
 import { getImageUrl } from "../../utils/baseUrl";
 
-const UsersTable = ({ data, loading, showCustomerViewModal, pageSize = 0 }) => {
+const LandlordTable = ({
+  data,
+  loading,
+  showCustomerViewModal,
+  pageSize = 0,
+}) => {
   const imageUrl = getImageUrl();
 
   const columns = [
@@ -44,7 +49,7 @@ const UsersTable = ({ data, loading, showCustomerViewModal, pageSize = 0 }) => {
     },
     {
       title: "Joining date",
-      dataIndex: "createdAt",
+      dataIndex: "joiningDate",
       key: "joiningDate",
       render: (date) => (date ? dayjs(date).format("DD-MM-YYYY") : "-"),
     },
@@ -88,16 +93,27 @@ const UsersTable = ({ data, loading, showCustomerViewModal, pageSize = 0 }) => {
   ];
   return (
     <div>
-      <Table
-        columns={columns}
-        dataSource={data}
-        loading={loading}
-        pagination={pageSize > 0 ? { pageSize } : false}
-        rowKey="id"
-        scroll={{ x: true }}
-      />
+      <ConfigProvider
+        theme={{
+          components: {
+            Table: {
+              headerBg: "rgb(91,91,91)",
+              headerColor: "rgba(255,255,255,0.88)",
+            },
+          },
+        }}
+      >
+        <Table
+          columns={columns}
+          dataSource={data}
+          loading={loading}
+          pagination={pageSize > 0 ? { pageSize } : false}
+          rowKey="id"
+          scroll={{ x: true }}
+        />
+      </ConfigProvider>
     </div>
   );
 };
 
-export default UsersTable;
+export default LandlordTable;

@@ -1,12 +1,17 @@
 /* eslint-disable no-unused-vars */
 import { Button, ConfigProvider, Form, Input, Typography, Upload } from "antd";
-import profileImage from "/images/profileImage.png";
+
 import { useEffect, useState } from "react";
 import { EditOutlined } from "@ant-design/icons";
 import { MdOutlineEdit } from "react-icons/md";
 import { AllImages } from "../../../public/images/AllImages";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEditProfileMutation, useUserProfileQuery } from "../../Redux/api/userApi";
+import { FaRegUser } from "react-icons/fa";
+
+import {
+  useEditProfileMutation,
+  useUserProfileQuery,
+} from "../../Redux/api/userApi";
 import { toast } from "sonner";
 
 const EditProfile = () => {
@@ -16,7 +21,7 @@ const EditProfile = () => {
   console.log(profileData);
 
   const { refetch } = useUserProfileQuery();
-  const [imageUrl, setImageUrl] = useState(profileImage);
+  const [imageUrl, setImageUrl] = useState(<FaRegUser />);
   const [imageFile, setImageFile] = useState(null);
 
   const [updateProfile, { isLoading }] = useEditProfileMutation();

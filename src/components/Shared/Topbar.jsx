@@ -4,7 +4,7 @@ import { BarsOutlined, BellFilled } from "@ant-design/icons";
 import { Dropdown, Flex, Typography } from "antd";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import user from "/images/user.png";
+// import user from "/images/user.png";
 import { AllImages } from "../../../public/images/AllImages";
 import { useUserProfileQuery } from "../../Redux/api/userApi";
 import { getImageUrl } from "../../utils/baseUrl";
@@ -77,11 +77,11 @@ const Topbar = ({ collapsed, setCollapsed }) => {
   //   </div>
   // );
   return (
-    <div className="py-2 mx-[-45px] flex justify-between items-center bg-[#007BFF] pt-4">
+    <div className="py-2 mx-[-45px] flex justify-between items-center bg-[#222021] pt-4">
       <div className="flex items-center gap-2 text-base-color ml-4 ">
         <BarsOutlined
           onClick={() => setCollapsed(!collapsed)}
-          className="text-3xl "
+          className="text-3xl text-white"
         />
       </div>
       <div className="flex items-center justify-center  mr-5">
@@ -107,7 +107,7 @@ const Topbar = ({ collapsed, setCollapsed }) => {
             style={{ width: "30px", height: "30px", marginRight: "10px" }}
             className="rounded"
           />
-          <p className="text-base-color text-lg ">{user?.fullName}</p>
+          <p className="text-white text-lg ">{user?.fullName}</p>
         </Link>
       </div>
     </div>

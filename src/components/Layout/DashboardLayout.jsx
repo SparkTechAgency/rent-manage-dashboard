@@ -13,13 +13,15 @@ import Topbar from "../Shared/Topbar";
 
 import { MdOutlineDashboard } from "react-icons/md";
 import { BsFillHousesFill } from "react-icons/bs";
-import { FaUsers } from "react-icons/fa";
+// import { FaUsers } from "react-icons/fa";
 import { GrAnnounce } from "react-icons/gr";
 import { VscTerminalUbuntu } from "react-icons/vsc";
 import { SiGnuprivacyguard } from "react-icons/si";
 import { BsInfoCircleFill } from "react-icons/bs";
 import { TbPasswordUser } from "react-icons/tb";
 import { VscSignOut } from "react-icons/vsc";
+import { FaBuildingUser } from "react-icons/fa6";
+import { FaUserTag } from "react-icons/fa";
 
 import {
   Link,
@@ -86,30 +88,29 @@ const DashboardLayout = () => {
       ),
     },
     {
-      key: "users",
-      label: <span className="text-white font-semibold">Users</span>,
-      icon: <FaUsers size={25} />,
-      children: [
-        {
-          key: "landlord",
-          icon: <span>&#8226;</span>,
-          label: (
-            <NavLink className="font-semibold" to="users/landlord">
-              Landlord
-            </NavLink>
-          ),
-        },
-        {
-          key: "tenant",
-          icon: <span>&#8226;</span>,
-          label: (
-            <NavLink className="font-semibold" to="users/tenant">
-              Tenant
-            </NavLink>
-          ),
-        },
-      ],
+      key: "landlord",
+      icon: <FaBuildingUser size={25} backgroundColor="white" />,
+      label: (
+        <NavLink className="font-semibold" to="landlord">
+          Landlord
+        </NavLink>
+      ),
     },
+    {
+      key: "tenant",
+      icon: <FaUserTag size={25} backgroundColor="white" />,
+      label: (
+        <NavLink className="font-semibold" to="tenant">
+          Tenant
+        </NavLink>
+      ),
+    },
+    // {
+    //   key: "users",
+    //   label: <span className="text-white font-semibold">Users</span>,
+    //   icon: <FaUsers size={25} />,
+    //   children: [],
+    // },
 
     {
       key: "announcement",
@@ -212,7 +213,7 @@ const DashboardLayout = () => {
           collapsible
           collapsed={collapsed}
           style={{
-            background: "#007BFF",
+            background: "#222021",
             // boxShadow: "0px 0px 5px #00000040",
             // position: "sticky",
 
@@ -255,7 +256,7 @@ const DashboardLayout = () => {
         <Layout>
           <Header
             style={{
-              background: "#007BFF",
+              background: "#222021",
               position: "sticky",
               top: 0,
               zIndex: 99999,

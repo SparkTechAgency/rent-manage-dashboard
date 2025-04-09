@@ -71,7 +71,7 @@ const Dashboard = () => {
         <div>
           {/* Card Items */}
           <div className="flex items-center gap-5 mt-8 w-full">
-            <div className="flex gap-5 flex-wrap rounded-lg bg-[#007BFF] border border-[#007BFF] py-2 px-1 lg:p-5 items-center flex-1">
+            <div className="flex gap-5 flex-wrap rounded-lg bg-[#222021] border border-[#808080] py-2 px-1 lg:p-5 items-center flex-1">
               <div className="flex gap-2 xl:gap-4 items-center">
                 <div className="p-3 w-fit">
                   <img
@@ -90,7 +90,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-            <div className="flex gap-5 flex-wrap rounded-lg bg-[#007BFF] border border-[#007BFF] py-2 px-1 xl:p-5 items-center  flex-1">
+            <div className="flex gap-5 flex-wrap rounded-lg bg-[#222021] border border-[#808080] py-2 px-1 xl:p-5 items-center  flex-1">
               <div className="flex gap-2 xl:gap-4 items-center">
                 <div className="p-3  w-fit">
                   {/* <img src={AllIcons.person} className="h-10 w-10" alt="" /> */}
@@ -106,7 +106,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-            <div className="flex gap-5 flex-wrap rounded-lg bg-[#007BFF] border border-[#007BFF] py-2 px-1 xl:p-5 items-center  flex-1">
+            <div className="flex gap-5 flex-wrap rounded-lg bg-[#222021] border border-[#808080] py-2 px-1 xl:p-5 items-center  flex-1">
               <div className="flex gap-2 xl:gap-4 items-center">
                 <div className="p-3  w-fit">
                   {/* <img src={AllIcons.person} className="h-10 w-10" alt="" /> */}
@@ -122,7 +122,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-            <div className="flex gap-5 flex-wrap rounded-lg bg-[#007BFF] border border-[#007BFF] py-2 px-1 xl:p-5 items-center  flex-1">
+            <div className="flex gap-5 flex-wrap rounded-lg bg-[#222021] border border-[#808080] py-2 px-1 xl:p-5 items-center  flex-1">
               <div className="flex gap-2 xl:gap-4 items-center">
                 <div className="p-3  w-fit">
                   {/* <img src={AllIcons.person} className="h-10 w-10" alt="" /> */}

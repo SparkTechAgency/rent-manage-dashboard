@@ -7,10 +7,10 @@ import updatePass from "./authImages/updatePass.png";
 
 // Main Images
 
-import profile from "./profileImage.png";
-import userImage from "./userImage.png";
-import PDFImage from "./pdfImage.png";
-import user from "./user.png";
+// import profile from "./profileImage.png";
+// import userImage from "./userImage.png";
+// import PDFImage from "./pdfImage.png";
+// import user from "./user.png";
 
 // Icons
 import girl from "./icons/girl.png";
@@ -28,10 +28,10 @@ import service6 from "./services/service6.png";
 
 export const AllImages = {
   logo,
-  profile,
-  userImage,
-  PDFImage,
-  user,
+  // profile,
+  // userImage,
+  // PDFImage,
+  // user,
 };
 
 export const AllServices = {
