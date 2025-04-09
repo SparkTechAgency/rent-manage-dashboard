@@ -51,7 +51,7 @@ const ChangePassword = () => {
   };
   return (
     <div>
-      <div className="container w-[90%] mx-auto bg-[#d2e8fffb] min-h-[80vh] p-20 flex justify-center items-center">
+      <div className="container w-[95%] mx-auto bg-gray-100 min-h-[80vh] p-20 flex justify-center items-center">
         <div className="w-full lg:w-[70%]">
           <Form
             onFinish={onFinish}
@@ -121,7 +121,7 @@ const ChangePassword = () => {
 
             <Form.Item>
               <Button
-                className="w-full py-6 border !border-[#007BFF] hover:border-secondary-color text-xl !text-primary-color bg-[#007BFF] hover:!bg-[#007BFF] font-semibold rounded-2xl mt-8"
+                className="w-full py-6 border !border-[#222021] hover:border-secondary-color text-xl !text-primary-color bg-[#222021] hover:!bg-[#222021] font-semibold rounded-2xl mt-8"
                 htmlType="submit"
               >
                 Change password
