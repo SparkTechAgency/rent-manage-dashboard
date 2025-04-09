@@ -4,88 +4,87 @@ import { Link, useNavigate } from "react-router-dom";
 import OTPInput from "react-otp-input";
 import { AllImages } from "../../../public/images/AllImages";
 import { HiArrowLeft } from "react-icons/hi";
-import {
-  useResendOtpMutation,
-  useVerifyOtpMutation,
-} from "../../Redux/api/authApi";
-import { toast } from "sonner";
+// import {
+//   useResendOtpMutation,
+//   useVerifyOtpMutation,
+// } from "../../Redux/api/authApi";
+// import { toast } from "sonner";
 
 const OtpPage = () => {
   const [otp, setOtp] = useState("");
   const navigate = useNavigate();
 
-  const [verifyOtp] = useVerifyOtpMutation();
-  const [resendOtp] = useResendOtpMutation();
+  // const [verifyOtp] = useVerifyOtpMutation();
+  // const [resendOtp] = useResendOtpMutation();
 
   const handleOTPSubmit = async () => {
-    if (otp.length < 6) {
-      alert("Please fill in all OTP fields");
-      return;
-    }
+    navigate("/reset-password");
 
-    const token = localStorage.getItem("otpToken");
-    if (!token) {
-      alert("Error!. Please start the reset process again.");
-      navigate("/forgot-password");
-      return;
-    }
-
-    try {
-      const data = { token, otp };
-      console.log("Success:", data);
-      const response = await verifyOtp(data).unwrap();
-      console.log("OTP verification response:", response);
-
-      if (response.success === true) {
-        localStorage.setItem(
-          "verifiedOtpToken",
-          response?.data?.forgetOtpMatchToken
-        );
-        toast.success("OTP verified successfully!");
-        navigate("/reset-password");
-      }
-    } catch (error) {
-      console.error("Error verifying OTP:", error);
-      if (error.data?.message === "Invalid OTP") {
-        toast.error("Invalid OTP. Please try again.");
-      } else {
-        toast.error("Failed to verify OTP. Please try again.");
-      }
-    }
+    // if (otp.length < 6) {
+    //   alert("Please fill in all OTP fields");
+    //   return;
+    // }
+    // const token = localStorage.getItem("otpToken");
+    // if (!token) {
+    //   alert("Error!. Please start the reset process again.");
+    //   navigate("/forgot-password");
+    //   return;
+    // }
+    // try {
+    //   const data = { token, otp };
+    //   console.log("Success:", data);
+    //   const response = await verifyOtp(data).unwrap();
+    //   console.log("OTP verification response:", response);
+    //   if (response.success === true) {
+    //     localStorage.setItem(
+    //       "verifiedOtpToken",
+    //       response?.data?.forgetOtpMatchToken
+    //     );
+    //     toast.success("OTP verified successfully!");
+    //     navigate("/reset-password");
+    //   }
+    // } catch (error) {
+    //   console.error("Error verifying OTP:", error);
+    //   if (error.data?.message === "Invalid OTP") {
+    //     toast.error("Invalid OTP. Please try again.");
+    //   } else {
+    //     toast.error("Failed to verify OTP. Please try again.");
+    //   }
+    // }
   };
 
-  const handleResendOtp = async () => {
-    const email = localStorage.getItem("userEmail");
-    if (!email) {
-      toast.error("Email not found. Please start the reset process again.");
-      navigate("/forgot-password");
-      return;
-    }
+  // const handleResendOtp = async () => {
+  //   const email = localStorage.getItem("userEmail");
+  //   if (!email) {
+  //     toast.error("Email not found. Please start the reset process again.");
+  //     navigate("/forgot-password");
+  //     return;
+  //   }
 
-    const data = { email };
-    try {
-      const response = await resendOtp(data).unwrap();
-      if (response.success === true) {
-        toast.success("An OTP has been sent to your email!");
-      }
-    } catch (error) {
-      // console.error("Error sending reset code:", error);
-      if (error.data?.message === "User not found") {
-        toast.error("Incorrect Email.");
-      } else {
-        toast.error("Failed to resend OTP. Please try again.");
-      }
-    }
-  };
+  //   const data = { email };
+  //   try {
+  //     const response = await resendOtp(data).unwrap();
+  //     if (response.success === true) {
+  //       toast.success("An OTP has been sent to your email!");
+  //     }
+  //   } catch (error) {
+  //     // console.error("Error sending reset code:", error);
+  //     if (error.data?.message === "User not found") {
+  //       toast.error("Incorrect Email.");
+  //     } else {
+  //       toast.error("Failed to resend OTP. Please try again.");
+  //     }
+  //   }
+  // };
 
   return (
-    <div className="text-base-color">
+    <div className="text-base-color bg-gray-300">
       <div className="max-w-[1350px] w-[90%] mx-auto grid grid-cols-1 lg:grid-cols-2 items-center justify-items-center gap-10 min-h-screen py-10">
         <div className="">
           <img src={AllImages.logo} alt="logo" className="mx-auto" />
         </div>
 
-        <div className="w-full flex flex-col justify-center items-center min-h-[80vh] p-5 md:p-8 lg:p-10 xl:p-16 bg-[#FEF2F599] lg:w-full mx-auto rounded-lg border border-[#FE5C8E]">
+        <div className="w-full flex flex-col justify-center items-center min-h-[80vh] p-5 md:p-8 lg:p-10 xl:p-16 bg-[#eeeeee] lg:w-full mx-auto rounded-lg border border-[#707070]">
           <div className="w-full">
             <div className="mb-8">
               <div className="flex items-center gap-1 mb-4">
@@ -115,8 +114,8 @@ const OtpPage = () => {
                 <p>Didn’t receive code?</p>
                 <Link
                   href="/otp-verification"
-                  className="!text-[#F66E10] !underline font-semibold"
-                  onClick={handleResendOtp}
+                  className="!text-[#222021] !underline font-semibold"
+                  // onClick={handleResendOtp}
                 >
                   Resend
                 </Link>
@@ -125,7 +124,7 @@ const OtpPage = () => {
               <Form.Item>
                 <Button
                   type="primary"
-                  className="w-full py-6 border border-secondary-color hover:border-secondary-color text-xl text-primary-color bg-secondary-color hover:!bg-secondary-color font-semibold rounded-2xl mt-8"
+                  className="w-full py-6 border border-[#222021] hover:border-[#222021] text-xl text-primary-color bg-[#222021] hover:!bg-[#222021] font-semibold rounded-2xl mt-8"
                   onClick={handleOTPSubmit}
                 >
                   Verify

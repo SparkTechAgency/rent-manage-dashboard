@@ -1,6 +1,6 @@
 import { Button, Form, Input } from "antd";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AllImages } from "../../../public/images/AllImages";
 import { HiArrowLeft } from "react-icons/hi";
 import { useState } from "react";
@@ -9,7 +9,7 @@ import { useState } from "react";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // const [forgetPassword] = useForgetPasswordMutation();
 
@@ -20,6 +20,7 @@ const ForgotPassword = () => {
   const onFinish = async () => {
     const data = { email };
     console.log("Success:", data);
+    navigate("/verify-otp");
     // try {
     //   const response = await forgetPassword(data).unwrap();
     //   console.log("response token", response);
