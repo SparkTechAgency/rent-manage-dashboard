@@ -4,7 +4,8 @@ export const mainTheme = {
       iconSize: 24,
       itemActiveBg: "#FDFDFD",
       itemActiveColor: "#FDFDFD",
-      itemHoverColor: "#18191B",
+      itemHoverColor: "white",
+      itemHoverBg: "#222A2D",
       itemColor: "#ffffff",
       itemSelectedBg: "#FDFDFD",
       itemSelectedColor: "#18191B",
@@ -16,8 +17,8 @@ export const mainTheme = {
       colorIcon: "#18191B",
     },
     Checkbox: {
-      colorPrimary: "#FE3372",
-      colorPrimaryHover: "#FE3372",
+      colorPrimary: "#222021",
+      colorPrimaryHover: "#222021",
     },
     Select: {
       colorBgContainer: "rgba(0,0,0,0)",
