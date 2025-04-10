@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Table, Space, Button, Tag } from "antd";
+import { Table, Space, Button, Tag, Popconfirm } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -80,11 +80,15 @@ const PropertyTable = ({ data, onDelete, onEdit, pageSize }) => {
       render: (_, record) => (
         <Space size="middle">
           <Button icon={<EditOutlined />} onClick={() => onEdit(record)} />
-          <Button
-            icon={<DeleteOutlined />}
-            danger
-            onClick={() => onDelete(record.key)} // Trigger delete confirmation
-          />
+          <Popconfirm
+            title="Are you sure to delete this property?"
+            onConfirm={() => onDelete(record.key)}
+            okText="Yes"
+            cancelText="No"
+            placement="topRight"
+          >
+            <Button icon={<DeleteOutlined />} danger />
+          </Popconfirm>
         </Space>
       ),
     });

@@ -76,37 +76,50 @@ const propertyData = [
 ];
 
 const PropertyComponent = () => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [data, setData] = useState(propertyData);
+  const [isAddModalVisible, setIsAddModalVisible] = useState(false);
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  const [editingProperty, setEditingProperty] = useState(null);
 
   const handleAddProperty = () => {
-    setIsModalVisible(true);
+    setIsAddModalVisible(true);
   };
 
   const handleAddSubmit = (values) => {
-    const newKey = (data.length + 1).toString(); // Simple key generation based on length
+    const newKey = (data.length + 1).toString();
     const newProperty = {
       key: newKey,
       ...values,
     };
-    setData([...data, newProperty]); // Add the new property to the state
-    setIsModalVisible(false); // Close the modal after adding
-    form.resetFields(); // Reset the form fields
+    setData([...data, newProperty]);
+    setIsAddModalVisible(false);
+    form.resetFields();
   };
 
-  const handleDelete = (key) => {
-    setData(data.filter((item) => item.key !== key)); // Remove the property from state
+  const handleEditSubmit = (values) => {
+    setData(
+      data.map((item) =>
+        item.key === editingProperty.key ? { ...item, ...values } : item
+      )
+    );
+    setIsEditModalVisible(false);
+    setEditingProperty(null);
   };
 
   const handleEdit = (record) => {
     console.log("Edit property:", record);
-    // Handle edit logic, open a modal or navigate to an edit page
+    setEditingProperty(record);
+    setIsEditModalVisible(true);
+  };
+
+  const handleDelete = (key) => {
+    setData(data.filter((item) => item.key !== key));
   };
 
   const [form] = Form.useForm();
 
   return (
-    <div style={{ padding: "24px", background: "white" }}>
+    <div className="p-6 h-screen">
       <ConfigProvider
         theme={{
           components: {
@@ -133,8 +146,8 @@ const PropertyComponent = () => {
         {/* Add Property Modal */}
         <Modal
           title="Add New Property"
-          visible={isModalVisible}
-          onCancel={() => setIsModalVisible(false)}
+          visible={isAddModalVisible}
+          onCancel={() => setIsAddModalVisible(false)}
           footer={null}
           height={600}
           width={600}
@@ -201,6 +214,44 @@ const PropertyComponent = () => {
                 style={{ width: "100%", height: 50 }}
               >
                 Add Property
+              </Button>
+            </Form.Item>
+          </Form>
+        </Modal>
+
+        {/* Edit Modal */}
+        <Modal
+          title="Edit Property"
+          visible={isEditModalVisible}
+          onCancel={() => setIsEditModalVisible(false)}
+          footer={null}
+        >
+          <Form
+            initialValues={editingProperty}
+            onFinish={handleEditSubmit}
+            layout="vertical"
+          >
+            <Form.Item name="title" label="Property Title">
+              <Input className="h-10" />
+            </Form.Item>
+            <Form.Item name="location" label="Location">
+              <Input className="h-10" />
+            </Form.Item>
+            <Form.Item name="owner" label="Owner">
+              <Input className="h-10" />
+            </Form.Item>
+            <Form.Item name="status" label="Status">
+              <Select className="h-10">
+                <Select.Option value="Available">Available</Select.Option>
+                <Select.Option value="Rented">Rented</Select.Option>
+                <Select.Option value="Under Maintenance">
+                  Under Maintenance
+                </Select.Option>
+              </Select>
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit" className="h-10 w-full">
+                Save Changes
               </Button>
             </Form.Item>
           </Form>
