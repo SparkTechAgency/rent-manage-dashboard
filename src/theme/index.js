@@ -48,11 +48,12 @@ export const mainTheme = {
       colorText: "#18191B",
     },
     Table: {
-      headerBg: "#007BFF",
+      headerBg: "rgb(91,91,91)",
+      headerColor: "rgba(255,255,255,0.88)",
       colorBgContainer: "#FFFFFF",
       colorText: "#232323",
       borderColor: "#DFE1E3",
-      headerColor: "#FFFFFF",
+
       fontSize: 18,
       footerColor: "#FE5C8E",
       colorPrimary: "#FFF9FD",

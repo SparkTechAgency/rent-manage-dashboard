@@ -1,18 +1,7 @@
 import { useState } from "react";
-import {
-  Table,
-  Button,
-  Space,
-  Tag,
-  Modal,
-  ConfigProvider,
-  Form,
-  Input,
-  Select,
-} from "antd";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Button, Modal, Form, Input, Select, ConfigProvider } from "antd";
+import PropertyTable from "../Tables/PropertyTable";
 
-// Sample data for properties (you can replace this with real data)
 const propertyData = [
   {
     key: "1",
@@ -86,50 +75,9 @@ const propertyData = [
   },
 ];
 
-const handleEdit = (record) => {
-  console.log("Edit property:", record);
-  // Handle edit logic, you can open a modal or navigate to an edit page
-};
-
-// State for managing the deletion modal visibility
 const PropertyComponent = () => {
-  const [pagination, setPagination] = useState({
-    current: 1,
-    pageSize: 8,
-  });
-
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
-  const [deleteKey, setDeleteKey] = useState(null);
   const [data, setData] = useState(propertyData);
-
-  const [form] = Form.useForm();
-
-  // Handle table pagination changes
-  const handleTableChange = (pagination) => {
-    setPagination({
-      current: pagination.current,
-      pageSize: pagination.pageSize,
-    });
-  };
-
-  // Show the delete confirmation modal
-  const handleDelete = (key) => {
-    setDeleteKey(key);
-    setIsDeleteModalVisible(true);
-  };
-
-  // Confirm delete action
-  const handleConfirmDelete = () => {
-    console.log("Deleted property with key:", deleteKey);
-
-    setIsDeleteModalVisible(false);
-  };
-
-  // Cancel delete action
-  const handleCancelDelete = () => {
-    setIsDeleteModalVisible(false);
-  };
 
   const handleAddProperty = () => {
     setIsModalVisible(true);
@@ -146,58 +94,16 @@ const PropertyComponent = () => {
     form.resetFields(); // Reset the form fields
   };
 
-  // Columns definition for the Ant Design Table
-  const columns = [
-    {
-      title: "Title",
-      dataIndex: "title",
-      key: "title",
-    },
-    {
-      title: "Location",
-      dataIndex: "location",
-      key: "location",
-    },
-    {
-      title: "Owner",
-      dataIndex: "owner",
-      key: "owner",
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      render: (status) => {
-        let color;
-        if (status === "Available") {
-          color = "green";
-        } else if (status === "Rented") {
-          color = "geekblue";
-        } else {
-          color = "volcano";
-        }
-        return (
-          <Tag className="h-7 text-base" color={color}>
-            {status}
-          </Tag>
-        );
-      },
-    },
-    {
-      title: "Action",
-      key: "action",
-      render: (_, record) => (
-        <Space size="middle">
-          <Button icon={<EditOutlined />} onClick={() => handleEdit(record)} />
-          <Button
-            icon={<DeleteOutlined />}
-            danger
-            onClick={() => handleDelete(record.key)} // Trigger delete confirmation
-          />
-        </Space>
-      ),
-    },
-  ];
+  const handleDelete = (key) => {
+    setData(data.filter((item) => item.key !== key)); // Remove the property from state
+  };
+
+  const handleEdit = (record) => {
+    console.log("Edit property:", record);
+    // Handle edit logic, open a modal or navigate to an edit page
+  };
+
+  const [form] = Form.useForm();
 
   return (
     <div style={{ padding: "24px", background: "white" }}>
@@ -223,17 +129,6 @@ const PropertyComponent = () => {
         >
           Add Property
         </Button>
-        <Table
-          columns={columns}
-          dataSource={data}
-          pagination={{
-            current: pagination.current,
-            pageSize: pagination.pageSize,
-            total: data.length,
-            showTotal: (total) => `Total ${total} items`,
-          }}
-          onChange={handleTableChange}
-        />
 
         {/* Add Property Modal */}
         <Modal
@@ -283,7 +178,6 @@ const PropertyComponent = () => {
             <Form.Item
               name="status"
               label="Status"
-              // style={{ height: 40, marginBottom: 20 }}
               rules={[
                 {
                   required: true,
@@ -311,19 +205,15 @@ const PropertyComponent = () => {
             </Form.Item>
           </Form>
         </Modal>
-
-        {/* Confirmation Modal for Deleting */}
-        <Modal
-          title="Confirm Deletion"
-          visible={isDeleteModalVisible}
-          onOk={handleConfirmDelete}
-          onCancel={handleCancelDelete}
-          okText="Delete"
-          cancelText="Cancel"
-        >
-          <p>Are you sure you want to delete this property?</p>
-        </Modal>
       </ConfigProvider>
+
+      {/* Property Table */}
+      <PropertyTable
+        data={data}
+        onDelete={handleDelete}
+        onEdit={handleEdit}
+        pageSize={8}
+      />
     </div>
   );
 };
