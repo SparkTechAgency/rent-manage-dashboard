@@ -3,10 +3,10 @@ import { useState, useMemo, useEffect } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import { Input } from "antd";
 import DeleteUserModal from "../../UI/DeleteUserModal";
-import ViewCustomerModal from "../../UI/ViewCustomerModal";
 // import { useAllUsersQuery } from "../../../Redux/api/userApi";
 import LandlordTable from "../../Tables/LandlordTable";
 import axios from "axios";
+import ViewUserModal from "../../UI/ViewUserModal";
 
 export default function Landlord() {
   // eslint-disable-next-line no-unused-vars
@@ -89,7 +89,7 @@ export default function Landlord() {
         <div className="flex justify-between p-6">
           <div className="flex items-center gap-3">
             <h1 className="text-3xl font-bold text-secondary-color">
-              LandLord
+              Landlord
             </h1>
           </div>
           <div className="flex gap-4 items-center">
@@ -114,7 +114,7 @@ export default function Landlord() {
           />
         </div>
 
-        <ViewCustomerModal
+        <ViewUserModal
           isViewCustomer={isViewCustomer}
           handleCancel={handleCancel}
           currentRecord={currentRecord}

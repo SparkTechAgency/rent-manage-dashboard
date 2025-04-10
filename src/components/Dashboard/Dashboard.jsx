@@ -9,9 +9,8 @@ import { FaLandmark } from "react-icons/fa";
 
 import { useState } from "react";
 
-import ViewUserModal from "../UI/ViewCustomerModal";
+import ViewUserModal from "../UI/ViewUserModal";
 import DeleteUserModal from "../UI/DeleteUserModal";
-// import HourArea_Chart from "../Chart/HourAreaChart";
 import IncomeBarChart from "../Chart/IncomeBarChart";
 // import { useAllCustomerQuery } from "../../Redux/api/dashboardApi";
 // import { useAllUsersQuery } from "../../Redux/api/userApi";
