@@ -28,32 +28,33 @@ const EditProfile = () => {
 
   const onFinish = async (values) => {
     console.log("onfinish", values);
-    const formData = new FormData();
-    formData.append("fullName", values.fullName);
-    formData.append("email", values.email);
-    if (imageFile) {
-      formData.append("image", imageFile); // Append image for upload
-    }
+    navigate("/profile");
+    // const formData = new FormData();
+    // formData.append("fullName", values.fullName);
+    // formData.append("email", values.email);
+    // if (imageFile) {
+    //   formData.append("image", imageFile); // Append image for upload
+    // }
 
-    try {
-      const response = await updateProfile(formData).unwrap(); // Send formData to the backend
-      if (response.success) {
-        toast.success("Profile updated successfully!");
-        setImageUrl(imageUrl);
+    // try {
+    //   const response = await updateProfile(formData).unwrap(); // Send formData to the backend
+    //   if (response.success) {
+    //     toast.success("Profile updated successfully!");
+    //     setImageUrl(imageUrl);
 
-        await refetch();
-        navigate("/profile", { state: { updated: true } });
-      } else {
-        toast.error(response.message || "Failed to update profile.");
-      }
-    } catch (error) {
-      console.log("Update error:", error);
-      toast.error("An error occurred while updating the profile.");
-    }
+    //     await refetch();
+    //     navigate("/profile", { state: { updated: true } });
+    //   } else {
+    //     toast.error(response.message || "Failed to update profile.");
+    //   }
+    // } catch (error) {
+    //   console.log("Update error:", error);
+    //   toast.error("An error occurred while updating the profile.");
+    // }
   };
 
   return (
-    <div className="min-h-screen bg-primary-color flex justify-center items-center">
+    <div className="min-h-screen bg-gray-100 flex justify-center">
       <Form
         onFinish={onFinish}
         layout="vertical"
@@ -65,11 +66,21 @@ const EditProfile = () => {
               <div className="mt-12 flex items-center  gap-x-4">
                 <div className="mt-12  relative ">
                   <div className="rounded-full w-fit border-2 border-secondary-color overflow-hidden">
-                    <img
-                      src={`http://10.0.70.35:8020/${profileData?.image}`}
-                      alt="profile_img"
-                      className="!h-40 !w-40 object-cover"
-                    />
+                    {profileData?.image ? (
+                      <img
+                        className="h-40 w-40 relative"
+                        src={`${imageUrl}/${
+                          profileData.image
+                        }?t=${new Date().getTime()}`}
+                        alt="Profile"
+                      />
+                    ) : (
+                      <img
+                        className="h-40 w-40 relative"
+                        src={AllImages.userImage}
+                        alt="Profile"
+                      />
+                    )}
                   </div>
                   <Form.Item name="image" className="text-white ">
                     <Upload
@@ -126,7 +137,7 @@ const EditProfile = () => {
                   suffix={<MdOutlineEdit />}
                   type="email"
                   placeholder="Enter your email"
-                  className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border !border-input-color text-base-color hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
+                  className="py-2 px-3 text-xl bg-site-color border !border-[#222021] text-base-color hover:bg-transparent hover:border-[#222021] focus:bg-transparent focus:border-[#222021]"
                 />
               </Form.Item>
               <Typography.Title level={5} style={{ color: "#222222" }}>
@@ -140,7 +151,7 @@ const EditProfile = () => {
                 <Input
                   suffix={<MdOutlineEdit />}
                   placeholder="Enter your Name"
-                  className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border !border-input-color text-base-color hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
+                  className="py-2 px-3 text-xl bg-site-color border !border-[#222021] text-base-color hover:bg-transparent hover:border-[#222021] focus:bg-transparent focus:border-[#222021]"
                 />
               </Form.Item>
               {profileData?.address && (
@@ -181,7 +192,7 @@ const EditProfile = () => {
               )}
               <Form.Item>
                 <Button
-                  className="w-full py-6 border !border-secondary-color hover:border-secondary-color text-xl !text-primary-color bg-secondary-color hover:!bg-secondary-color font-semibold rounded-2xl mt-8"
+                  className="w-full py-6 border !border-[#222021] hover:border-[#222021] text-xl !text-primary-color bg-[#222021] hover:!bg-[#222021] font-semibold rounded-2xl mt-8"
                   htmlType="submit"
                 >
                   Save & Change
