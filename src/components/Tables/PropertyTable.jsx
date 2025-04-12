@@ -10,6 +10,7 @@ const PropertyTable = ({ data, pageSize }) => {
   const [currentRecord, setCurrentRecord] = useState(null);
   const [openPropertyDetailsModal, setOpenPropertyDetailsModal] =
     useState(false);
+  const [propertyData, setPropertyData] = useState(data);
   const location = useLocation();
   const [pagination, setPagination] = useState({
     current: 1,
@@ -31,6 +32,13 @@ const PropertyTable = ({ data, pageSize }) => {
 
   const handleCancel = () => {
     setOpenPropertyDetailsModal(false);
+  };
+  const handleVerify = (record) => {
+    // Update the status to Verified
+    const updatedData = propertyData.map((item) =>
+      item.key === record.key ? { ...item, status: "verified" } : item
+    );
+    setPropertyData(updatedData); // Update state with the new status
   };
 
   const columns = [
@@ -62,12 +70,18 @@ const PropertyTable = ({ data, pageSize }) => {
       key: "status",
       render: (status) => {
         let color;
-        if (status === "Requested") {
-          color = "warning";
-        } else if (status === "Verified") {
+        if (status === "verify_request") {
+          color = "#F4BB44";
+        } else if (status === "verified") {
           color = "success";
         }
-        return <Tag color={color}>{status}</Tag>;
+        return (
+          <Tag color={color}>
+            {status === "verify_request"
+              ? "Verify Request"
+              : status.charAt(0).toUpperCase() + status.slice(1)}
+          </Tag>
+        );
       },
     },
     // {
@@ -101,6 +115,21 @@ const PropertyTable = ({ data, pageSize }) => {
             icon={<GoEye style={{ fontSize: "24px" }} />}
             onClick={() => showPropertyDetailsModal(record)}
           />
+          {record.status === "verify_request" && (
+            <Button
+              style={{
+                background: "#FFBF00",
+                border: "none",
+                color: "#222222",
+                fontWeight: "600",
+              }}
+              onClick={() => handleVerify(record)}
+            >
+              Verify
+            </Button>
+          )}
+
+          {/* {record.status === "Verified" && <p>Verified</p>} */}
         </Space>
       ),
     });
@@ -110,7 +139,7 @@ const PropertyTable = ({ data, pageSize }) => {
     <div>
       <Table
         columns={columns}
-        dataSource={data}
+        dataSource={propertyData}
         pagination={{
           current: pagination.current,
           pageSize: pagination.pageSize,

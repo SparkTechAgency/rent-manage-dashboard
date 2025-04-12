@@ -6,13 +6,13 @@
     "joiningDate": "2022-01-15",
     "ownedProperties": [
       {
-        "name": "Property A",
+        "name": "Sunset Villas",
         "type": "Residential",
         "location": "New York, NY",
         "value": "$850,000"
       },
       {
-        "name": "Property B",
+        "name": "Skyline Towers",
         "type": "Commercial",
         "location": "Los Angeles, CA",
         "value": "$1,200,000"
@@ -26,7 +26,7 @@
     "joiningDate": "2021-06-20",
     "ownedProperties": [
       {
-        "name": "Property C",
+        "name": "Golden Gate Apartments",
         "type": "Residential",
         "location": "San Francisco, CA",
         "value": "$950,000"
@@ -40,13 +40,13 @@
     "joiningDate": "2023-03-10",
     "ownedProperties": [
       {
-        "name": "Property D",
+        "name": "Steelworks Complex",
         "type": "Industrial",
         "location": "Chicago, IL",
         "value": "$2,500,000"
       },
       {
-        "name": "Property E",
+        "name": "Coastline Plaza",
         "type": "Commercial",
         "location": "Miami, FL",
         "value": "$1,100,000"
@@ -60,7 +60,7 @@
     "joiningDate": "2020-11-02",
     "ownedProperties": [
       {
-        "name": "Property F",
+        "name": "Lakeview Estates",
         "type": "Residential",
         "location": "Austin, TX",
         "value": "$600,000"
@@ -74,19 +74,19 @@
     "joiningDate": "2024-02-05",
     "ownedProperties": [
       {
-        "name": "Property G",
+        "name": "Evergreen Residences",
         "type": "Residential",
         "location": "Seattle, WA",
         "value": "$1,200,000"
       },
       {
-        "name": "Property H",
+        "name": "Pioneer Tower",
         "type": "Commercial",
         "location": "Portland, OR",
         "value": "$850,000"
       },
       {
-        "name": "Property I",
+        "name": "Civic Center Plaza",
         "type": "Mixed-use",
         "location": "Denver, CO",
         "value": "$1,500,000"

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { List, Modal } from "antd";
+import { Image, List, Modal } from "antd";
 // import dayjs from "dayjs";
 // import { getImageUrl } from "../../utils/baseUrl";
 
@@ -26,21 +26,42 @@ const ViewPropertyDetailsModal = ({
       style={{ textAlign: "center" }}
       className="lg:min-w-[800px]"
     >
-      <div className="p-10">
+      <div className="px-10">
         <div className="">
           {/* Property Image */}
-          <div className="flex gap-4 items-center justify-center">
-            {currentRecord?.image &&
-              Array.isArray(currentRecord.image) &&
-              currentRecord.image.map((image, index) => (
-                <div key={index} className="flex justify-center mb-4">
-                  <img
-                    src={image}
-                    alt={currentRecord?.title}
-                    className="w-40 h-40 sm:w-56 sm:h-56 rounded-lg mx-auto"
-                  />
-                </div>
-              ))}
+          <div className="flex flex-col items-start gap-2">
+            <p className="text-xl font-semibold">Property Images</p>
+            <div className="flex gap-4 items-center justify-center">
+              {currentRecord?.image &&
+                Array.isArray(currentRecord.image) &&
+                currentRecord.image.map((image, index) => (
+                  <div key={index} className="flex justify-center mb-4">
+                    <img
+                      src={image}
+                      alt={currentRecord?.title}
+                      className="w-40 h-40 sm:w-56 sm:h-56 rounded-lg mx-auto"
+                    />
+                  </div>
+                ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col items-start gap-2">
+            <p className="text-xl font-semibold">Property Files</p>
+            <div className="flex gap-4 items-center justify-center">
+              {currentRecord?.image &&
+                Array.isArray(currentRecord.image) &&
+                currentRecord.image.map((image, index) => (
+                  <div key={index} className="flex justify-center mb-4">
+                    <Image
+                      width={100}
+                      src={image}
+                      alt={currentRecord?.title}
+                      className="rounded-lg mx-auto"
+                    />
+                  </div>
+                ))}
+            </div>
           </div>
 
           <div className="text-xl sm:text-2xl font-bold mt-4">
@@ -65,12 +86,16 @@ const ViewPropertyDetailsModal = ({
               {currentRecord?.status && (
                 <div className="sm:flex gap-1">
                   <div className="font-bold">Status:</div>
-                  <div>{currentRecord?.status}</div>
+                  {currentRecord.status === "verify_request" ? (
+                    <p className="text-yellow-500">Requested To Verify</p>
+                  ) : (
+                    <p className="text-green-500">Verified</p>
+                  )}
                 </div>
               )}
               {currentRecord?.price && (
                 <div className="sm:flex gap-1">
-                  <div className="font-bold">Price:</div>
+                  <div className="font-bold">Rent:</div>
                   <div>{currentRecord?.price}</div>
                 </div>
               )}

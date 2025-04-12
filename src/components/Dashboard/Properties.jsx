@@ -8,7 +8,7 @@ const propertyData = [
     title: "Green Villa",
     location: "123 Green Street",
     owner: "John Doe",
-    status: "Requested",
+    status: "verify_request",
     image: [PropertyImages.property01, PropertyImages.property02],
     description: "A beautiful villa surrounded by lush green gardens.",
     price: "$1,200,000",
@@ -19,7 +19,7 @@ const propertyData = [
     title: "Sunny Apartment",
     location: "456 Sunny Lane",
     owner: "Jane Smith",
-    status: "Verified",
+    status: "verified",
     image: [PropertyImages.property01, PropertyImages.property02],
     description: "A modern apartment with stunning city views.",
     price: "$850,000",
@@ -30,7 +30,7 @@ const propertyData = [
     title: "Cozy Cottage",
     location: "789 Cottage Ave",
     owner: "Alice Johnson",
-    status: "Requested",
+    status: "verify_request",
     image: [PropertyImages.property01, PropertyImages.property02],
     description: "A cozy cottage perfect for a quiet weekend getaway.",
     price: "$450,000",
@@ -41,7 +41,7 @@ const propertyData = [
     title: "Luxury Mansion",
     location: "101 Luxury Blvd",
     owner: "Bob Brown",
-    status: "Verified",
+    status: "verified",
     image: [PropertyImages.property01, PropertyImages.property02],
     description:
       "A luxury mansion with all modern amenities and expansive space.",
@@ -53,7 +53,7 @@ const propertyData = [
     title: "Modern Condo",
     location: "202 Modern St",
     owner: "Charlie Davis",
-    status: "Requested",
+    status: "verify_request",
     image: [PropertyImages.property01, PropertyImages.property02],
     description: "A stylish condo located in the heart of the city.",
     price: "$1,000,000",
@@ -64,7 +64,7 @@ const propertyData = [
     title: "Beach House",
     location: "303 Beach Road",
     owner: "David Wilson",
-    status: "Verified",
+    status: "verified",
     image: [PropertyImages.property01, PropertyImages.property02],
     description: "A beautiful beach house with oceanfront views.",
     price: "$2,800,000",
@@ -75,7 +75,7 @@ const propertyData = [
     title: "Mountain Retreat",
     location: "404 Mountain Peak",
     owner: "Eve Parker",
-    status: "Requested",
+    status: "verify_request",
     image: [PropertyImages.property01, PropertyImages.property02],
     description: "A serene retreat located at the top of the mountain.",
     price: "$1,500,000",
@@ -86,7 +86,7 @@ const propertyData = [
     title: "City Loft",
     location: "505 City Center",
     owner: "Frank Hall",
-    status: "Verified",
+    status: "verified",
     image: [PropertyImages.property01, PropertyImages.property02],
     description: "A trendy city loft with open-plan living.",
     price: "$950,000",
@@ -97,7 +97,7 @@ const propertyData = [
     title: "Suburban Ranch",
     location: "606 Suburb Lane",
     owner: "Grace Lee",
-    status: "Requested",
+    status: "verify_request",
     image: [PropertyImages.property01, PropertyImages.property02],
     description: "A large ranch with plenty of space for outdoor activities.",
     price: "$3,200,000",
@@ -108,7 +108,7 @@ const propertyData = [
     title: "Downtown Penthouse",
     location: "707 Downtown Blvd",
     owner: "Harry King",
-    status: "Verified",
+    status: "verified",
     image: [PropertyImages.property01, PropertyImages.property02],
     description: "An extravagant penthouse with panoramic city views.",
     price: "$4,500,000",
@@ -164,7 +164,7 @@ const PropertyComponent = () => {
   // const [form] = Form.useForm();
 
   return (
-    <div className="p-6 h-screen">
+    <div className="h-screen">
       <ConfigProvider
         theme={{
           components: {
