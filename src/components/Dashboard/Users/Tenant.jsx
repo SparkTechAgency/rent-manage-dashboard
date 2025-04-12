@@ -31,7 +31,7 @@ export default function Landlord() {
     const fetchUserData = async () => {
       setLoadingUser(true);
       try {
-        const response = await axios.get("data/landLordData.json");
+        const response = await axios.get("data/tenantData.json");
         console.log(response.data);
         setUserData(response.data);
       } catch (error) {

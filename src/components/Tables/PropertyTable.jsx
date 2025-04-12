@@ -1,11 +1,15 @@
 /* eslint-disable react/prop-types */
-import { Table, Space, Button, Tag, Popconfirm } from "antd";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Table, Space, Button, Tag } from "antd";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
+import { GoEye } from "react-icons/go";
+import ViewPropertyDetailsModal from "../UI/ViewPropertyDetails";
 // import dayjs from "dayjs";
 
-const PropertyTable = ({ data, onDelete, onEdit, pageSize }) => {
+const PropertyTable = ({ data, pageSize }) => {
+  const [currentRecord, setCurrentRecord] = useState(null);
+  const [openPropertyDetailsModal, setOpenPropertyDetailsModal] =
+    useState(false);
   const location = useLocation();
   const [pagination, setPagination] = useState({
     current: 1,
@@ -17,6 +21,16 @@ const PropertyTable = ({ data, onDelete, onEdit, pageSize }) => {
       current: pagination.current,
       pageSize: pagination.pageSize,
     });
+  };
+
+  const showPropertyDetailsModal = (record) => {
+    console.log(record);
+    setCurrentRecord(record);
+    setOpenPropertyDetailsModal(true);
+  };
+
+  const handleCancel = () => {
+    setOpenPropertyDetailsModal(false);
   };
 
   const columns = [
@@ -48,12 +62,10 @@ const PropertyTable = ({ data, onDelete, onEdit, pageSize }) => {
       key: "status",
       render: (status) => {
         let color;
-        if (status === "Available") {
-          color = "green";
-        } else if (status === "Rented") {
-          color = "geekblue";
-        } else {
-          color = "volcano";
+        if (status === "Requested") {
+          color = "warning";
+        } else if (status === "Verified") {
+          color = "success";
         }
         return <Tag color={color}>{status}</Tag>;
       },
@@ -73,39 +85,47 @@ const PropertyTable = ({ data, onDelete, onEdit, pageSize }) => {
     //   ),
     // },
   ];
+
   if (location.pathname === "/properties") {
     columns.push({
       title: "Action",
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button icon={<EditOutlined />} onClick={() => onEdit(record)} />
-          <Popconfirm
-            title="Are you sure to delete this property?"
-            onConfirm={() => onDelete(record.key)}
-            okText="Yes"
-            cancelText="No"
-            placement="topRight"
-          >
-            <Button icon={<DeleteOutlined />} danger />
-          </Popconfirm>
+          <Button
+            style={{
+              background: "#FFFFFF",
+              border: "none",
+              color: "#222222",
+            }}
+            icon={<GoEye style={{ fontSize: "24px" }} />}
+            onClick={() => showPropertyDetailsModal(record)}
+          />
         </Space>
       ),
     });
   }
 
   return (
-    <Table
-      columns={columns}
-      dataSource={data}
-      pagination={{
-        current: pagination.current,
-        pageSize: pagination.pageSize,
-        total: data.length,
-        showTotal: (total) => `Total ${total} items`,
-      }}
-      onChange={handleTableChange}
-    />
+    <div>
+      <Table
+        columns={columns}
+        dataSource={data}
+        pagination={{
+          current: pagination.current,
+          pageSize: pagination.pageSize,
+          total: data.length,
+          showTotal: (total) => `Total ${total} items`,
+        }}
+        onChange={handleTableChange}
+      />
+
+      <ViewPropertyDetailsModal
+        currentRecord={currentRecord}
+        openPropertyDetailsModal={openPropertyDetailsModal}
+        handleCancel={handleCancel}
+      />
+    </div>
   );
 };
 

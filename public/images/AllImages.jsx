@@ -14,6 +14,9 @@ import person from "./icons/person.png";
 import incomeAmount from "./icons/income-amount.png";
 import groupsPerson from "./icons/groupsPerson.png";
 
+import property01 from "./propertyImage/property01.jpg";
+import property02 from "./propertyImage/property02.jpg";
+
 export const AllImages = {
   logo,
   userImage,
@@ -23,6 +26,10 @@ export const AuthImages = {
   ForgotPassword,
   otp,
   updatePass,
+};
+export const PropertyImages = {
+  property01,
+  property02,
 };
 
 export const AllIcons = {

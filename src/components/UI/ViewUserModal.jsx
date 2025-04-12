@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Modal } from "antd";
+import { List, Modal } from "antd";
 import dayjs from "dayjs";
 import { getImageUrl } from "../../utils/baseUrl";
 
@@ -86,6 +86,23 @@ const ViewUserModal = ({
               )}
             </div>
           </div>
+          {/* Display Owned Properties */}
+          {currentRecord?.ownedProperties &&
+            currentRecord?.ownedProperties.length > 0 && (
+              <div className="mt-5">
+                <h3 className="text-lg font-bold">Owned Properties:</h3>
+                <List
+                  bordered
+                  dataSource={currentRecord.ownedProperties}
+                  renderItem={(property) => (
+                    <List.Item>
+                      <strong>{property.name}</strong> - {property.type} -{" "}
+                      {property.location} - {property.value}
+                    </List.Item>
+                  )}
+                />
+              </div>
+            )}
         </div>
         {/* <button
           onClick={() => handleBlock(currentRecord)}

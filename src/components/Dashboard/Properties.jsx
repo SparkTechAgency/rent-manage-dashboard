@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Button, Modal, Form, Input, Select, ConfigProvider } from "antd";
+import { ConfigProvider } from "antd";
 import PropertyTable from "../Tables/PropertyTable";
+import { PropertyImages } from "../../../public/images/AllImages";
 
 const propertyData = [
   {
@@ -8,115 +8,160 @@ const propertyData = [
     title: "Green Villa",
     location: "123 Green Street",
     owner: "John Doe",
-    status: "Available",
+    status: "Requested",
+    image: [PropertyImages.property01, PropertyImages.property02],
+    description: "A beautiful villa surrounded by lush green gardens.",
+    price: "$1,200,000",
+    size: "3500 sq ft",
   },
   {
     key: "2",
     title: "Sunny Apartment",
     location: "456 Sunny Lane",
     owner: "Jane Smith",
-    status: "Rented",
+    status: "Verified",
+    image: [PropertyImages.property01, PropertyImages.property02],
+    description: "A modern apartment with stunning city views.",
+    price: "$850,000",
+    size: "1500 sq ft",
   },
   {
     key: "3",
     title: "Cozy Cottage",
     location: "789 Cottage Ave",
     owner: "Alice Johnson",
-    status: "Available",
+    status: "Requested",
+    image: [PropertyImages.property01, PropertyImages.property02],
+    description: "A cozy cottage perfect for a quiet weekend getaway.",
+    price: "$450,000",
+    size: "1200 sq ft",
   },
   {
     key: "4",
     title: "Luxury Mansion",
     location: "101 Luxury Blvd",
     owner: "Bob Brown",
-    status: "Under Maintenance",
+    status: "Verified",
+    image: [PropertyImages.property01, PropertyImages.property02],
+    description:
+      "A luxury mansion with all modern amenities and expansive space.",
+    price: "$5,000,000",
+    size: "8500 sq ft",
   },
   {
     key: "5",
     title: "Modern Condo",
     location: "202 Modern St",
     owner: "Charlie Davis",
-    status: "Available",
+    status: "Requested",
+    image: [PropertyImages.property01, PropertyImages.property02],
+    description: "A stylish condo located in the heart of the city.",
+    price: "$1,000,000",
+    size: "2000 sq ft",
   },
   {
     key: "6",
     title: "Beach House",
     location: "303 Beach Road",
     owner: "David Wilson",
-    status: "Rented",
+    status: "Verified",
+    image: [PropertyImages.property01, PropertyImages.property02],
+    description: "A beautiful beach house with oceanfront views.",
+    price: "$2,800,000",
+    size: "4000 sq ft",
   },
   {
     key: "7",
     title: "Mountain Retreat",
     location: "404 Mountain Peak",
     owner: "Eve Parker",
-    status: "Available",
+    status: "Requested",
+    image: [PropertyImages.property01, PropertyImages.property02],
+    description: "A serene retreat located at the top of the mountain.",
+    price: "$1,500,000",
+    size: "3000 sq ft",
   },
   {
     key: "8",
     title: "City Loft",
     location: "505 City Center",
     owner: "Frank Hall",
-    status: "Rented",
+    status: "Verified",
+    image: [PropertyImages.property01, PropertyImages.property02],
+    description: "A trendy city loft with open-plan living.",
+    price: "$950,000",
+    size: "1800 sq ft",
   },
   {
     key: "9",
     title: "Suburban Ranch",
     location: "606 Suburb Lane",
     owner: "Grace Lee",
-    status: "Under Maintenance",
+    status: "Requested",
+    image: [PropertyImages.property01, PropertyImages.property02],
+    description: "A large ranch with plenty of space for outdoor activities.",
+    price: "$3,200,000",
+    size: "6000 sq ft",
   },
   {
     key: "10",
     title: "Downtown Penthouse",
     location: "707 Downtown Blvd",
     owner: "Harry King",
-    status: "Available",
+    status: "Verified",
+    image: [PropertyImages.property01, PropertyImages.property02],
+    description: "An extravagant penthouse with panoramic city views.",
+    price: "$4,500,000",
+    size: "5000 sq ft",
   },
 ];
 
 const PropertyComponent = () => {
-  const [data, setData] = useState(propertyData);
-  const [isAddModalVisible, setIsAddModalVisible] = useState(false);
-  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
-  const [editingProperty, setEditingProperty] = useState(null);
+  // const [data, setData] = useState(propertyData);
+  // const [isAddModalVisible, setIsAddModalVisible] = useState(false);
+  // const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  // const [editingProperty, setEditingProperty] = useState(null);
 
-  const handleAddProperty = () => {
-    setIsAddModalVisible(true);
+  // const handleAddProperty = () => {
+  //   setIsAddModalVisible(true);
+  // };
+
+  // const handleAddSubmit = (values) => {
+  //   const newKey = (data.length + 1).toString();
+  //   const newProperty = {
+  //     key: newKey,
+  //     ...values,
+  //   };
+  //   setData([...data, newProperty]);
+  //   setIsAddModalVisible(false);
+  //   form.resetFields();
+  // };
+
+  // const handleEditSubmit = (values) => {
+  //   setData(
+  //     data.map((item) =>
+  //       item.key === editingProperty.key ? { ...item, ...values } : item
+  //     )
+  //   );
+  //   setIsEditModalVisible(false);
+  //   setEditingProperty(null);
+  // };
+
+  // const handleEdit = (record) => {
+  //   console.log("Edit property:", record);
+  //   setEditingProperty(record);
+  //   setIsEditModalVisible(true);
+  // };
+
+  const showDetails = (record) => {
+    console.log("View property details:", record);
   };
 
-  const handleAddSubmit = (values) => {
-    const newKey = (data.length + 1).toString();
-    const newProperty = {
-      key: newKey,
-      ...values,
-    };
-    setData([...data, newProperty]);
-    setIsAddModalVisible(false);
-    form.resetFields();
-  };
+  // const handleDelete = (key) => {
+  //   setData(data.filter((item) => item.key !== key));
+  // };
 
-  const handleEditSubmit = (values) => {
-    setData(
-      data.map((item) =>
-        item.key === editingProperty.key ? { ...item, ...values } : item
-      )
-    );
-    setIsEditModalVisible(false);
-    setEditingProperty(null);
-  };
-
-  const handleEdit = (record) => {
-    console.log("Edit property:", record);
-    setEditingProperty(record);
-    setIsEditModalVisible(true);
-  };
-
-  const handleDelete = (key) => {
-    setData(data.filter((item) => item.key !== key));
-  };
-
-  const [form] = Form.useForm();
+  // const [form] = Form.useForm();
 
   return (
     <div className="p-6 h-screen">
@@ -135,16 +180,16 @@ const PropertyComponent = () => {
           },
         }}
       >
-        <Button
+        {/* <Button
           type="primary"
           style={{ marginBottom: 16, height: 40 }}
           onClick={handleAddProperty}
         >
           Add Property
-        </Button>
+        </Button> */}
 
         {/* Add Property Modal */}
-        <Modal
+        {/* <Modal
           title="Add New Property"
           visible={isAddModalVisible}
           onCancel={() => setIsAddModalVisible(false)}
@@ -217,10 +262,10 @@ const PropertyComponent = () => {
               </Button>
             </Form.Item>
           </Form>
-        </Modal>
+        </Modal> */}
 
         {/* Edit Modal */}
-        <Modal
+        {/* <Modal
           title="Edit Property"
           visible={isEditModalVisible}
           onCancel={() => setIsEditModalVisible(false)}
@@ -255,14 +300,15 @@ const PropertyComponent = () => {
               </Button>
             </Form.Item>
           </Form>
-        </Modal>
+        </Modal> */}
       </ConfigProvider>
 
       {/* Property Table */}
       <PropertyTable
-        data={data}
-        onDelete={handleDelete}
-        onEdit={handleEdit}
+        data={propertyData}
+        // onDelete={handleDelete}
+        // onEdit={handleEdit}
+        showDetails={showDetails}
         pageSize={8}
       />
     </div>
