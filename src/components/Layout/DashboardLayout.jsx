@@ -216,8 +216,6 @@ const DashboardLayout = () => {
             background: "#222021",
             // boxShadow: "0px 0px 5px #00000040",
             // position: "sticky",
-
-            height: "100vh",
             overflowY: "auto",
           }}
           className=""

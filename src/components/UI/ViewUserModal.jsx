@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
-import { Modal } from "antd";
+import { List, Modal } from "antd";
 import dayjs from "dayjs";
 import { getImageUrl } from "../../utils/baseUrl";
 
-const ViewCustomerModal = ({
+const ViewUserModal = ({
   isViewCustomer,
   handleCancel,
   currentRecord,
@@ -14,8 +14,8 @@ const ViewCustomerModal = ({
   return (
     <Modal
       title={
-        <div className="pt-7">
-          <h2 className="text-secondary-color text-4xl ">User Details</h2>
+        <div className="">
+          <h2 className="text-secondary-color text-2xl ">User Details</h2>
         </div>
       }
       open={isViewCustomer}
@@ -36,7 +36,7 @@ const ViewCustomerModal = ({
                 className="w-14 h-14 sm:w-20  sm:h-20 rounded-lg mr-4"
               />
             )}
-            <div className="text-xl sm:text-3xl font-bold">
+            <div className="text-xl sm:text-2xl font-bold">
               {currentRecord?.fullName}
             </div>
           </div>
@@ -55,10 +55,10 @@ const ViewCustomerModal = ({
                   <div>{currentRecord?.email}</div>
                 </div>
               )}
-              {currentRecord?.servicePrice && (
+              {currentRecord?.joiningDate && (
                 <div className="sm:flex gap-1">
-                  <div className="font-bold">Service price:</div>
-                  <div>{currentRecord?.servicePrice}</div>
+                  <div className="font-bold">Joining Date:</div>
+                  <div>{currentRecord?.joiningDate}</div>
                 </div>
               )}
 
@@ -86,6 +86,23 @@ const ViewCustomerModal = ({
               )}
             </div>
           </div>
+          {/* Display Owned Properties */}
+          {currentRecord?.ownedProperties &&
+            currentRecord?.ownedProperties.length > 0 && (
+              <div className="mt-5">
+                <h3 className="text-lg font-bold">Owned Properties:</h3>
+                <List
+                  bordered
+                  dataSource={currentRecord.ownedProperties}
+                  renderItem={(property) => (
+                    <List.Item>
+                      <strong>{property.name}</strong> - {property.type} -{" "}
+                      {property.location} - {property.value}
+                    </List.Item>
+                  )}
+                />
+              </div>
+            )}
         </div>
         {/* <button
           onClick={() => handleBlock(currentRecord)}
@@ -98,4 +115,4 @@ const ViewCustomerModal = ({
   );
 };
 
-export default ViewCustomerModal;
+export default ViewUserModal;

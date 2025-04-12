@@ -173,12 +173,9 @@ const Announcement = () => {
         },
       }}
     >
-      <div className="announcement-container" style={{ padding: 20 }}>
-        <div
-          className="flex items-center justify-between"
-          style={{ marginBottom: 20 }}
-        >
-          <h1 style={{ fontSize: 28, fontWeight: "bold", color: "#333" }}>
+      <div className="p-5 h-screen">
+        <div className="flex items-center justify-between mb-5">
+          <h1 className="text-3xl font-bold text-[#333]">
             Announcements
           </h1>
           <div className="flex items-center gap-2">

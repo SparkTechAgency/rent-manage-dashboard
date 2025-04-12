@@ -1,33 +1,96 @@
 [
-    {
-      "serial": 1,
-      "fullName": "John Doe",
-      "email": "johndoe@example.com",
-      "joiningDate": "2022-01-15"
-    },
-    {
-      "serial": 2,
-      "fullName": "Jane Smith",
-      "email": "janesmith@example.com",
-      "joiningDate": "2021-06-20"
-    },
-    {
-      "serial": 3,
-      "fullName": "Michael Brown",
-      "email": "michaelbrown@example.com",
-      "joiningDate": "2023-03-10"
-    },
-    {
-      "serial": 4,
-      "fullName": "Emily Clark",
-      "email": "emilyclark@example.com",
-      "joiningDate": "2020-11-02"
-    },
-    {
-      "serial": 5,
-      "fullName": "David Lee",
-      "email": "davidlee@example.com",
-      "joiningDate": "2024-02-05"
-    }
-  ]
-  
+  {
+    "serial": 1,
+    "fullName": "Johnathan Doe",
+    "email": "johnathan.doe@example.com",
+    "joiningDate": "2022-01-15",
+    "ownedProperties": [
+      {
+        "name": "Sunset Villas",
+        "type": "Residential",
+        "location": "New York, NY",
+        "value": "$850,000"
+      },
+      {
+        "name": "Skyline Towers",
+        "type": "Commercial",
+        "location": "Los Angeles, CA",
+        "value": "$1,200,000"
+      }
+    ]
+  },
+  {
+    "serial": 2,
+    "fullName": "Janet Smith",
+    "email": "janet.smith@example.com",
+    "joiningDate": "2021-06-20",
+    "ownedProperties": [
+      {
+        "name": "Golden Gate Apartments",
+        "type": "Residential",
+        "location": "San Francisco, CA",
+        "value": "$950,000"
+      }
+    ]
+  },
+  {
+    "serial": 3,
+    "fullName": "Mike Brown",
+    "email": "mike.brown@example.com",
+    "joiningDate": "2023-03-10",
+    "ownedProperties": [
+      {
+        "name": "Steelworks Complex",
+        "type": "Industrial",
+        "location": "Chicago, IL",
+        "value": "$2,500,000"
+      },
+      {
+        "name": "Coastline Plaza",
+        "type": "Commercial",
+        "location": "Miami, FL",
+        "value": "$1,100,000"
+      }
+    ]
+  },
+  {
+    "serial": 4,
+    "fullName": "Emily Clarke",
+    "email": "emily.clarke@example.com",
+    "joiningDate": "2020-11-02",
+    "ownedProperties": [
+      {
+        "name": "Lakeview Estates",
+        "type": "Residential",
+        "location": "Austin, TX",
+        "value": "$600,000"
+      }
+    ]
+  },
+  {
+    "serial": 5,
+    "fullName": "David Lee",
+    "email": "david.lee@example.com",
+    "joiningDate": "2024-02-05",
+    "ownedProperties": [
+      {
+        "name": "Evergreen Residences",
+        "type": "Residential",
+        "location": "Seattle, WA",
+        "value": "$1,200,000"
+      },
+      {
+        "name": "Pioneer Tower",
+        "type": "Commercial",
+        "location": "Portland, OR",
+        "value": "$850,000"
+      },
+      {
+        "name": "Civic Center Plaza",
+        "type": "Mixed-use",
+        "location": "Denver, CO",
+        "value": "$1,500,000"
+      }
+    ]
+  }
+]

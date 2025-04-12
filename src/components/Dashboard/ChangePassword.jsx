@@ -51,7 +51,7 @@ const ChangePassword = () => {
   };
   return (
     <div>
-      <div className="container w-[95%] mx-auto bg-gray-100 min-h-[80vh] p-20 flex justify-center items-center">
+      <div className=" w-[95%] mx-auto bg-gray-100 min-h-[100vh] p-20 flex justify-center items-center">
         <div className="w-full lg:w-[70%]">
           <Form
             onFinish={onFinish}

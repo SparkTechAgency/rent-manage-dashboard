@@ -9,24 +9,96 @@ import { FaLandmark } from "react-icons/fa";
 
 import { useState } from "react";
 
-import ViewUserModal from "../UI/ViewCustomerModal";
+import ViewUserModal from "../UI/ViewUserModal";
 import DeleteUserModal from "../UI/DeleteUserModal";
-import RecentUserTable from "../Tables/RecentUserTable";
-// import HourArea_Chart from "../Chart/HourAreaChart";
 import IncomeBarChart from "../Chart/IncomeBarChart";
 // import { useAllCustomerQuery } from "../../Redux/api/dashboardApi";
-import { useAllUsersQuery } from "../../Redux/api/userApi";
+// import { useAllUsersQuery } from "../../Redux/api/userApi";
+import PropertyTable from "../Tables/PropertyTable";
+
+const propertyData = [
+  {
+    key: "1",
+    title: "Green Villa",
+    location: "123 Green Street",
+    owner: "John Doe",
+    status: "Available",
+  },
+  {
+    key: "2",
+    title: "Sunny Apartment",
+    location: "456 Sunny Lane",
+    owner: "Jane Smith",
+    status: "Rented",
+  },
+  {
+    key: "3",
+    title: "Cozy Cottage",
+    location: "789 Cottage Ave",
+    owner: "Alice Johnson",
+    status: "Available",
+  },
+  {
+    key: "4",
+    title: "Luxury Mansion",
+    location: "101 Luxury Blvd",
+    owner: "Bob Brown",
+    status: "Under Maintenance",
+  },
+  {
+    key: "5",
+    title: "Modern Condo",
+    location: "202 Modern St",
+    owner: "Charlie Davis",
+    status: "Available",
+  },
+  {
+    key: "6",
+    title: "Beach House",
+    location: "303 Beach Road",
+    owner: "David Wilson",
+    status: "Rented",
+  },
+  {
+    key: "7",
+    title: "Mountain Retreat",
+    location: "404 Mountain Peak",
+    owner: "Eve Parker",
+    status: "Available",
+  },
+  {
+    key: "8",
+    title: "City Loft",
+    location: "505 City Center",
+    owner: "Frank Hall",
+    status: "Rented",
+  },
+  {
+    key: "9",
+    title: "Suburban Ranch",
+    location: "606 Suburb Lane",
+    owner: "Grace Lee",
+    status: "Under Maintenance",
+  },
+  {
+    key: "10",
+    title: "Downtown Penthouse",
+    location: "707 Downtown Blvd",
+    owner: "Harry King",
+    status: "Available",
+  },
+];
 
 const Dashboard = () => {
   // const { data: allCustomer } = useAllCustomerQuery();
   // eslint-disable-next-line no-unused-vars
-  const { data: allUsers, loadingUser, refetch } = useAllUsersQuery();
+  // const { data: allUsers, loadingUser, refetch } = useAllUsersQuery();
   const [selectedYear, setSelectedYear] = useState("2025");
   // const [selectedHour, setSelectedHour] = useState("24hour");
   // const [selectedDays, setSelectedDays] = useState("7day");
 
-  const userData = allUsers?.data;
-  console.log(userData);
+  // const userData = allUsers?.data;
+  // console.log(userData);
 
   // console.log(allCustomer?.data);
 
@@ -143,7 +215,7 @@ const Dashboard = () => {
           {/* graphs */}
           <div className="mt-8 w-full">
             <div
-              className="w-full p-3 bg-[#FFFFFF] rounded-lg border border-[#D35400]"
+              className="w-full p-3 bg-[#FFFFFF] rounded-lg border border-[#222021]"
               //
             >
               <div className="flex justify-between text-base-color mt-4">
@@ -251,18 +323,18 @@ const Dashboard = () => {
                   Property List
                 </p>
                 <div>
-                  <Link to="/users">
-                    <p className="bg-[#fadcc8] border border-secondary-color font-semibold text-[#D35400] px-3 py-1 rounded-lg">
+                  <Link to="/properties">
+                    <p className="bg-[#2e2e2e] border border-secondary-color font-semibold text-white px-3 py-1 rounded-lg">
                       See All
                     </p>
                   </Link>
                 </div>
               </div>
-              <RecentUserTable
-                data={userData}
-                loading={loadingUser}
+              <PropertyTable
+                data={propertyData}
                 showViewModal={showViewModal}
                 showDeleteModal={showDeleteModal}
+                pageSize={5}
               />
             </div>
           </div>

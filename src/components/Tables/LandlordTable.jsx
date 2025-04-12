@@ -53,7 +53,12 @@ const LandlordTable = ({
       key: "joiningDate",
       render: (date) => (date ? dayjs(date).format("DD-MM-YYYY") : "-"),
     },
-
+    {
+      title: "Owned Properties",
+      dataIndex: "ownedProperties",
+      key: "ownedProperties",
+      render: (ownedProperties) => ownedProperties?.length || 0, // Show quantity of owned properties
+    },
     {
       title: "Action",
       key: "action",

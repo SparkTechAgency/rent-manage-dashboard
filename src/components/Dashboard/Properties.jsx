@@ -1,206 +1,170 @@
-import { useState } from "react";
-import {
-  Table,
-  Button,
-  Space,
-  Tag,
-  Modal,
-  ConfigProvider,
-  Form,
-  Input,
-  Select,
-} from "antd";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { ConfigProvider } from "antd";
+import PropertyTable from "../Tables/PropertyTable";
+import { PropertyImages } from "../../../public/images/AllImages";
 
-// Sample data for properties (you can replace this with real data)
 const propertyData = [
   {
     key: "1",
     title: "Green Villa",
     location: "123 Green Street",
     owner: "John Doe",
-    status: "Available",
+    status: "verify_request",
+    image: [PropertyImages.property01, PropertyImages.property02],
+    description: "A beautiful villa surrounded by lush green gardens.",
+    price: "$1,200,000",
+    size: "3500 sq ft",
   },
   {
     key: "2",
     title: "Sunny Apartment",
     location: "456 Sunny Lane",
     owner: "Jane Smith",
-    status: "Rented",
+    status: "verified",
+    image: [PropertyImages.property01, PropertyImages.property02],
+    description: "A modern apartment with stunning city views.",
+    price: "$850,000",
+    size: "1500 sq ft",
   },
   {
     key: "3",
     title: "Cozy Cottage",
     location: "789 Cottage Ave",
     owner: "Alice Johnson",
-    status: "Available",
+    status: "verify_request",
+    image: [PropertyImages.property01, PropertyImages.property02],
+    description: "A cozy cottage perfect for a quiet weekend getaway.",
+    price: "$450,000",
+    size: "1200 sq ft",
   },
   {
     key: "4",
     title: "Luxury Mansion",
     location: "101 Luxury Blvd",
     owner: "Bob Brown",
-    status: "Under Maintenance",
+    status: "verified",
+    image: [PropertyImages.property01, PropertyImages.property02],
+    description:
+      "A luxury mansion with all modern amenities and expansive space.",
+    price: "$5,000,000",
+    size: "8500 sq ft",
   },
   {
     key: "5",
     title: "Modern Condo",
     location: "202 Modern St",
     owner: "Charlie Davis",
-    status: "Available",
+    status: "verify_request",
+    image: [PropertyImages.property01, PropertyImages.property02],
+    description: "A stylish condo located in the heart of the city.",
+    price: "$1,000,000",
+    size: "2000 sq ft",
   },
   {
     key: "6",
     title: "Beach House",
     location: "303 Beach Road",
     owner: "David Wilson",
-    status: "Rented",
+    status: "verified",
+    image: [PropertyImages.property01, PropertyImages.property02],
+    description: "A beautiful beach house with oceanfront views.",
+    price: "$2,800,000",
+    size: "4000 sq ft",
   },
   {
     key: "7",
     title: "Mountain Retreat",
     location: "404 Mountain Peak",
     owner: "Eve Parker",
-    status: "Available",
+    status: "verify_request",
+    image: [PropertyImages.property01, PropertyImages.property02],
+    description: "A serene retreat located at the top of the mountain.",
+    price: "$1,500,000",
+    size: "3000 sq ft",
   },
   {
     key: "8",
     title: "City Loft",
     location: "505 City Center",
     owner: "Frank Hall",
-    status: "Rented",
+    status: "verified",
+    image: [PropertyImages.property01, PropertyImages.property02],
+    description: "A trendy city loft with open-plan living.",
+    price: "$950,000",
+    size: "1800 sq ft",
   },
   {
     key: "9",
     title: "Suburban Ranch",
     location: "606 Suburb Lane",
     owner: "Grace Lee",
-    status: "Under Maintenance",
+    status: "verify_request",
+    image: [PropertyImages.property01, PropertyImages.property02],
+    description: "A large ranch with plenty of space for outdoor activities.",
+    price: "$3,200,000",
+    size: "6000 sq ft",
   },
   {
     key: "10",
     title: "Downtown Penthouse",
     location: "707 Downtown Blvd",
     owner: "Harry King",
-    status: "Available",
+    status: "verified",
+    image: [PropertyImages.property01, PropertyImages.property02],
+    description: "An extravagant penthouse with panoramic city views.",
+    price: "$4,500,000",
+    size: "5000 sq ft",
   },
 ];
 
-const handleEdit = (record) => {
-  console.log("Edit property:", record);
-  // Handle edit logic, you can open a modal or navigate to an edit page
-};
-
-// State for managing the deletion modal visibility
 const PropertyComponent = () => {
-  const [pagination, setPagination] = useState({
-    current: 1,
-    pageSize: 8,
-  });
+  // const [data, setData] = useState(propertyData);
+  // const [isAddModalVisible, setIsAddModalVisible] = useState(false);
+  // const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  // const [editingProperty, setEditingProperty] = useState(null);
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
-  const [deleteKey, setDeleteKey] = useState(null);
-  const [data, setData] = useState(propertyData);
+  // const handleAddProperty = () => {
+  //   setIsAddModalVisible(true);
+  // };
 
-  const [form] = Form.useForm();
+  // const handleAddSubmit = (values) => {
+  //   const newKey = (data.length + 1).toString();
+  //   const newProperty = {
+  //     key: newKey,
+  //     ...values,
+  //   };
+  //   setData([...data, newProperty]);
+  //   setIsAddModalVisible(false);
+  //   form.resetFields();
+  // };
 
-  // Handle table pagination changes
-  const handleTableChange = (pagination) => {
-    setPagination({
-      current: pagination.current,
-      pageSize: pagination.pageSize,
-    });
+  // const handleEditSubmit = (values) => {
+  //   setData(
+  //     data.map((item) =>
+  //       item.key === editingProperty.key ? { ...item, ...values } : item
+  //     )
+  //   );
+  //   setIsEditModalVisible(false);
+  //   setEditingProperty(null);
+  // };
+
+  // const handleEdit = (record) => {
+  //   console.log("Edit property:", record);
+  //   setEditingProperty(record);
+  //   setIsEditModalVisible(true);
+  // };
+
+  const showDetails = (record) => {
+    console.log("View property details:", record);
   };
 
-  // Show the delete confirmation modal
-  const handleDelete = (key) => {
-    setDeleteKey(key);
-    setIsDeleteModalVisible(true);
-  };
+  // const handleDelete = (key) => {
+  //   setData(data.filter((item) => item.key !== key));
+  // };
 
-  // Confirm delete action
-  const handleConfirmDelete = () => {
-    console.log("Deleted property with key:", deleteKey);
-
-    setIsDeleteModalVisible(false);
-  };
-
-  // Cancel delete action
-  const handleCancelDelete = () => {
-    setIsDeleteModalVisible(false);
-  };
-
-  const handleAddProperty = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleAddSubmit = (values) => {
-    const newKey = (data.length + 1).toString(); // Simple key generation based on length
-    const newProperty = {
-      key: newKey,
-      ...values,
-    };
-    setData([...data, newProperty]); // Add the new property to the state
-    setIsModalVisible(false); // Close the modal after adding
-    form.resetFields(); // Reset the form fields
-  };
-
-  // Columns definition for the Ant Design Table
-  const columns = [
-    {
-      title: "Title",
-      dataIndex: "title",
-      key: "title",
-    },
-    {
-      title: "Location",
-      dataIndex: "location",
-      key: "location",
-    },
-    {
-      title: "Owner",
-      dataIndex: "owner",
-      key: "owner",
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      render: (status) => {
-        let color;
-        if (status === "Available") {
-          color = "green";
-        } else if (status === "Rented") {
-          color = "geekblue";
-        } else {
-          color = "volcano";
-        }
-        return (
-          <Tag className="h-7 text-base" color={color}>
-            {status}
-          </Tag>
-        );
-      },
-    },
-    {
-      title: "Action",
-      key: "action",
-      render: (_, record) => (
-        <Space size="middle">
-          <Button icon={<EditOutlined />} onClick={() => handleEdit(record)} />
-          <Button
-            icon={<DeleteOutlined />}
-            danger
-            onClick={() => handleDelete(record.key)} // Trigger delete confirmation
-          />
-        </Space>
-      ),
-    },
-  ];
+  // const [form] = Form.useForm();
 
   return (
-    <div style={{ padding: "24px", background: "white" }}>
+    <div className="h-screen">
       <ConfigProvider
         theme={{
           components: {
@@ -216,30 +180,19 @@ const PropertyComponent = () => {
           },
         }}
       >
-        <Button
+        {/* <Button
           type="primary"
           style={{ marginBottom: 16, height: 40 }}
           onClick={handleAddProperty}
         >
           Add Property
-        </Button>
-        <Table
-          columns={columns}
-          dataSource={data}
-          pagination={{
-            current: pagination.current,
-            pageSize: pagination.pageSize,
-            total: data.length,
-            showTotal: (total) => `Total ${total} items`,
-          }}
-          onChange={handleTableChange}
-        />
+        </Button> */}
 
         {/* Add Property Modal */}
-        <Modal
+        {/* <Modal
           title="Add New Property"
-          visible={isModalVisible}
-          onCancel={() => setIsModalVisible(false)}
+          visible={isAddModalVisible}
+          onCancel={() => setIsAddModalVisible(false)}
           footer={null}
           height={600}
           width={600}
@@ -283,7 +236,6 @@ const PropertyComponent = () => {
             <Form.Item
               name="status"
               label="Status"
-              // style={{ height: 40, marginBottom: 20 }}
               rules={[
                 {
                   required: true,
@@ -310,20 +262,55 @@ const PropertyComponent = () => {
               </Button>
             </Form.Item>
           </Form>
-        </Modal>
+        </Modal> */}
 
-        {/* Confirmation Modal for Deleting */}
-        <Modal
-          title="Confirm Deletion"
-          visible={isDeleteModalVisible}
-          onOk={handleConfirmDelete}
-          onCancel={handleCancelDelete}
-          okText="Delete"
-          cancelText="Cancel"
+        {/* Edit Modal */}
+        {/* <Modal
+          title="Edit Property"
+          visible={isEditModalVisible}
+          onCancel={() => setIsEditModalVisible(false)}
+          footer={null}
         >
-          <p>Are you sure you want to delete this property?</p>
-        </Modal>
+          <Form
+            initialValues={editingProperty}
+            onFinish={handleEditSubmit}
+            layout="vertical"
+          >
+            <Form.Item name="title" label="Property Title">
+              <Input className="h-10" />
+            </Form.Item>
+            <Form.Item name="location" label="Location">
+              <Input className="h-10" />
+            </Form.Item>
+            <Form.Item name="owner" label="Owner">
+              <Input className="h-10" />
+            </Form.Item>
+            <Form.Item name="status" label="Status">
+              <Select className="h-10">
+                <Select.Option value="Available">Available</Select.Option>
+                <Select.Option value="Rented">Rented</Select.Option>
+                <Select.Option value="Under Maintenance">
+                  Under Maintenance
+                </Select.Option>
+              </Select>
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit" className="h-10 w-full">
+                Save Changes
+              </Button>
+            </Form.Item>
+          </Form>
+        </Modal> */}
       </ConfigProvider>
+
+      {/* Property Table */}
+      <PropertyTable
+        data={propertyData}
+        // onDelete={handleDelete}
+        // onEdit={handleEdit}
+        showDetails={showDetails}
+        pageSize={8}
+      />
     </div>
   );
 };

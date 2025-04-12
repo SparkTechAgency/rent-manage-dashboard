@@ -3,10 +3,10 @@ import { useState, useMemo, useEffect } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import { Input } from "antd";
 import DeleteUserModal from "../../UI/DeleteUserModal";
-import ViewCustomerModal from "../../UI/ViewCustomerModal";
 // import { useAllUsersQuery } from "../../../Redux/api/userApi";
 import axios from "axios";
 import TenantTable from "../../Tables/TenantTable";
+import ViewUserModal from "../../UI/ViewUserModal";
 
 export default function Landlord() {
   // eslint-disable-next-line no-unused-vars
@@ -31,7 +31,7 @@ export default function Landlord() {
     const fetchUserData = async () => {
       setLoadingUser(true);
       try {
-        const response = await axios.get("data/landLordData.json");
+        const response = await axios.get("data/tenantData.json");
         console.log(response.data);
         setUserData(response.data);
       } catch (error) {
@@ -112,7 +112,7 @@ export default function Landlord() {
           />
         </div>
 
-        <ViewCustomerModal
+        <ViewUserModal
           isViewCustomer={isViewCustomer}
           handleCancel={handleCancel}
           currentRecord={currentRecord}
