@@ -13,6 +13,7 @@ const propertyData = [
     description: "A beautiful villa surrounded by lush green gardens.",
     price: "$1,200,000",
     size: "3500 sq ft",
+    files: [PropertyImages.file01, PropertyImages.file02],
   },
   {
     key: "2",
@@ -24,6 +25,7 @@ const propertyData = [
     description: "A modern apartment with stunning city views.",
     price: "$850,000",
     size: "1500 sq ft",
+    files: [PropertyImages.file01, PropertyImages.file02],
   },
   {
     key: "3",
@@ -35,6 +37,7 @@ const propertyData = [
     description: "A cozy cottage perfect for a quiet weekend getaway.",
     price: "$450,000",
     size: "1200 sq ft",
+    files: [PropertyImages.file01, PropertyImages.file02],
   },
   {
     key: "4",
@@ -47,6 +50,7 @@ const propertyData = [
       "A luxury mansion with all modern amenities and expansive space.",
     price: "$5,000,000",
     size: "8500 sq ft",
+    files: [PropertyImages.file01, PropertyImages.file02],
   },
   {
     key: "5",
@@ -58,6 +62,7 @@ const propertyData = [
     description: "A stylish condo located in the heart of the city.",
     price: "$1,000,000",
     size: "2000 sq ft",
+    files: [PropertyImages.file01, PropertyImages.file02],
   },
   {
     key: "6",
@@ -69,6 +74,7 @@ const propertyData = [
     description: "A beautiful beach house with oceanfront views.",
     price: "$2,800,000",
     size: "4000 sq ft",
+    files: [PropertyImages.file01, PropertyImages.file02],
   },
   {
     key: "7",
@@ -80,6 +86,7 @@ const propertyData = [
     description: "A serene retreat located at the top of the mountain.",
     price: "$1,500,000",
     size: "3000 sq ft",
+    files: [PropertyImages.file01, PropertyImages.file02],
   },
   {
     key: "8",
@@ -91,6 +98,7 @@ const propertyData = [
     description: "A trendy city loft with open-plan living.",
     price: "$950,000",
     size: "1800 sq ft",
+    files: [PropertyImages.file01, PropertyImages.file02],
   },
   {
     key: "9",
@@ -102,6 +110,7 @@ const propertyData = [
     description: "A large ranch with plenty of space for outdoor activities.",
     price: "$3,200,000",
     size: "6000 sq ft",
+    files: [PropertyImages.file01, PropertyImages.file02],
   },
   {
     key: "10",
@@ -113,6 +122,7 @@ const propertyData = [
     description: "An extravagant penthouse with panoramic city views.",
     price: "$4,500,000",
     size: "5000 sq ft",
+    files: [PropertyImages.file01, PropertyImages.file02],
   },
 ];
 

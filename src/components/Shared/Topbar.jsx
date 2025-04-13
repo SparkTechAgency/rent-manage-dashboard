@@ -5,9 +5,9 @@ import { Dropdown, Flex, Typography } from "antd";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 // import user from "/images/user.png";
-import { AllImages } from "../../../public/images/AllImages";
 import { useUserProfileQuery } from "../../Redux/api/userApi";
 import { getImageUrl } from "../../utils/baseUrl";
+import { AllImages } from "../../../public/images/AllImages";
 
 const notifications = [
   {
@@ -84,7 +84,7 @@ const Topbar = ({ collapsed, setCollapsed }) => {
           className="text-3xl text-white"
         />
       </div>
-      <div className="flex items-center justify-center  mr-5">
+      <div className="flex items-center justify-center px-10">
         {/* <Dropdown
           overlay={notificationMenu}
           trigger={["click"]}
@@ -98,13 +98,13 @@ const Topbar = ({ collapsed, setCollapsed }) => {
         </Dropdown> */}
         <Link
           to="profile"
-          className="flex items-center justify-center gap-2 bg-transparent text-base-color border-0 rounded-lg h-8 px-2 py-1  mr-5"
+          className="flex items-center justify-center bg-transparent text-base-color border-0 rounded-lg h-8py-1"
         >
           <img
-            src={`${imageUrl}/${user?.image}`}
-            // src={`/${image}`}
+            // src={`${imageUrl}/${user?.image}`}
+            src={AllImages.userImage}
             alt="profile_pic"
-            style={{ width: "30px", height: "30px", marginRight: "10px" }}
+            style={{ width: "35px", height: "35px" }}
             className="rounded"
           />
           <p className="text-white text-lg ">{user?.fullName}</p>
