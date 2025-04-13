@@ -51,7 +51,7 @@ const ViewPropertyDetailsModal = ({
             <div className="flex gap-4 items-center justify-center">
               {currentRecord?.files &&
                 Array.isArray(currentRecord.files) &&
-                currentRecord.files.map((file, index) => (
+                currentRecord?.files.map((file, index) => (
                   <div key={index} className="flex justify-center mb-4">
                     <Image
                       width={60}
