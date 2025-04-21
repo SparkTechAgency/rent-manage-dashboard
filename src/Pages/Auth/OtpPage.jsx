@@ -78,7 +78,7 @@ const OtpPage = () => {
   // };
 
   return (
-    <div className="text-base-color bg-gray-300">
+    <div className="text-base-color bg-gray-500">
       <div className="max-w-[1350px] w-[90%] mx-auto grid grid-cols-1 lg:grid-cols-2 items-center justify-items-center gap-10 min-h-screen py-10">
         <div className="">
           <img src={AllImages.logo} alt="logo" className="mx-auto" />
