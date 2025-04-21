@@ -1,10 +1,9 @@
 /* eslint-disable react/prop-types */
-import { Table, Space, Button, Tag } from "antd";
+import { Table, Space, Button, Tag, Menu } from "antd";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { GoEye } from "react-icons/go";
 import ViewPropertyDetailsModal from "../UI/ViewPropertyDetails";
-// import dayjs from "dayjs";
 
 const PropertyTable = ({ data, pageSize }) => {
   const [currentRecord, setCurrentRecord] = useState(null);
@@ -16,6 +15,7 @@ const PropertyTable = ({ data, pageSize }) => {
     current: 1,
     pageSize: pageSize,
   });
+  const [ownerFilter, setOwnerFilter] = useState(null);
 
   const handleTableChange = (pagination) => {
     setPagination({
@@ -25,7 +25,6 @@ const PropertyTable = ({ data, pageSize }) => {
   };
 
   const showPropertyDetailsModal = (record) => {
-    console.log(record);
     setCurrentRecord(record);
     setOpenPropertyDetailsModal(true);
   };
@@ -33,12 +32,23 @@ const PropertyTable = ({ data, pageSize }) => {
   const handleCancel = () => {
     setOpenPropertyDetailsModal(false);
   };
+
   const handleVerify = (record) => {
-    // Update the status to Verified
     const updatedData = propertyData.map((item) =>
       item.key === record.key ? { ...item, status: "verified" } : item
     );
-    setPropertyData(updatedData); // Update state with the new status
+    setPropertyData(updatedData);
+  };
+
+  const handleOwnerFilter = (value, setSelectedKeys, confirm) => {
+    setOwnerFilter(value);
+    setSelectedKeys(value ? [value] : []); // Set selected key for filter
+    confirm(); // Close the dropdown
+  };
+
+  const getEachOwners = () => {
+    const owners = data.map((item) => item.owner);
+    return [...new Set(owners)];
   };
 
   const columns = [
@@ -47,27 +57,58 @@ const PropertyTable = ({ data, pageSize }) => {
       dataIndex: "id",
       key: "id",
       responsive: ["md"],
-      render: (_, __, index) => index + 1, // Serial number based on row index
+      render: (_, __, index) => index + 1,
+      align: "center",
     },
     {
       title: "Title",
       dataIndex: "title",
       key: "title",
+      align: "center",
     },
     {
       title: "Location",
       dataIndex: "location",
       key: "location",
+      align: "center",
     },
     {
       title: "Owner",
       dataIndex: "owner",
       key: "owner",
+      align: "center",
+      filterDropdown: ({ setSelectedKeys, confirm, clearFilters }) => (
+        <div style={{ padding: 8 }}>
+          <Menu>
+            <Menu.Item
+              key="all"
+              onClick={() => handleOwnerFilter(null, setSelectedKeys, confirm)}
+            >
+              All
+            </Menu.Item>
+            {getEachOwners().map((owner) => (
+              <Menu.Item
+                key={owner}
+                onClick={() =>
+                  handleOwnerFilter(owner, setSelectedKeys, confirm)
+                }
+              >
+                {owner}
+              </Menu.Item>
+            ))}
+          </Menu>
+        </div>
+      ),
+      onFilter: (value, record) => {
+        if (value === null) return true; // Show all when no filter is applied
+        return record.owner === value;
+      },
     },
     {
       title: "Status",
       dataIndex: "status",
       key: "status",
+      align: "center",
       render: (status) => {
         let color;
         if (status === "verify_request") {
@@ -84,20 +125,6 @@ const PropertyTable = ({ data, pageSize }) => {
         );
       },
     },
-    // {
-    //   title: "Action",
-    //   key: "action",
-    //   render: (_, record) => (
-    //     <Space size="middle">
-    //       <Button icon={<EditOutlined />} onClick={() => onEdit(record)} />
-    //       <Button
-    //         icon={<DeleteOutlined />}
-    //         danger
-    //         onClick={() => onDelete(record.key)} // Trigger delete confirmation
-    //       />
-    //     </Space>
-    //   ),
-    // },
   ];
 
   if (location.pathname === "/properties") {
@@ -128,8 +155,6 @@ const PropertyTable = ({ data, pageSize }) => {
               Verify
             </Button>
           )}
-
-          {/* {record.status === "Verified" && <p>Verified</p>} */}
         </Space>
       ),
     });
@@ -139,7 +164,9 @@ const PropertyTable = ({ data, pageSize }) => {
     <div>
       <Table
         columns={columns}
-        dataSource={propertyData}
+        dataSource={propertyData.filter((item) =>
+          ownerFilter ? item.owner === ownerFilter : true
+        )}
         pagination={{
           current: pagination.current,
           pageSize: pagination.pageSize,

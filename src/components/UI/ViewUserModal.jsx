@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
-import { List, Modal } from "antd";
+import { ConfigProvider, Modal, Table } from "antd";
 import dayjs from "dayjs";
-import { getImageUrl } from "../../utils/baseUrl";
+// import { getImageUrl } from "../../utils/baseUrl";
 
 const ViewUserModal = ({
   isViewCustomer,
@@ -9,7 +9,7 @@ const ViewUserModal = ({
   currentRecord,
   // handleBlock,
 }) => {
-  const imageUrl = getImageUrl();
+  // const imageUrl = getImageUrl();
 
   return (
     <Modal
@@ -31,7 +31,8 @@ const ViewUserModal = ({
             {/* Avatar */}
             {currentRecord?.image && (
               <img
-                src={`${imageUrl}/${currentRecord.image}`}
+                // src={`${imageUrl}/${currentRecord.image}`}
+                src={currentRecord?.image}
                 alt={currentRecord?.fullName}
                 className="w-14 h-14 sm:w-20  sm:h-20 rounded-lg mr-4"
               />
@@ -90,17 +91,49 @@ const ViewUserModal = ({
           {currentRecord?.ownedProperties &&
             currentRecord?.ownedProperties.length > 0 && (
               <div className="mt-5">
-                <h3 className="text-lg font-bold">Owned Properties:</h3>
-                <List
-                  bordered
-                  dataSource={currentRecord.ownedProperties}
-                  renderItem={(property) => (
-                    <List.Item>
-                      <strong>{property.name}</strong> - {property.type} -{" "}
-                      {property.location} - {property.value}
-                    </List.Item>
-                  )}
-                />
+                <h3 className="text-lg font-bold mb-2">Owned Properties:</h3>
+                <ConfigProvider
+                  theme={{
+                    components: {
+                      Table: {
+                        padding: 5,
+                        fontSize: 14,
+                      },
+                    },
+                  }}
+                >
+                  <Table
+                    bordered
+                    dataSource={currentRecord.ownedProperties}
+                    columns={[
+                      {
+                        title: "Property Name",
+                        dataIndex: "name",
+                        key: "name",
+                        align: "center",
+                      },
+                      {
+                        title: "Property Type",
+                        dataIndex: "type",
+                        key: "type",
+                        align: "center",
+                      },
+                      {
+                        title: "Location",
+                        dataIndex: "location",
+                        key: "location",
+                        align: "center",
+                      },
+                      {
+                        title: "Value",
+                        dataIndex: "value",
+                        key: "value",
+                        align: "center",
+                      },
+                    ]}
+                    rowKey="name" // Assuming 'name' is unique for each property
+                  />
+                </ConfigProvider>
               </div>
             )}
         </div>

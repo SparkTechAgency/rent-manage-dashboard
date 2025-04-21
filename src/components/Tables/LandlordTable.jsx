@@ -17,15 +17,17 @@ const LandlordTable = ({
       title: "#SI",
       dataIndex: "id",
       key: "id",
+      align: "center",
       responsive: ["md"],
-      render: (_, __, index) => index + 1, // Serial number based on row index
+      render: (_, __, index) => index + 1,
     },
     {
       title: "Full Name",
       dataIndex: "fullName",
       key: "fullName",
+      align: "center",
       render: (text, record) => (
-        <div className="flex items-center">
+        <div className="flex items-center justify-center">
           {record?.image && (
             <img
               src={`${imageUrl}/${record.image}`}
@@ -46,22 +48,26 @@ const LandlordTable = ({
       title: "Email",
       dataIndex: "email",
       key: "email",
+      align: "center",
     },
     {
       title: "Joining date",
       dataIndex: "joiningDate",
       key: "joiningDate",
+      align: "center",
       render: (date) => (date ? dayjs(date).format("DD-MM-YYYY") : "-"),
     },
     {
       title: "Owned Properties",
       dataIndex: "ownedProperties",
       key: "ownedProperties",
-      render: (ownedProperties) => ownedProperties?.length || 0, // Show quantity of owned properties
+      align: "center",
+      render: (ownedProperties) => ownedProperties?.length || 0,
     },
     {
       title: "Action",
       key: "action",
+      align: "center",
       render: (_, record) => (
         <>
           <Space size="middle">

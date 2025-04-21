@@ -89,7 +89,7 @@ export default function Landlord() {
         <div className="flex justify-between p-6">
           <div className="flex items-center gap-3">
             <h1 className="text-3xl font-bold text-secondary-color">
-              Landlord
+              Landlord List
             </h1>
           </div>
           <div className="flex gap-4 items-center">

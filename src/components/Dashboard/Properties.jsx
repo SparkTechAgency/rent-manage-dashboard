@@ -174,7 +174,8 @@ const PropertyComponent = () => {
   // const [form] = Form.useForm();
 
   return (
-    <div className="h-screen">
+    <div className="h-screen p-6">
+      <p className="text-3xl font-bold pb-5">Property List</p>
       <ConfigProvider
         theme={{
           components: {
