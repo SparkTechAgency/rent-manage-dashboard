@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Modal } from "antd";
 const JustModal = ({ title, showModal, setShowModal, children, width }) => {
   const handleCloseModal = () => {

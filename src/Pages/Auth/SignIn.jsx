@@ -1,43 +1,43 @@
 import { Checkbox, Button, Input, Form, Typography } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AllImages } from "../../../public/images/AllImages";
 import { HiOutlineMailOpen } from "react-icons/hi";
 import { MdOutlineLock } from "react-icons/md";
-// import { useSignInMutation } from "../../Redux/api/authApi";
-// import { toast } from "sonner";
+import { useSignInMutation } from "../../Redux/api/authApi";
+import { toast } from "sonner";
 
 const SignIn = () => {
-  // const navigate = useNavigate();
-  // const [login] = useSignInMutation();
+  const navigate = useNavigate();
+  const [login] = useSignInMutation();
 
   const onFinish = async (values) => {
     console.log(values);
-    // const data = {
-    //   email: values.email,
-    //   password: values.password,
-    // };
+    const data = {
+      email: values.email,
+      password: values.password,
+    };
 
-    // try {
-    //   console.log(data);
-    //   const res = await login(data).unwrap();
-    //   localStorage.setItem("accessToken", res?.data?.accessToken);
-    //   localStorage.setItem("refreshToken", res?.data?.refreshToken);
+    try {
+      console.log(data);
+      const res = await login(data).unwrap();
+      localStorage.setItem("accessToken", res?.data?.accessToken);
+      localStorage.setItem("refreshToken", res?.data?.refreshToken);
 
-    //   if (res.success) {
-    //     toast.success("Login Successfully!");
-    //     navigate("/");
-    //   } else {
-    //     toast.error("Login Error.!");
-    //   }
-    // } catch (error) {
-    //   console.error("Error user login:", error);
-    //   if (error.data) {
-    //     toast.error("Something went wrong while login users.");
-    //   }
-    // }
+      if (res.success) {
+        toast.success("Login Successfully!");
+        navigate("/");
+      } else {
+        toast.error("Login Error.!");
+      }
+    } catch (error) {
+      console.error("Error user login:", error);
+      if (error.data) {
+        toast.error("Something went wrong while login users.");
+      }
+    }
   };
   return (
-    <div className="text-base-color bg-gray-300">
+    <div className="text-base-color bg-gray-500">
       <div className="max-w-[1350px] w-[90%] mx-auto grid grid-cols-1 lg:grid-cols-2 items-center justify-items-center gap-10 min-h-screen py-10">
         <div className="">
           <img src={AllImages.logo} alt="logo" className="mx-auto" />

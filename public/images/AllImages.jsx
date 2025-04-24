@@ -16,6 +16,8 @@ import groupsPerson from "./icons/groupsPerson.png";
 
 import property01 from "./propertyImage/property01.jpg";
 import property02 from "./propertyImage/property02.jpg";
+import file01 from "./propertyImage/docImage.png";
+import file02 from "./propertyImage/pdfImage.png";
 
 export const AllImages = {
   logo,
@@ -30,6 +32,8 @@ export const AuthImages = {
 export const PropertyImages = {
   property01,
   property02,
+  file01,
+  file02,
 };
 
 export const AllIcons = {

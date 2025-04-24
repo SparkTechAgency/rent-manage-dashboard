@@ -24,6 +24,7 @@ import PrivacyPolicy from "../Dashboard/PrivacyPolicy";
 import Properties from "../Dashboard/Properties";
 import Landlord from "../Dashboard/Users/Landlord";
 import Tenant from "../Dashboard/Users/Tenant";
+import ProtectedRoute from "../../utils/ProtectedRoute";
 
 //
 
@@ -50,7 +51,11 @@ const router = createBrowserRouter([
       },
       {
         path: "",
-        element: <DashboardLayout />,
+        element: (
+          <ProtectedRoute>
+            <DashboardLayout />
+          </ProtectedRoute>
+        ),
         children: [
           {
             path: "/",
