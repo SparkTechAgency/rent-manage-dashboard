@@ -4,53 +4,53 @@ import { Link, useNavigate } from "react-router-dom";
 import OTPInput from "react-otp-input";
 import { AllImages } from "../../../public/images/AllImages";
 import { HiArrowLeft } from "react-icons/hi";
-// import {
-//   useResendOtpMutation,
-//   useVerifyOtpMutation,
-// } from "../../Redux/api/authApi";
-// import { toast } from "sonner";
+import {
+  // useResendOtpMutation,
+  useVerifyOtpMutation,
+} from "../../Redux/api/authApi";
+import { toast } from "sonner";
 
 const OtpPage = () => {
   const [otp, setOtp] = useState("");
   const navigate = useNavigate();
 
-  // const [verifyOtp] = useVerifyOtpMutation();
+  const [verifyOtp] = useVerifyOtpMutation();
   // const [resendOtp] = useResendOtpMutation();
 
   const handleOTPSubmit = async () => {
     navigate("/reset-password");
 
-    // if (otp.length < 6) {
-    //   alert("Please fill in all OTP fields");
-    //   return;
-    // }
-    // const token = localStorage.getItem("otpToken");
-    // if (!token) {
-    //   alert("Error!. Please start the reset process again.");
-    //   navigate("/forgot-password");
-    //   return;
-    // }
-    // try {
-    //   const data = { token, otp };
-    //   console.log("Success:", data);
-    //   const response = await verifyOtp(data).unwrap();
-    //   console.log("OTP verification response:", response);
-    //   if (response.success === true) {
-    //     localStorage.setItem(
-    //       "verifiedOtpToken",
-    //       response?.data?.forgetOtpMatchToken
-    //     );
-    //     toast.success("OTP verified successfully!");
-    //     navigate("/reset-password");
-    //   }
-    // } catch (error) {
-    //   console.error("Error verifying OTP:", error);
-    //   if (error.data?.message === "Invalid OTP") {
-    //     toast.error("Invalid OTP. Please try again.");
-    //   } else {
-    //     toast.error("Failed to verify OTP. Please try again.");
-    //   }
-    // }
+    if (otp.length < 6) {
+      alert("Please fill in all OTP fields");
+      return;
+    }
+    const token = localStorage.getItem("otpToken");
+    if (!token) {
+      alert("Error!. Please start the reset process again.");
+      navigate("/forgot-password");
+      return;
+    }
+    try {
+      const data = { token, otp };
+      console.log("Success:", data);
+      const response = await verifyOtp(data).unwrap();
+      console.log("OTP verification response:", response);
+      if (response.success === true) {
+        localStorage.setItem(
+          "verifiedOtpToken",
+          response?.data?.forgetOtpMatchToken
+        );
+        toast.success("OTP verified successfully!");
+        navigate("/reset-password");
+      }
+    } catch (error) {
+      console.error("Error verifying OTP:", error);
+      if (error.data?.message === "Invalid OTP") {
+        toast.error("Invalid OTP. Please try again.");
+      } else {
+        toast.error("Failed to verify OTP. Please try again.");
+      }
+    }
   };
 
   // const handleResendOtp = async () => {
@@ -110,16 +110,16 @@ const OtpPage = () => {
                   />
                 </div>
               </Form.Item>
-              <div className="flex justify-between py-1">
+              {/* <div className="flex justify-between py-1">
                 <p>Didn’t receive code?</p>
                 <Link
                   href="/otp-verification"
                   className="!text-[#222021] !underline font-semibold"
-                  // onClick={handleResendOtp}
+                  onClick={handleResendOtp}
                 >
                   Resend
                 </Link>
-              </div>
+              </div> */}
 
               <Form.Item>
                 <Button

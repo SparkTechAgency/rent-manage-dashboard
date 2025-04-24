@@ -4,49 +4,49 @@ import { Link, useNavigate } from "react-router-dom";
 import { AllImages } from "../../../public/images/AllImages";
 import { HiArrowLeft } from "react-icons/hi";
 import { MdOutlineLock } from "react-icons/md";
-// import { useResetPasswordMutation } from "../../Redux/api/authApi";
-// import { toast } from "sonner";
+import { useResetPasswordMutation } from "../../Redux/api/authApi";
+import { toast } from "sonner";
 
 const UpdatePassword = () => {
   const navigate = useNavigate();
-  // const [resetPassword] = useResetPasswordMutation();
+  const [resetPassword] = useResetPasswordMutation();
 
   const onFinish = async (values) => {
     console.log(values);
     navigate("/signin");
-    // try {
-    //   const data = {
-    //     newPassword: values.password,
-    //     confirmPassword: values.confirmPassword,
-    //   };
-    //   console.log("Request payload:", data);
+    try {
+      const data = {
+        newPassword: values.password,
+        confirmPassword: values.confirmPassword,
+      };
+      console.log("Request payload:", data);
 
-    //   const token = localStorage.getItem("verifiedOtpToken");
-    //   if (!token) {
-    //     toast.error("Session expired. Please start the reset process again.");
-    //     navigate("/forgot-password");
-    //     return;
-    //   }
+      const token = localStorage.getItem("verifiedOtpToken");
+      if (!token) {
+        toast.error("Session expired. Please start the reset process again.");
+        navigate("/forgot-password");
+        return;
+      }
 
-    //   const response = await resetPassword(data).unwrap();
-    //   console.log("Response:", response);
+      const response = await resetPassword(data).unwrap();
+      console.log("Response:", response);
 
-    //   if (response.success) {
-    //     toast.success("Password updated successfully!");
-    //     navigate("/signin");
-    //   }
-    // } catch (error) {
-    //   console.log("Error updating password:", error);
-    //   // if (error.response) {
-    //   //   console.error("Validation error details:", error.response.data);
-    //   //   toast.error(
-    //   //     error.response.data.message ||
-    //   //       "Failed to update password. Please try again."
-    //   //   );
-    //   // } else {
-    //   //   toast.error("An unexpected error occurred. Please try again.");
-    //   // }
-    // }
+      if (response.success) {
+        toast.success("Password updated successfully!");
+        navigate("/signin");
+      }
+    } catch (error) {
+      console.log("Error updating password:", error);
+      if (error.response) {
+        console.error("Validation error details:", error.response.data);
+        toast.error(
+          error.response.data.message ||
+            "Failed to update password. Please try again."
+        );
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
+      }
+    }
   };
 
   return (
@@ -57,7 +57,6 @@ const UpdatePassword = () => {
         </div>
         <div className="w-full flex flex-col justify-center items-center min-h-[80vh] p-5 md:p-8 lg:p-10 xl:p-16 bg-[#eeeeee] lg:w-full mx-auto rounded-lg border border-[#707070]">
           <div className="w-full">
-            {/* -------- update Password Page Header ------------ */}
             <div className="mb-8">
               <div className="flex items-center gap-1 mb-4">
                 <Link to="/verify-otp">
@@ -71,7 +70,6 @@ const UpdatePassword = () => {
                 Your password must be 8-10 character long.
               </p>
             </div>
-            {/* -------- Form Start ------------ */}
             <Form
               layout="vertical"
               className="bg-transparent w-full"
