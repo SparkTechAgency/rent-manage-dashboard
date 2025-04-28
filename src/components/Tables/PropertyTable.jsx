@@ -5,6 +5,8 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { GoEye } from "react-icons/go";
 import ViewPropertyDetailsModal from "../UI/ViewPropertyDetails";
+import { useChangeStatusMutation } from "../../Redux/api/propertyApi";
+import { toast } from "sonner";
 
 const PropertyTable = ({ data, pageSize }) => {
   const [currentRecord, setCurrentRecord] = useState(null);
@@ -17,6 +19,7 @@ const PropertyTable = ({ data, pageSize }) => {
     pageSize: pageSize,
   });
   const [ownerFilter, setOwnerFilter] = useState(null);
+  const [changePropertyStatus] = useChangeStatusMutation();
 
   const handleTableChange = (pagination) => {
     setPagination({
@@ -34,12 +37,38 @@ const PropertyTable = ({ data, pageSize }) => {
     setOpenPropertyDetailsModal(false);
   };
 
-  const handleVerify = (record) => {
-    const updatedData = propertyData.map((item) =>
-      item.key === record.key ? { ...item, status: "verified" } : item
-    );
-    setPropertyData(updatedData);
-  };
+  // const handleVerify = async (record) => {
+  //   console.log("record", record);
+  //   try {
+  //     // Show loading feedback
+  //     // message.loading({ content: "Verifying...", key: "verifyLoading" });
+
+  //     const response = await changePropertyStatus({
+  //       propertyId: record._id,
+  //       status: !record.status,
+  //     }).unwrap();
+
+  //     console.log("update response", response);
+
+  //     const updatedData = propertyData.map((item) =>
+  //       item.key === record.key ? { ...item, status: "verified" } : item
+  //     );
+  //     setPropertyData(updatedData);
+
+  //     toast.success({
+  //       content: "Property verified successfully!",
+  //       key: "verifyLoading",
+  //       duration: 2,
+  //     });
+  //   } catch (error) {
+  //     toast.error({
+  //       content: "Failed to verify property",
+  //       key: "verifyLoading",
+  //       duration: 2,
+  //     });
+  //     console.error("Error verifying property: ", error);
+  //   }
+  // };
 
   console.log("propertyData", data);
 

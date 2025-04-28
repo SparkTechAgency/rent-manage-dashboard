@@ -206,7 +206,6 @@ const PropertyComponent = () => {
       {/* Property Table */}
       <PropertyTable
         data={propertiesData}
-        // propertiesData={propertiesData}
         // onDelete={handleDelete}
         // onEdit={handleEdit}
         showDetails={showDetails}

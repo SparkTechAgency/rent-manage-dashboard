@@ -15,7 +15,23 @@ const propertyApi = baseApi.injectEndpoints({
       },
       providesTags: ["properties"],
     }),
+    changeStatus: builder.mutation({
+      query: ({ propertyId, status }) => {
+        console.log(
+          "Changing status for propertyId:",
+          propertyId,
+          "to",
+          status
+        );
+        return {
+          url: `/property/verify/${propertyId}`,
+          method: "PATCH",
+          body: { status },
+        };
+      },
+      invalidatesTags: ["properties"],
+    }),
   }),
 });
 
-export const { usePropertiesQuery } = propertyApi;
+export const { usePropertiesQuery, useChangeStatusMutation } = propertyApi;
