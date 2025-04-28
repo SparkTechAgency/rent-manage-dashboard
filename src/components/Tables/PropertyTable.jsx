@@ -41,14 +41,18 @@ const PropertyTable = ({ data, pageSize }) => {
     setPropertyData(updatedData);
   };
 
+  console.log("propertyData", data);
+
   const handleOwnerFilter = (value, setSelectedKeys, confirm) => {
     setOwnerFilter(value);
-    setSelectedKeys(value ? [value] : []); // Set selected key for filter
-    confirm(); // Close the dropdown
+    setSelectedKeys(value ? [value] : []);
+    confirm();
   };
 
   const getEachOwners = () => {
-    const owners = data.map((item) => item.owner);
+    const owners = data.map((item) => item?.landlordUserId?.fullName);
+    // console.log("owners", owners);
+
     return [...new Set(owners)];
   };
 
@@ -63,21 +67,23 @@ const PropertyTable = ({ data, pageSize }) => {
     },
     {
       title: "Title",
-      dataIndex: "title",
-      key: "title",
+      dataIndex: "name",
+      key: "name",
       align: "center",
     },
     {
       title: "Location",
-      dataIndex: "location",
-      key: "location",
+      dataIndex: "address",
+      key: "address",
       align: "center",
     },
     {
       title: "Owner",
-      dataIndex: "owner",
-      key: "owner",
+      dataIndex: "landlordUserId",
+      key: "landlordUserId",
       align: "center",
+      render: (landlordUserId) =>
+        landlordUserId ? landlordUserId.fullName : "Unknown",
       filterDropdown: ({ setSelectedKeys, confirm, clearFilters }) => (
         <div style={{ padding: 8 }}>
           <Menu>
@@ -101,8 +107,9 @@ const PropertyTable = ({ data, pageSize }) => {
         </div>
       ),
       onFilter: (value, record) => {
-        if (value === null) return true; // Show all when no filter is applied
-        return record.owner === value;
+        console.log(value);
+        if (value === null) return true;
+        return record?.landlordUserId?.fullName === value;
       },
     },
     {
@@ -165,8 +172,8 @@ const PropertyTable = ({ data, pageSize }) => {
     <div>
       <Table
         columns={columns}
-        dataSource={propertyData.filter((item) =>
-          ownerFilter ? item.owner === ownerFilter : true
+        dataSource={data.filter((item) =>
+          ownerFilter ? item.landlordUserId?.fullName === ownerFilter : true
         )}
         pagination={{
           current: pagination.current,
