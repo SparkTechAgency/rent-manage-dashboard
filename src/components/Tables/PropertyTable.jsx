@@ -5,6 +5,8 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { GoEye } from "react-icons/go";
 import ViewPropertyDetailsModal from "../UI/ViewPropertyDetails";
+import { useChangeStatusMutation } from "../../Redux/api/propertyApi";
+import { toast } from "sonner";
 
 const PropertyTable = ({ data, pageSize }) => {
   const [currentRecord, setCurrentRecord] = useState(null);
@@ -17,6 +19,7 @@ const PropertyTable = ({ data, pageSize }) => {
     pageSize: pageSize,
   });
   const [ownerFilter, setOwnerFilter] = useState(null);
+  const [changePropertyStatus] = useChangeStatusMutation();
 
   const handleTableChange = (pagination) => {
     setPagination({
@@ -34,21 +37,51 @@ const PropertyTable = ({ data, pageSize }) => {
     setOpenPropertyDetailsModal(false);
   };
 
-  const handleVerify = (record) => {
-    const updatedData = propertyData.map((item) =>
-      item.key === record.key ? { ...item, status: "verified" } : item
-    );
-    setPropertyData(updatedData);
-  };
+  // const handleVerify = async (record) => {
+  //   console.log("record", record);
+  //   try {
+  //     // Show loading feedback
+  //     // message.loading({ content: "Verifying...", key: "verifyLoading" });
+
+  //     const response = await changePropertyStatus({
+  //       propertyId: record._id,
+  //       status: !record.status,
+  //     }).unwrap();
+
+  //     console.log("update response", response);
+
+  //     const updatedData = propertyData.map((item) =>
+  //       item.key === record.key ? { ...item, status: "verified" } : item
+  //     );
+  //     setPropertyData(updatedData);
+
+  //     toast.success({
+  //       content: "Property verified successfully!",
+  //       key: "verifyLoading",
+  //       duration: 2,
+  //     });
+  //   } catch (error) {
+  //     toast.error({
+  //       content: "Failed to verify property",
+  //       key: "verifyLoading",
+  //       duration: 2,
+  //     });
+  //     console.error("Error verifying property: ", error);
+  //   }
+  // };
+
+  console.log("propertyData", data);
 
   const handleOwnerFilter = (value, setSelectedKeys, confirm) => {
     setOwnerFilter(value);
-    setSelectedKeys(value ? [value] : []); // Set selected key for filter
-    confirm(); // Close the dropdown
+    setSelectedKeys(value ? [value] : []);
+    confirm();
   };
 
   const getEachOwners = () => {
-    const owners = data.map((item) => item.owner);
+    const owners = data.map((item) => item?.landlordUserId?.fullName);
+    // console.log("owners", owners);
+
     return [...new Set(owners)];
   };
 
@@ -63,21 +96,23 @@ const PropertyTable = ({ data, pageSize }) => {
     },
     {
       title: "Title",
-      dataIndex: "title",
-      key: "title",
+      dataIndex: "name",
+      key: "name",
       align: "center",
     },
     {
       title: "Location",
-      dataIndex: "location",
-      key: "location",
+      dataIndex: "address",
+      key: "address",
       align: "center",
     },
     {
       title: "Owner",
-      dataIndex: "owner",
-      key: "owner",
+      dataIndex: "landlordUserId",
+      key: "landlordUserId",
       align: "center",
+      render: (landlordUserId) =>
+        landlordUserId ? landlordUserId.fullName : "Unknown",
       filterDropdown: ({ setSelectedKeys, confirm, clearFilters }) => (
         <div style={{ padding: 8 }}>
           <Menu>
@@ -101,8 +136,9 @@ const PropertyTable = ({ data, pageSize }) => {
         </div>
       ),
       onFilter: (value, record) => {
-        if (value === null) return true; // Show all when no filter is applied
-        return record.owner === value;
+        console.log(value);
+        if (value === null) return true;
+        return record?.landlordUserId?.fullName === value;
       },
     },
     {
@@ -165,8 +201,8 @@ const PropertyTable = ({ data, pageSize }) => {
     <div>
       <Table
         columns={columns}
-        dataSource={propertyData.filter((item) =>
-          ownerFilter ? item.owner === ownerFilter : true
+        dataSource={data.filter((item) =>
+          ownerFilter ? item.landlordUserId?.fullName === ownerFilter : true
         )}
         pagination={{
           current: pagination.current,

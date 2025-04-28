@@ -3,14 +3,14 @@ import { Form, Input, Typography } from "antd";
 // import profileImage from "/images/profileImage.png";
 import { EditOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-// import { useUserProfileQuery } from "../../Redux/api/userApi";
-import { useState } from "react";
+import { useUserProfileQuery } from "../../Redux/api/userApi";
+import { useEffect, useState } from "react";
 import { getImageUrl } from "../../utils/baseUrl";
 import { AllImages } from "../../../public/images/AllImages";
 
 const Profile = () => {
-  // const { data: userProfile, refetch } = useUserProfileQuery();
-  // console.log(userProfile);
+  const { data: userProfile, refetch } = useUserProfileQuery();
+  console.log(userProfile);
   const imageUrl = getImageUrl();
 
   const navigate = useNavigate();
@@ -19,32 +19,32 @@ const Profile = () => {
     email: "",
   });
 
-  // useEffect(() => {
-  //   if (userProfile?.data) {
-  //     const profileDataApi = userProfile.data;
-  //     console.log(profileDataApi);
+  useEffect(() => {
+    if (userProfile?.data) {
+      const profileDataApi = userProfile.data;
+      console.log(profileDataApi);
 
-  //     setProfileData({
-  //       fullName: profileDataApi.fullName,
-  //       email: profileDataApi.email,
-  //       image: profileDataApi.image,
-  //       // phoneCode: profileDataApi.phoneCode || "BD",
-  //       address: profileDataApi.address,
-  //       phoneNumber: profileDataApi.phoneNumber,
-  //       role: profileDataApi.role || "Undefined",
-  //     });
-  //   }
-  // }, [userProfile]);
+      setProfileData({
+        fullName: profileDataApi.fullName,
+        email: profileDataApi.email,
+        image: profileDataApi.image,
+        // phoneCode: profileDataApi.phoneCode || "BD",
+        address: profileDataApi.address,
+        phoneNumber: profileDataApi.phoneNumber,
+        role: profileDataApi.role || "Undefined",
+      });
+    }
+  }, [userProfile]);
 
-  // useEffect(() => {
-  //   if (location.state?.updated) {
-  //     refetch();
-  //   }
-  // }, [location.state, refetch]);
+  useEffect(() => {
+    if (location.state?.updated) {
+      refetch();
+    }
+  }, [refetch]);
 
   const handleEditClick = () => {
-    // navigate("edit-profile", { state: { profileData } });
-    navigate("edit-profile");
+    navigate("edit-profile", { state: { profileData } });
+    // navigate("edit-profile");
   };
 
   return (
@@ -54,10 +54,8 @@ const Profile = () => {
           <div className="flex items-center justify-center gap-8">
             {profileData?.image ? (
               <img
-                className="h-40 w-40 relative"
-                src={`${imageUrl}/${
-                  profileData.image
-                }?t=${new Date().getTime()}`}
+                className="h-32 w-36 relative"
+                src={`${imageUrl}/${profileData.image}`}
                 alt="Profile"
               />
             ) : (
@@ -88,8 +86,8 @@ const Profile = () => {
             </Typography.Title>
             <Form.Item className="text-white ">
               <Input
-                // value={profileData?.email}
-                value="user@email.com"
+                value={profileData?.email}
+                // value="user@email.com"
                 placeholder="Enter your email"
                 readOnly
                 className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border !border-[#222021] text-base-color hover:bg-transparent hover:border-[#222021] focus:bg-transparent focus:border-[#222021]"
@@ -101,8 +99,7 @@ const Profile = () => {
             <Form.Item className="text-white">
               <Input
                 readOnly
-                value="The User"
-                // value={profileData?.fullName}
+                value={profileData?.fullName}
                 placeholder="Enter your full name"
                 className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border !border-[#222021] text-base-color hover:bg-transparent hover:border-[#222021] focus:bg-transparent focus:border-[#222021]"
               />

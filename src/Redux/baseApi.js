@@ -9,7 +9,7 @@ export const baseApi = createApi({
   tagTypes: [
     "user",
     "income",
-    "withdraw",
+    "properties",
     "profile",
     "settings",
     "service",

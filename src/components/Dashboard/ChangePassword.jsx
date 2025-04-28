@@ -1,53 +1,53 @@
+/* eslint-disable no-unused-vars */
 import { Button, Form, Input, Typography } from "antd";
-// import { useNavigate } from "react-router-dom";
-// import { useChangePasswordMutation } from "../../../Redux/api/settingsApi";
-// import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { useChangePasswordMutation } from "../../Redux/api/settingsApi";
 
 const ChangePassword = () => {
-  // const navigate = useNavigate();
-  // eslint-disable-next-line no-unused-vars
-  // const [changePassword, { isLoading }] = useChangePasswordMutation();
+  const navigate = useNavigate();
+  const [changePassword, { isLoading }] = useChangePasswordMutation();
 
   const onFinish = async (values) => {
     console.log("password Values", values);
-    // try {
-    //   const data = {
-    //     oldPassword: values.currentPassword,
-    //     newPassword: values.newPassword,
-    //   };
-    //   console.log("Request payload:", data);
+    try {
+      const data = {
+        oldPassword: values.currentPassword,
+        newPassword: values.newPassword,
+      };
+      console.log("Request payload:", data);
 
-    //   // const token = localStorage.getItem("authToken");
-    //   // if (!token) {
-    //   //   toast.error("Session expired. Please start the reset process again.");
-    //   //   navigate("/forgot-password");
-    //   //   return;
-    //   // }
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        toast.error("Session expired. Please start the reset process again.");
+        navigate("/signin");
+        return;
+      }
 
-    //   const response = await changePassword(data).unwrap();
-    //   console.log("Response:", response);
+      const response = await changePassword(data).unwrap();
+      console.log("Response:", response);
 
-    //   if (response.success) {
-    //     toast.success("Password updated successfully!");
-    //     navigate("/signin");
-    //   } else {
-    //     toast.error(response.message || "Failed to update password.");
-    //   }
-    // } catch (error) {
-    //   console.log("Error updating password:", error);
-    //   toast.error(
-    //     error?.data?.message || "An error occurred while updating the password."
-    //   );
-    //   // if (error.response) {
-    //   //   console.error("Validation error details:", error.response.data);
-    //   //   toast.error(
-    //   //     error.response.data.message ||
-    //   //       "Failed to update password. Please try again."
-    //   //   );
-    //   // } else {
-    //   //   toast.error("An unexpected error occurred. Please try again.");
-    //   // }
-    // }
+      if (response.success) {
+        toast.success("Password updated successfully!");
+        navigate("/signin");
+      } else {
+        toast.error(response.message || "Failed to update password.");
+      }
+    } catch (error) {
+      console.log("Error updating password:", error);
+      toast.error(
+        error?.data?.message || "An error occurred while updating the password."
+      );
+      if (error.response) {
+        console.error("Validation error details:", error.response.data);
+        toast.error(
+          error.response.data.message ||
+            "Failed to update password. Please try again."
+        );
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
+      }
+    }
   };
   return (
     <div>

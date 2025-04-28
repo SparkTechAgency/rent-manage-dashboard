@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Image, List, Modal } from "antd";
+import { getImageUrl } from "../../utils/baseUrl";
 // import dayjs from "dayjs";
 // import { getImageUrl } from "../../utils/baseUrl";
 
@@ -11,6 +12,7 @@ const ViewPropertyDetailsModal = ({
   //   const imageUrl = getImageUrl();
 
   console.log("currentRecord", currentRecord);
+  const imageUrl = getImageUrl();
 
   return (
     <Modal
@@ -32,12 +34,13 @@ const ViewPropertyDetailsModal = ({
           <div className="flex flex-col items-start gap-2">
             <p className="text-xl font-semibold">Property Images</p>
             <div className="flex gap-4 items-center justify-center">
-              {currentRecord?.image &&
-                Array.isArray(currentRecord.image) &&
-                currentRecord.image.map((image, index) => (
+              {currentRecord?.images &&
+                Array.isArray(currentRecord.images) &&
+                currentRecord.images.map((image, index) => (
                   <div key={index} className="flex justify-center mb-4">
                     <img
-                      src={image}
+                      // src={image}
+                      src={`${imageUrl}/${image}`}
                       alt={currentRecord?.title}
                       className="w-40 h-40 sm:w-56 sm:h-56 rounded-lg mx-auto"
                     />
@@ -49,13 +52,13 @@ const ViewPropertyDetailsModal = ({
           <div className="flex flex-col items-start gap-2">
             <p className="text-xl font-semibold">Property Files</p>
             <div className="flex gap-4 items-center justify-center">
-              {currentRecord?.files &&
-                Array.isArray(currentRecord.files) &&
-                currentRecord?.files.map((file, index) => (
+              {currentRecord?.propertyFiles &&
+                Array.isArray(currentRecord.propertyFiles) &&
+                currentRecord?.propertyFiles.map((file, index) => (
                   <div key={index} className="flex justify-center mb-4">
                     <Image
                       width={60}
-                      src={file}
+                      src={`${imageUrl}/${file}`}
                       alt={currentRecord?.title}
                       className="rounded-lg mx-auto"
                     />
@@ -70,17 +73,17 @@ const ViewPropertyDetailsModal = ({
 
           {/* Property Details */}
           <div className="mt-5">
-            <div className="grid lg:grid-cols-2 text-start gap-4 text-lg">
-              {currentRecord?.owner && (
+            <div className="grid lg:grid-cols-2 text-start gap-3 text-lg">
+              {currentRecord?.landlordUserId?.fullName && (
                 <div className="sm:flex gap-1">
                   <div className="font-bold">Owner:</div>
-                  <div>{currentRecord?.owner}</div>
+                  <div>{currentRecord?.landlordUserId?.fullName}</div>
                 </div>
               )}
-              {currentRecord?.location && (
+              {currentRecord?.address && (
                 <div className="sm:flex gap-1">
                   <div className="font-bold">Location:</div>
-                  <div>{currentRecord?.location}</div>
+                  <div>{currentRecord?.address}</div>
                 </div>
               )}
               {currentRecord?.status && (

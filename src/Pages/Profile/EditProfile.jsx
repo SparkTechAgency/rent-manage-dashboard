@@ -22,35 +22,50 @@ const EditProfile = () => {
 
   const { refetch } = useUserProfileQuery();
   const [imageUrl, setImageUrl] = useState(<FaRegUser />);
-  const [imageFile, setImageFile] = useState(null);
+  const [uploadedFile, setUploadedFile] = useState(null);
 
   const [updateProfile, { isLoading }] = useEditProfileMutation();
+
+  const handleUploadChange = (info) => {
+    console.log("info", info.file);
+
+    setImageUrl(info.file);
+    setUploadedFile(info.file);
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setImageUrl(e.target.result);
+    };
+    console.log("info.file.originFileObj", info.file.originFileObj);
+    reader.readAsDataURL(info.file);
+  };
 
   const onFinish = async (values) => {
     console.log("onfinish", values);
     navigate("/profile");
-    // const formData = new FormData();
-    // formData.append("fullName", values.fullName);
-    // formData.append("email", values.email);
-    // if (imageFile) {
-    //   formData.append("image", imageFile); // Append image for upload
-    // }
+    const formData = new FormData();
+    formData.append("fullName", values.fullName);
+    formData.append("email", values.email);
+    formData.append("address", values.address);
+    if (uploadedFile) {
+      formData.append("image", uploadedFile);
+    }
 
-    // try {
-    //   const response = await updateProfile(formData).unwrap(); // Send formData to the backend
-    //   if (response.success) {
-    //     toast.success("Profile updated successfully!");
-    //     setImageUrl(imageUrl);
+    try {
+      const response = await updateProfile(formData).unwrap();
+      if (response.success) {
+        toast.success("Profile updated successfully!");
+        setImageUrl(imageUrl);
 
-    //     await refetch();
-    //     navigate("/profile", { state: { updated: true } });
-    //   } else {
-    //     toast.error(response.message || "Failed to update profile.");
-    //   }
-    // } catch (error) {
-    //   console.log("Update error:", error);
-    //   toast.error("An error occurred while updating the profile.");
-    // }
+        await refetch();
+        navigate("/profile", { state: { updated: true } });
+      } else {
+        toast.error(response.message || "Failed to update profile.");
+      }
+    } catch (error) {
+      console.log("Update error:", error);
+      toast.error("An error occurred while updating the profile.");
+    }
   };
 
   return (
@@ -69,9 +84,7 @@ const EditProfile = () => {
                     {profileData?.image ? (
                       <img
                         className="h-40 w-40 relative"
-                        src={`${imageUrl}/${
-                          profileData.image
-                        }?t=${new Date().getTime()}`}
+                        src={`${imageUrl}/${profileData.image}`}
                         alt="Profile"
                       />
                     ) : (
@@ -84,36 +97,16 @@ const EditProfile = () => {
                   </div>
                   <Form.Item name="image" className="text-white ">
                     <Upload
-                      maxCount={1}
-                      listType="picture"
+                      name="avatar"
+                      showUploadList={false}
+                      onChange={handleUploadChange}
                       beforeUpload={() => false}
-                      accept="image/*"
-                      multiple={false}
-                      // style={{
-                      //   top: 0,
-                      //   left: 0,
-                      //   width: "100%",
-                      //   height: "100%",
-                      //   opacity: 0,
-                      //   cursor: "pointer",
-                      // }}
                     >
-                      <Button
-                        style={{
-                          position: "absolute",
-                          top: "-20px",
-                          left: "130px",
-                          transform: "translate(-50%, -50%)",
-                          zIndex: 1,
-                          opacity: 1,
-                          height: "36px",
-                          width: "36px",
-                          borderRadius: "90px",
-                          fontSize: "18px",
-                        }}
-                      >
-                        <EditOutlined style={{ color: "#f5382c" }} />
-                      </Button>
+                      <div className="absolute h-5 lg:h-8 w-10 left-[110px] inset-0 top-8 xl:-top-10 md:top-10 flex items-center justify-center rounded-full opacity-100 cursor-pointer border border-gray-400">
+                        <EditOutlined
+                          style={{ color: "#f5382c", fontSize: "25px" }}
+                        />
+                      </div>
                     </Upload>
                   </Form.Item>
                 </div>
@@ -136,6 +129,7 @@ const EditProfile = () => {
                 <Input
                   suffix={<MdOutlineEdit />}
                   type="email"
+                  readOnly
                   placeholder="Enter your email"
                   className="py-2 px-3 text-xl bg-site-color border !border-[#222021] text-base-color hover:bg-transparent hover:border-[#222021] focus:bg-transparent focus:border-[#222021]"
                 />
