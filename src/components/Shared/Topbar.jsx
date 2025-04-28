@@ -98,13 +98,13 @@ const Topbar = ({ collapsed, setCollapsed }) => {
         </Dropdown> */}
         <Link
           to="profile"
-          className="flex items-center justify-center bg-transparent text-base-color border-0 rounded-lg h-8py-1"
+          className="flex items-center gap-2 justify-center bg-transparent text-base-color border-0 rounded-lg h-7 py-1"
         >
           <img
-            // src={`${imageUrl}/${user?.image}`}
-            src={AllImages.userImage}
+            src={`${imageUrl}/${user?.image}`}
+            // src={AllImages.userImage}
             alt="profile_pic"
-            style={{ width: "35px", height: "35px" }}
+            style={{ width: "30px", height: "30px" }}
             className="rounded"
           />
           <p className="text-white text-lg ">{user?.fullName}</p>
