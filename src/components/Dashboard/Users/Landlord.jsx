@@ -1,62 +1,46 @@
-import { useState, useMemo, useEffect } from "react";
+/* eslint-disable no-unused-vars */
+// eslint-disable-next-line no-unused-vars
+import { useState, useMemo } from "react";
 
 import { SearchOutlined } from "@ant-design/icons";
 import { Input } from "antd";
 import DeleteUserModal from "../../UI/DeleteUserModal";
-// import { useAllUsersQuery } from "../../../Redux/api/userApi";
 import LandlordTable from "../../Tables/LandlordTable";
-import axios from "axios";
 import ViewUserModal from "../../UI/ViewUserModal";
+import { useAllUsersQuery } from "../../../Redux/api/userApi";
 
 export default function Landlord() {
-  // eslint-disable-next-line no-unused-vars
-  // const { data: allUsers, loadingUser, refetch } = useAllUsersQuery();
-  // const userData = allUsers?.data;
-  // console.log(userData);
-  //* Store Search Value
+  const {
+    data: allUsers,
+    isLoading: userLoading,
+    isError,
+    refetch,
+  } = useAllUsersQuery();
+  const users = allUsers?.data || [];
+  console.log(users);
+
+  const landlordData = users?.filter((user) => user.role === "landlord");
+  console.log("Landlords:", landlordData);
+
   const [searchText, setSearchText] = useState("");
-
-  //* It's Use to Show Customer Modal
   const [isViewCustomer, setIsViewCustomer] = useState(false);
-
-  //* It's Use to Show Delete Modal
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
-
-  //* It's Use to Set Seclected User to delete and view
   const [currentRecord, setCurrentRecord] = useState(null);
-
-  const [userData, setUserData] = useState([]);
   const [loadingUser, setLoadingUser] = useState(false);
-  useEffect(() => {
-    const fetchUserData = async () => {
-      setLoadingUser(true);
-      try {
-        const response = await axios.get("data/landLordData.json");
-        console.log(response.data);
-        setUserData(response.data);
-      } catch (error) {
-        console.error("Error fetching landlord data", error);
-      } finally {
-        setLoadingUser(false);
-      }
-    };
-
-    fetchUserData();
-  }, []);
 
   const filteredData = useMemo(() => {
-    if (!searchText) return userData;
-    return userData.filter((item) =>
+    if (!searchText) return landlordData;
+    return landlordData.filter((item) =>
       item.fullName.toLowerCase().includes(searchText.toLowerCase())
     );
-  }, [userData, searchText]);
+  }, [landlordData, searchText]);
 
   const onSearch = (value) => {
     setSearchText(value);
   };
 
   const showCustomerViewModal = (record) => {
-    console.log(record);
+    console.log("landlord", record);
     setCurrentRecord(record);
     setIsViewCustomer(true);
   };
@@ -77,11 +61,9 @@ export default function Landlord() {
     setIsDeleteModalVisible(false);
   };
 
-  // const handleBlock = (data) => {
-  //   console.log("Blocked User:", { id: data?.id, data: data });
-  //   setIsViewCustomer(false);
-  //   setIsViewBusiness(false);
-  // };
+  if (userLoading) {
+    <p>Loading..</p>;
+  }
 
   return (
     <div className="min-h-[90vh]">

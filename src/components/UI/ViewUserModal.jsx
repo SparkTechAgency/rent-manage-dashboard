@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { ConfigProvider, Modal, Table } from "antd";
 import dayjs from "dayjs";
-// import { getImageUrl } from "../../utils/baseUrl";
+import { getImageUrl } from "../../utils/baseUrl";
 
 const ViewUserModal = ({
   isViewCustomer,
@@ -9,13 +9,14 @@ const ViewUserModal = ({
   currentRecord,
   // handleBlock,
 }) => {
-  // const imageUrl = getImageUrl();
+  const imageUrl = getImageUrl();
 
   return (
     <Modal
       title={
         <div className="">
-          <h2 className="text-secondary-color text-2xl ">User Details</h2>
+          <h2 className="text-secondary-color text-2xl ">Landlord Details</h2>
+          <hr />
         </div>
       }
       open={isViewCustomer}
@@ -31,8 +32,8 @@ const ViewUserModal = ({
             {/* Avatar */}
             {currentRecord?.image && (
               <img
-                // src={`${imageUrl}/${currentRecord.image}`}
-                src={currentRecord?.image}
+                src={`${imageUrl}/${currentRecord.image}`}
+                // src={currentRecord?.image}
                 alt={currentRecord?.fullName}
                 className="w-14 h-14 sm:w-20  sm:h-20 rounded-lg mr-4"
               />
