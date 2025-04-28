@@ -15,7 +15,7 @@ const ViewUserModal = ({
     <Modal
       title={
         <div className="">
-          <h2 className="text-secondary-color text-2xl ">Landlord Details</h2>
+          <h2 className="text-secondary-color text-2xl ">User Details</h2>
           <hr />
         </div>
       }
