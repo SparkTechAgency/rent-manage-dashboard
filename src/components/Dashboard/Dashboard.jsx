@@ -15,6 +15,7 @@ import IncomeBarChart from "../Chart/IncomeBarChart";
 // import { useAllCustomerQuery } from "../../Redux/api/dashboardApi";
 // import { useAllUsersQuery } from "../../Redux/api/userApi";
 import PropertyTable from "../Tables/PropertyTable";
+import { usePropertiesQuery } from "../../Redux/api/propertyApi";
 
 const propertyData = [
   {
@@ -144,6 +145,18 @@ const Dashboard = () => {
   // const { data: allCustomer } = useAllCustomerQuery();
   // eslint-disable-next-line no-unused-vars
   // const { data: allUsers, loadingUser, refetch } = useAllUsersQuery();
+  const { data: properties, isLoading, error } = usePropertiesQuery();
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error loading data</p>;
+  }
+
+  const propertiesData = properties?.data;
+
   const [selectedYear, setSelectedYear] = useState("2025");
   // const [selectedHour, setSelectedHour] = useState("24hour");
   // const [selectedDays, setSelectedDays] = useState("7day");
@@ -153,13 +166,8 @@ const Dashboard = () => {
 
   // console.log(allCustomer?.data);
 
-  //* It's Use to Show Modal
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
-
-  //* It's Use to Show Delete Modal
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
-
-  //* It's Use to Set Seclected User to delete and view
   const [currentRecord, setCurrentRecord] = useState(null);
 
   const showViewModal = (record) => {
@@ -382,7 +390,7 @@ const Dashboard = () => {
                 </div>
               </div>
               <PropertyTable
-                data={propertyData}
+                data={propertiesData}
                 showViewModal={showViewModal}
                 showDeleteModal={showDeleteModal}
                 pageSize={5}
