@@ -1,47 +1,48 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Button, ConfigProvider, Input, Modal, Table, Tag, Select } from "antd";
+import { SearchOutlined, EditOutlined } from "@ant-design/icons";
 import {
-  Button,
-  ConfigProvider,
-  Input,
-  Modal,
-  Table,
-  message,
-  Tag,
-  Select,
-} from "antd";
-import {
-  SearchOutlined,
-  EditOutlined,
-  DeleteOutlined,
-} from "@ant-design/icons";
-import axios from "axios";
+  useAnnouncementsQuery,
+  useChangeAnnouncementStatusMutation,
+  useCreateAnnouncementMutation,
+} from "../../Redux/api/annuncementApi";
+import { toast } from "sonner";
 
 const Announcement = () => {
-  const [announcements, setAnnouncements] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const {
+    data: announcementsData,
+    isLoading,
+    isError,
+    refetch,
+  } = useAnnouncementsQuery();
+  const announcements = announcementsData?.data;
+  console.log("announcementsData", announcements);
+
+  const [createAnnouncement] = useCreateAnnouncementMutation();
+  const [updateAnnouncement] = useChangeAnnouncementStatusMutation();
+
+  const [announcement, setAnnouncement] = useState([]);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [currentAnnouncement, setCurrentAnnouncement] = useState(null);
   const [searchText, setSearchText] = useState("");
 
-  // Fetch data from JSON (you can change this to an API endpoint if needed)
   useEffect(() => {
-    const fetchAnnouncements = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get("data/announcementData.json"); // Replace with your API endpoint
-        setAnnouncements(response.data);
-      } catch (error) {
-        console.error("Error fetching announcements", error);
-        message.error("Failed to load announcements");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchAnnouncements();
-  }, []);
+    if (announcements && announcements.length) {
+      setAnnouncement(announcements);
+    }
+  }, [announcements]);
 
-  // Filter announcements based on search text
+  console.log("announcement", announcement);
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (isError) {
+    return <p>Error loading data</p>;
+  }
+
   const filteredAnnouncements = announcements.filter((announcement) =>
     announcement.title.toLowerCase().includes(searchText.toLowerCase())
   );
@@ -51,7 +52,7 @@ const Announcement = () => {
   };
 
   const showAddModal = () => {
-    setCurrentAnnouncement(null); // Reset current announcement for adding new
+    setCurrentAnnouncement(null);
     setIsAddModalVisible(true);
   };
 
@@ -60,53 +61,82 @@ const Announcement = () => {
     setIsEditModalVisible(true);
   };
 
-  const handleAddOk = () => {
+  const addAnnouncement = async () => {
     if (currentAnnouncement?.title && currentAnnouncement?.description) {
-      const newAnnouncement = { ...currentAnnouncement, id: Date.now() };
-      setAnnouncements([...announcements, newAnnouncement]);
-      setIsAddModalVisible(false);
-      message.success("New announcement added successfully");
+      try {
+        const payload = {
+          title: currentAnnouncement.title,
+          description: currentAnnouncement.description,
+        };
+        const res = await createAnnouncement(payload).unwrap();
+        setIsAddModalVisible(false);
+        toast.success("New announcement created successfully!");
+        refetch();
+        setAnnouncement((prev) => [...prev, res.data]);
+      } catch (error) {
+        console.error("Failed to create announcement:", error);
+        toast.error("Failed to create announcement. Try again.");
+      }
     } else {
-      message.error("Please provide title and description");
+      toast.error("Please provide title and description");
     }
   };
 
-  const handleEditOk = () => {
-    if (currentAnnouncement?.title && currentAnnouncement?.description) {
-      setAnnouncements((prev) =>
-        prev.map((item) =>
-          item.id === currentAnnouncement.id ? currentAnnouncement : item
-        )
-      );
-      setIsEditModalVisible(false);
-      message.success("Announcement updated successfully");
+  const editAnnouncement = async () => {
+    if (currentAnnouncement?._id && currentAnnouncement?.status) {
+      try {
+        const payload = {
+          announcementId: currentAnnouncement._id,
+          status: currentAnnouncement.status,
+        };
+
+        const res = await updateAnnouncement(payload).unwrap();
+        console.log(res);
+
+        // Update local announcement state after successful API call
+        setAnnouncement((prev) =>
+          prev.map((item) =>
+            item._id === currentAnnouncement._id
+              ? { ...item, status: currentAnnouncement.status }
+              : item
+          )
+        );
+
+        setIsEditModalVisible(false);
+        toast.success("Announcement status updated successfully!");
+      } catch (error) {
+        console.error("Failed to update announcement status:", error);
+        toast.error("Failed to update status. Try again.");
+      }
     } else {
-      message.error("Please provide title and description");
+      toast.error("Invalid announcement data");
     }
   };
 
   const handleCancel = () => {
     setIsAddModalVisible(false);
     setIsEditModalVisible(false);
+    setCurrentAnnouncement(null);
   };
 
-  const handleDelete = (announcement) => {
-    Modal.confirm({
-      title: "Are you sure you want to delete this announcement?",
-      onOk: () => {
-        setAnnouncements((prev) =>
-          prev.filter((item) => item.id !== announcement.id)
-        );
-        message.success("Announcement deleted successfully");
-      },
-    });
-  };
+  // const handleDelete = (announcement) => {
+  //   Modal.confirm({
+  //     title: "Are you sure you want to delete this announcement?",
+  //     onOk: () => {
+  //       setAnnouncement((prev) =>
+  //         prev.filter((item) => item.id !== announcement.id)
+  //       );
+  //       message.success("Announcement deleted successfully");
+  //     },
+  //   });
+  // };
 
   const handleStatusChange = (value) => {
-    setCurrentAnnouncement({
-      ...currentAnnouncement,
+    console.log("selected status", value);
+    setCurrentAnnouncement((prev) => ({
+      ...prev,
       status: value,
-    });
+    }));
   };
 
   const columns = [
@@ -127,10 +157,12 @@ const Announcement = () => {
       dataIndex: "status",
       key: "status",
       render: (status) => {
-        let color = status === "Active" ? "green" : "gray";
+        let color = status.toLowerCase() === "active" ? "green" : "red";
+        const formattedStatus =
+          status.charAt(0).toUpperCase() + status.slice(1).toLowerCase();
         return (
           <Tag className="h-7 text-base" color={color}>
-            {status}
+            {formattedStatus}
           </Tag>
         );
       },
@@ -138,6 +170,7 @@ const Announcement = () => {
     {
       title: "Actions",
       key: "actions",
+      align: "center",
       render: (text, record) => (
         <span>
           <Button
@@ -145,10 +178,10 @@ const Announcement = () => {
             onClick={() => showEditModal(record)}
             style={{ marginRight: 8 }}
           />
-          <Button
+          {/* <Button
             icon={<DeleteOutlined />}
             onClick={() => handleDelete(record)}
-          />
+          /> */}
         </span>
       ),
     },
@@ -175,9 +208,7 @@ const Announcement = () => {
     >
       <div className="p-5 h-screen">
         <div className="flex items-center justify-between mb-5">
-          <h1 className="text-3xl font-bold text-[#333]">
-            Announcements
-          </h1>
+          <h1 className="text-3xl font-bold text-[#333]">Announcements</h1>
           <div className="flex items-center gap-2">
             <Button
               type="primary"
@@ -199,16 +230,15 @@ const Announcement = () => {
         <Table
           columns={columns}
           dataSource={filteredAnnouncements}
-          loading={loading}
+          loading={isLoading}
           rowKey="id"
           pagination={{ pageSize: 5 }}
         />
 
-        {/* Add Modal */}
         <Modal
           title="Add New Announcement"
           visible={isAddModalVisible}
-          onOk={handleAddOk}
+          onOk={addAnnouncement}
           onCancel={handleCancel}
           width={600}
         >
@@ -238,15 +268,15 @@ const Announcement = () => {
               placeholder="Enter announcement description"
               style={{ marginBottom: 10 }}
             />
-            <h3>Status:</h3>
+            {/* <h3>Status:</h3>
             <Select
               value={currentAnnouncement?.status || "Active"}
               onChange={handleStatusChange}
               style={{ width: "100%", marginBottom: 10, height: 40 }}
             >
-              <Select.Option value="Active">Active</Select.Option>
-              <Select.Option value="Archived">Archived</Select.Option>
-            </Select>
+              <Select.Option value="active">Active</Select.Option>
+              <Select.Option value="deActive">Deactive</Select.Option>
+            </Select> */}
           </div>
         </Modal>
 
@@ -254,7 +284,7 @@ const Announcement = () => {
         <Modal
           title="Edit Announcement"
           visible={isEditModalVisible}
-          onOk={handleEditOk}
+          onOk={editAnnouncement}
           onCancel={handleCancel}
           width={600}
         >
@@ -262,6 +292,7 @@ const Announcement = () => {
             <h3>Title:</h3>
             <Input
               value={currentAnnouncement?.title || ""}
+              readOnly
               onChange={(e) =>
                 setCurrentAnnouncement({
                   ...currentAnnouncement,
@@ -274,6 +305,7 @@ const Announcement = () => {
             <h3>Description:</h3>
             <Input.TextArea
               value={currentAnnouncement?.description || ""}
+              readOnly
               onChange={(e) =>
                 setCurrentAnnouncement({
                   ...currentAnnouncement,
@@ -286,12 +318,12 @@ const Announcement = () => {
             />
             <h3>Status:</h3>
             <Select
-              value={currentAnnouncement?.status || "Active"}
+              value={currentAnnouncement?.status || "active"}
               onChange={handleStatusChange}
               style={{ width: "100%", marginBottom: 10, height: 40 }}
             >
-              <Select.Option value="Active">Active</Select.Option>
-              <Select.Option value="Archived">Archived</Select.Option>
+              <Select.Option value="active">Active</Select.Option>
+              <Select.Option value="deActive">Deactive</Select.Option>
             </Select>
           </div>
         </Modal>
