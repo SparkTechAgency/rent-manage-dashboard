@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Button, ConfigProvider, Input, Modal, Table, Tag, Select } from "antd";
-import { SearchOutlined, EditOutlined } from "@ant-design/icons";
+import { Button, ConfigProvider, Input, Modal, Table, Tag, Switch } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 import {
   useAnnouncementsQuery,
   useChangeAnnouncementStatusMutation,
@@ -23,7 +23,7 @@ const Announcement = () => {
 
   const [announcement, setAnnouncement] = useState([]);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
-  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  // const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [currentAnnouncement, setCurrentAnnouncement] = useState(null);
   const [searchText, setSearchText] = useState("");
 
@@ -56,10 +56,10 @@ const Announcement = () => {
     setIsAddModalVisible(true);
   };
 
-  const showEditModal = (announcement) => {
-    setCurrentAnnouncement(announcement);
-    setIsEditModalVisible(true);
-  };
+  // const showEditModal = (announcement) => {
+  //   setCurrentAnnouncement(announcement);
+  //   setIsEditModalVisible(true);
+  // };
 
   const addAnnouncement = async () => {
     if (currentAnnouncement?.title && currentAnnouncement?.description) {
@@ -82,40 +82,40 @@ const Announcement = () => {
     }
   };
 
-  const editAnnouncement = async () => {
-    if (currentAnnouncement?._id && currentAnnouncement?.status) {
-      try {
-        const payload = {
-          announcementId: currentAnnouncement._id,
-          status: currentAnnouncement.status,
-        };
+  // const editAnnouncement = async () => {
+  //   if (currentAnnouncement?._id && currentAnnouncement?.status) {
+  //     try {
+  //       const payload = {
+  //         announcementId: currentAnnouncement._id,
+  //         status: currentAnnouncement.status,
+  //       };
 
-        const res = await updateAnnouncement(payload).unwrap();
-        console.log(res);
+  //       const res = await updateAnnouncement(payload).unwrap();
+  //       console.log(res);
 
-        // Update local announcement state after successful API call
-        setAnnouncement((prev) =>
-          prev.map((item) =>
-            item._id === currentAnnouncement._id
-              ? { ...item, status: currentAnnouncement.status }
-              : item
-          )
-        );
+  //       // Update local announcement state after successful API call
+  //       setAnnouncement((prev) =>
+  //         prev.map((item) =>
+  //           item._id === currentAnnouncement._id
+  //             ? { ...item, status: currentAnnouncement.status }
+  //             : item
+  //         )
+  //       );
 
-        setIsEditModalVisible(false);
-        toast.success("Announcement status updated successfully!");
-      } catch (error) {
-        console.error("Failed to update announcement status:", error);
-        toast.error("Failed to update status. Try again.");
-      }
-    } else {
-      toast.error("Invalid announcement data");
-    }
-  };
+  //       setIsEditModalVisible(false);
+  //       toast.success("Announcement status updated successfully!");
+  //     } catch (error) {
+  //       console.error("Failed to update announcement status:", error);
+  //       toast.error("Failed to update status. Try again.");
+  //     }
+  //   } else {
+  //     toast.error("Invalid announcement data");
+  //   }
+  // };
 
   const handleCancel = () => {
     setIsAddModalVisible(false);
-    setIsEditModalVisible(false);
+    // setIsEditModalVisible(false);
     setCurrentAnnouncement(null);
   };
 
@@ -131,14 +131,27 @@ const Announcement = () => {
   //   });
   // };
 
-  const handleStatusChange = (value) => {
-    console.log("selected status", value);
-    setCurrentAnnouncement((prev) => ({
-      ...prev,
-      status: value,
-    }));
-  };
+  const handleStatusChange = async (checked, announcementId) => {
+    const newStatus = checked ? "active" : "deActive";
 
+    try {
+      const payload = {
+        announcementId,
+        status: newStatus,
+      };
+
+      await updateAnnouncement(payload).unwrap();
+      setAnnouncement((prev) =>
+        prev.map((item) =>
+          item._id === announcementId ? { ...item, status: newStatus } : item
+        )
+      );
+
+      toast.success(`Announcement status updated to ${newStatus}`);
+    } catch (error) {
+      toast.error("Failed to update status. Try again.");
+    }
+  };
   const columns = [
     {
       title: "Title",
@@ -172,17 +185,10 @@ const Announcement = () => {
       key: "actions",
       align: "center",
       render: (text, record) => (
-        <span>
-          <Button
-            icon={<EditOutlined />}
-            onClick={() => showEditModal(record)}
-            style={{ marginRight: 8 }}
-          />
-          {/* <Button
-            icon={<DeleteOutlined />}
-            onClick={() => handleDelete(record)}
-          /> */}
-        </span>
+        <Switch
+          checked={record.status === "active"}
+          onChange={(checked) => handleStatusChange(checked, record._id)}
+        />
       ),
     },
   ];
@@ -281,7 +287,7 @@ const Announcement = () => {
         </Modal>
 
         {/* Edit Modal */}
-        <Modal
+        {/* <Modal
           title="Edit Announcement"
           visible={isEditModalVisible}
           onOk={editAnnouncement}
@@ -326,7 +332,7 @@ const Announcement = () => {
               <Select.Option value="deActive">Deactive</Select.Option>
             </Select>
           </div>
-        </Modal>
+        </Modal> */}
       </div>
     </ConfigProvider>
   );
