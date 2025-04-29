@@ -19,7 +19,7 @@ const TenantTable = ({
       key: "id",
       align: "center",
       responsive: ["md"],
-      render: (_, __, index) => index + 1, // Serial number based on row index
+      render: (_, __, index) => index + 1,
     },
     {
       title: "Full Name",
@@ -27,14 +27,14 @@ const TenantTable = ({
       key: "fullName",
       align: "center",
       render: (text, record) => (
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-start">
           {record?.image && (
             <img
               src={`${imageUrl}/${record.image}`}
               alt={text}
               style={{
                 width: 40,
-                height: 40,
+                height: 36,
                 borderRadius: "50%",
                 marginRight: 10,
               }}
@@ -52,8 +52,8 @@ const TenantTable = ({
     },
     {
       title: "Joining date",
-      dataIndex: "joiningDate",
-      key: "joiningDate",
+      dataIndex: "createdAt",
+      key: "createdAt",
       align: "center",
       render: (date) => (date ? dayjs(date).format("DD-MM-YYYY") : "-"),
     },

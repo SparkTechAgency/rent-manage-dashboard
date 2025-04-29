@@ -45,10 +45,10 @@ const ViewUserModal = ({
 
           <div className="mt-5">
             <div className="grid lg:grid-cols-2 text-start gap-4 text-lg">
-              {currentRecord?.serviceName && (
+              {currentRecord?.address && (
                 <div className="sm:flex gap-1">
-                  <div className="font-bold">Service name:</div>
-                  <div>{currentRecord?.serviceName}</div>
+                  <div className="font-bold">Address:</div>
+                  <div>{currentRecord?.address}</div>
                 </div>
               )}
               {currentRecord?.email && (
@@ -57,10 +57,10 @@ const ViewUserModal = ({
                   <div>{currentRecord?.email}</div>
                 </div>
               )}
-              {currentRecord?.joiningDate && (
+              {currentRecord?.createdAt && (
                 <div className="sm:flex gap-1">
                   <div className="font-bold">Joining Date:</div>
-                  <div>{currentRecord?.joiningDate}</div>
+                  <div>{currentRecord?.createdAt}</div>
                 </div>
               )}
 
@@ -74,16 +74,10 @@ const ViewUserModal = ({
                   </div>
                 </div>
               )}
-              {currentRecord?.contactNumber && (
+              {currentRecord?.phone && (
                 <div className="sm:flex gap-1">
                   <div className="font-bold">Contact number:</div>
-                  <div>{currentRecord?.contactNumber}</div>
-                </div>
-              )}
-              {currentRecord?.address && (
-                <div className="sm:flex gap-1">
-                  <div className="font-bold">Contact number:</div>
-                  <div>{currentRecord?.address}</div>
+                  <div>{currentRecord?.phone}</div>
                 </div>
               )}
             </div>

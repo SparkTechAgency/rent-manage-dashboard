@@ -2,7 +2,7 @@ import { ConfigProvider, Select } from "antd";
 // import Area_Chart from "../Chart/AreaChart";
 import { Link } from "react-router-dom";
 
-import { AllIcons, PropertyImages } from "../../../public/images/AllImages";
+import { AllIcons } from "../../../public/images/AllImages";
 import { LiaHandHoldingUsdSolid } from "react-icons/lia";
 import { FaHouseChimneyUser } from "react-icons/fa6";
 import { FaLandmark } from "react-icons/fa";
@@ -16,159 +16,55 @@ import IncomeBarChart from "../Chart/IncomeBarChart";
 // import { useAllUsersQuery } from "../../Redux/api/userApi";
 import PropertyTable from "../Tables/PropertyTable";
 import { usePropertiesQuery } from "../../Redux/api/propertyApi";
-
-const propertyData = [
-  {
-    key: "1",
-    title: "Green Villa",
-    location: "123 Green Street",
-    owner: "John Doe",
-    status: "verify_request",
-    image: [PropertyImages.property01, PropertyImages.property02],
-    description: "A beautiful villa surrounded by lush green gardens.",
-    price: "$1,200,000",
-    size: "3500 sq ft",
-    files: ["PropertyImages.file01", "PropertyImages.file02"],
-  },
-  {
-    key: "2",
-    title: "Sunny Apartment",
-    location: "456 Sunny Lane",
-    owner: "Jane Smith",
-    status: "verified",
-    image: [PropertyImages.property01, PropertyImages.property02],
-    description: "A modern apartment with stunning city views.",
-    price: "$850,000",
-    size: "1500 sq ft",
-    files: ["PropertyImages.file01", "PropertyImages.file02"],
-  },
-  {
-    key: "3",
-    title: "Cozy Cottage",
-    location: "789 Cottage Ave",
-    owner: "Alice Johnson",
-    status: "verify_request",
-    image: [PropertyImages.property01, PropertyImages.property02],
-    description: "A cozy cottage perfect for a quiet weekend getaway.",
-    price: "$450,000",
-    size: "1200 sq ft",
-    files: ["PropertyImages.file01", "PropertyImages.file02"],
-  },
-  {
-    key: "4",
-    title: "Luxury Mansion",
-    location: "101 Luxury Blvd",
-    owner: "Bob Brown",
-    status: "verified",
-    image: [PropertyImages.property01, PropertyImages.property02],
-    description:
-      "A luxury mansion with all modern amenities and expansive space.",
-    price: "$5,000,000",
-    size: "8500 sq ft",
-    files: ["PropertyImages.file01", "PropertyImages.file02"],
-  },
-  {
-    key: "5",
-    title: "Modern Condo",
-    location: "202 Modern St",
-    owner: "Charlie Davis",
-    status: "verify_request",
-    image: [PropertyImages.property01, PropertyImages.property02],
-    description: "A stylish condo located in the heart of the city.",
-    price: "$1,000,000",
-    size: "2000 sq ft",
-    files: ["PropertyImages.file01", "PropertyImages.file02"],
-  },
-  {
-    key: "6",
-    title: "Beach House",
-    location: "303 Beach Road",
-    owner: "David Wilson",
-    status: "verified",
-    image: [PropertyImages.property01, PropertyImages.property02],
-    description: "A beautiful beach house with oceanfront views.",
-    price: "$2,800,000",
-    size: "4000 sq ft",
-    files: ["PropertyImages.file01", "PropertyImages.file02"],
-  },
-  {
-    key: "7",
-    title: "Mountain Retreat",
-    location: "404 Mountain Peak",
-    owner: "Eve Parker",
-    status: "verify_request",
-    image: [PropertyImages.property01, PropertyImages.property02],
-    description: "A serene retreat located at the top of the mountain.",
-    price: "$1,500,000",
-    size: "3000 sq ft",
-    files: ["PropertyImages.file01", "PropertyImages.file02"],
-  },
-  {
-    key: "8",
-    title: "City Loft",
-    location: "505 City Center",
-    owner: "Frank Hall",
-    status: "verified",
-    image: [PropertyImages.property01, PropertyImages.property02],
-    description: "A trendy city loft with open-plan living.",
-    price: "$950,000",
-    size: "1800 sq ft",
-    files: ["PropertyImages.file01", "PropertyImages.file02"],
-  },
-  {
-    key: "9",
-    title: "Suburban Ranch",
-    location: "606 Suburb Lane",
-    owner: "Grace Lee",
-    status: "verify_request",
-    image: [PropertyImages.property01, PropertyImages.property02],
-    description: "A large ranch with plenty of space for outdoor activities.",
-    price: "$3,200,000",
-    size: "6000 sq ft",
-    files: ["PropertyImages.file01", "PropertyImages.file02"],
-  },
-  {
-    key: "10",
-    title: "Downtown Penthouse",
-    location: "707 Downtown Blvd",
-    owner: "Harry King",
-    status: "verified",
-    image: [PropertyImages.property01, PropertyImages.property02],
-    description: "An extravagant penthouse with panoramic city views.",
-    price: "$4,500,000",
-    size: "5000 sq ft",
-    files: ["PropertyImages.file01", "PropertyImages.file02"],
-  },
-];
+import { useAllUsersQuery } from "../../Redux/api/userApi";
 
 const Dashboard = () => {
-  // const { data: allCustomer } = useAllCustomerQuery();
-  // eslint-disable-next-line no-unused-vars
-  // const { data: allUsers, loadingUser, refetch } = useAllUsersQuery();
-  const { data: properties, isLoading, error } = usePropertiesQuery();
-
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>Error loading data</p>;
-  }
-
-  const propertiesData = properties?.data;
-
   const [selectedYear, setSelectedYear] = useState("2025");
   // const [selectedHour, setSelectedHour] = useState("24hour");
   // const [selectedDays, setSelectedDays] = useState("7day");
+  const [isViewModalVisible, setIsViewModalVisible] = useState(false);
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+  const [currentRecord, setCurrentRecord] = useState(null);
+
+  const { data: allUsers, isLoading, isError } = useAllUsersQuery();
+  const {
+    data: allProperties,
+    isLoading: propertyLoading,
+    isErrorProperty,
+  } = usePropertiesQuery();
+
+  const users = allUsers?.data || [];
+  const properties = allProperties?.data || [];
+
+  // console.log(users);
+  // console.log(properties);
+
+  const tenantData = users?.filter((user) => user.role === "tenant");
+  const landlordData = users?.filter((user) => user.role === "landlord");
+  const approvedProperties = properties?.filter(
+    (property) => property.status === "verified"
+  );
+
+  const totalLandlord = landlordData?.length;
+  const totalTenant = tenantData?.length;
+  const totalProperties = approvedProperties?.length;
+
+  // console.log("Landlords:", totalLandlord);
+  // console.log("tenantData:", totalTenant);
+  console.log("totalProperties", totalProperties);
+
+  if (isLoading || propertyLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (isError || isErrorProperty) {
+    return <p>Error loading data</p>;
+  }
 
   // const userData = allUsers?.data;
   // console.log(userData);
 
   // console.log(allCustomer?.data);
-
-  const [isViewModalVisible, setIsViewModalVisible] = useState(false);
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
-  const [currentRecord, setCurrentRecord] = useState(null);
 
   const showViewModal = (record) => {
     setCurrentRecord(record);
@@ -216,7 +112,7 @@ const Dashboard = () => {
                     Total Tenant
                   </p>
                   <p className="text-sm lg:text-base xl:text-3xl font-medium text-primary-color">
-                    {/* {allCustomer?.data?.allCustomerCount} */} 10
+                    {totalTenant}
                   </p>
                 </div>
               </div>
@@ -232,7 +128,7 @@ const Dashboard = () => {
                     Total Landlord
                   </p>
                   <p className="text-sm lg:text-base xl:text-3xl font-medium text-primary-color">
-                    {/* {allCustomer?.data?.allBusinessCount} */} 50
+                    {totalLandlord}
                   </p>
                 </div>
               </div>
@@ -261,10 +157,10 @@ const Dashboard = () => {
                 </div>
                 <div className="text-start">
                   <p className="text-xs lg:text-sm xl:text-2xl text-primary-color mb-1">
-                    Total Properties
+                    Verified Properties
                   </p>
                   <p className="text-sm lg:text-base xl:text-3xl font-medium text-primary-color">
-                    {/* {allCustomer?.data?.allBusinessCount} */} 20
+                    {totalProperties}
                   </p>
                 </div>
               </div>
@@ -390,7 +286,7 @@ const Dashboard = () => {
                 </div>
               </div>
               <PropertyTable
-                data={propertiesData}
+                data={properties}
                 showViewModal={showViewModal}
                 showDeleteModal={showDeleteModal}
                 pageSize={5}

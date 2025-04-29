@@ -21,7 +21,7 @@ export default function Landlord() {
   console.log(users);
 
   const tenantData = users?.filter((user) => user.role === "tenant");
-  console.log("Landlords:", tenantData);
+  console.log("Tenants:", tenantData);
 
   const [searchText, setSearchText] = useState("");
   const [isViewCustomer, setIsViewCustomer] = useState(false);
