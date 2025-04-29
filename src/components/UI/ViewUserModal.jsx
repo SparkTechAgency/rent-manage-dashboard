@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { ConfigProvider, Modal, Table } from "antd";
+import { ConfigProvider, Modal, Table, Tag } from "antd";
 import dayjs from "dayjs";
 import { getImageUrl } from "../../utils/baseUrl";
 
@@ -57,6 +57,12 @@ const ViewUserModal = ({
                   <div>{currentRecord?.email}</div>
                 </div>
               )}
+              {currentRecord?.phone && (
+                <div className="sm:flex gap-1">
+                  <div className="font-bold">Contact:</div>
+                  <div>{currentRecord?.phone}</div>
+                </div>
+              )}
               {currentRecord?.createdAt && (
                 <div className="sm:flex gap-1">
                   <div className="font-bold">Joining Date:</div>
@@ -74,63 +80,66 @@ const ViewUserModal = ({
                   </div>
                 </div>
               )}
-              {currentRecord?.phone && (
-                <div className="sm:flex gap-1">
-                  <div className="font-bold">Contact number:</div>
-                  <div>{currentRecord?.phone}</div>
-                </div>
-              )}
             </div>
           </div>
           {/* Display Owned Properties */}
-          {currentRecord?.ownedProperties &&
-            currentRecord?.ownedProperties.length > 0 && (
-              <div className="mt-5">
-                <h3 className="text-lg font-bold mb-2">Owned Properties:</h3>
-                <ConfigProvider
-                  theme={{
-                    components: {
-                      Table: {
-                        padding: 5,
-                        fontSize: 14,
+          {currentRecord?.properties && (
+            <div className="mt-5">
+              <h3 className="text-lg font-bold mb-2">Owned Properties:</h3>
+              <ConfigProvider
+                theme={{
+                  components: {
+                    Table: {
+                      padding: 5,
+                      fontSize: 14,
+                    },
+                  },
+                }}
+              >
+                <Table
+                  bordered
+                  dataSource={currentRecord.properties}
+                  columns={[
+                    {
+                      title: "Property Name",
+                      dataIndex: "name",
+                      key: "name",
+                      align: "center",
+                    },
+                    {
+                      title: "Status",
+                      dataIndex: "status",
+                      key: "status",
+                      align: "center",
+                      render: (status) => {
+                        let color;
+                        if (status === "verify_request") {
+                          color = "#f9aa18";
+                        } else if (status === "verified") {
+                          color = "success";
+                        }
+                        return (
+                          <Tag color={color}>
+                            {status === "verify_request"
+                              ? "Verify Request"
+                              : status.charAt(0).toUpperCase() +
+                                status.slice(1)}
+                          </Tag>
+                        );
                       },
                     },
-                  }}
-                >
-                  <Table
-                    bordered
-                    dataSource={currentRecord.ownedProperties}
-                    columns={[
-                      {
-                        title: "Property Name",
-                        dataIndex: "name",
-                        key: "name",
-                        align: "center",
-                      },
-                      {
-                        title: "Property Type",
-                        dataIndex: "type",
-                        key: "type",
-                        align: "center",
-                      },
-                      {
-                        title: "Location",
-                        dataIndex: "location",
-                        key: "location",
-                        align: "center",
-                      },
-                      {
-                        title: "Value",
-                        dataIndex: "value",
-                        key: "value",
-                        align: "center",
-                      },
-                    ]}
-                    rowKey="name" // Assuming 'name' is unique for each property
-                  />
-                </ConfigProvider>
-              </div>
-            )}
+                    {
+                      title: "Location",
+                      dataIndex: "address",
+                      key: "address",
+                      align: "center",
+                    },
+                  ]}
+                  rowKey="name" // Assuming 'name' is unique for each property
+                />
+              </ConfigProvider>
+            </div>
+          )}
         </div>
         {/* <button
           onClick={() => handleBlock(currentRecord)}

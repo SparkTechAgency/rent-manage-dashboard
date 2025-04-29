@@ -3,7 +3,7 @@ import PropertyTable from "../Tables/PropertyTable";
 import { usePropertiesQuery } from "../../Redux/api/propertyApi";
 
 const PropertyComponent = () => {
-  const { data: properties, isLoading, error } = usePropertiesQuery();
+  const { data: properties, isLoading, error, refetch } = usePropertiesQuery();
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -208,6 +208,7 @@ const PropertyComponent = () => {
         data={propertiesData}
         // onDelete={handleDelete}
         // onEdit={handleEdit}
+        refetch={refetch}
         showDetails={showDetails}
         pageSize={8}
       />

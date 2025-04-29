@@ -50,8 +50,19 @@ const userApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["profile"],
     }),
+    allLandlord: builder.query({
+      query: () => ({
+        url: "/users/all-landlord-with-property",
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
   }),
 });
 
-export const { useAllUsersQuery, useUserProfileQuery, useEditProfileMutation } =
-  userApi;
+export const {
+  useAllUsersQuery,
+  useUserProfileQuery,
+  useEditProfileMutation,
+  useAllLandlordQuery,
+} = userApi;
