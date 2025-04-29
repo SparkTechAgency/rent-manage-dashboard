@@ -8,38 +8,42 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-// import { useIncomeByYearQuery } from "../../Redux/api/dashboardApi";
 import { useEffect, useState } from "react";
-
-const generatedYearData = [
-  { year: 2018, income: 150000 },
-  { year: 2019, income: 180000 },
-  { year: 2020, income: 200000 },
-  { year: 2021, income: 220000 },
-  { year: 2022, income: 250000 },
-  { year: 2023, income: 270000 },
-];
+import { useRevenueRatioByYearQuery } from "../../Redux/api/earningApi";
 
 const IncomeBarChart = ({ selectedYear }) => {
-  console.log(selectedYear);
+  const { data: revenueData, refetch } =
+    useRevenueRatioByYearQuery(selectedYear);
+  const [chartData, setChartData] = useState([]);
 
-  // const { data: incomeData, refetch } = useIncomeByYearQuery(selectedYear);
-  // const [chartData, setChartData] = useState([]);
-  // useEffect(() => {
-  //   if (incomeData) {
-  //     setChartData(incomeData?.data || []);
-  //   }
-  // }, [incomeData]);
-
-  // useEffect(() => {
-  //   refetch();
-  // }, [selectedYear, refetch]);
-
-  const [chartData, setChartData] = useState(generatedYearData);
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
 
   useEffect(() => {
-    setChartData(generatedYearData);
-  }, [selectedYear]);
+    if (revenueData && revenueData.data) {
+      const transformedData = revenueData.data.map((item) => ({
+        month: monthNames[item.month - 1],
+        income: item.totalIncome,
+      }));
+      setChartData(transformedData);
+    }
+  }, [revenueData]);
+
+  useEffect(() => {
+    refetch();
+  }, [selectedYear, refetch]);
 
   return (
     <div className="w-full">

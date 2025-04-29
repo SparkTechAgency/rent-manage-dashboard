@@ -17,6 +17,7 @@ import IncomeBarChart from "../Chart/IncomeBarChart";
 import PropertyTable from "../Tables/PropertyTable";
 import { usePropertiesQuery } from "../../Redux/api/propertyApi";
 import { useAllUsersQuery } from "../../Redux/api/userApi";
+import { useAdminRevenueQuery } from "../../Redux/api/earningApi";
 
 const Dashboard = () => {
   const [selectedYear, setSelectedYear] = useState("2025");
@@ -28,6 +29,11 @@ const Dashboard = () => {
 
   const { data: allUsers, isLoading, isError } = useAllUsersQuery();
   const {
+    data: adminRevenue,
+    isLoading: loadingRevenue,
+    isError: revenueError,
+  } = useAdminRevenueQuery();
+  const {
     data: allProperties,
     isLoading: propertyLoading,
     isErrorProperty,
@@ -35,15 +41,23 @@ const Dashboard = () => {
 
   const users = allUsers?.data || [];
   const properties = allProperties?.data || [];
+  const adminRevenueData = adminRevenue?.data?.result || [];
 
   // console.log(users);
   // console.log(properties);
+  // console.log(adminRevenueData);
 
   const tenantData = users?.filter((user) => user.role === "tenant");
   const landlordData = users?.filter((user) => user.role === "landlord");
   const approvedProperties = properties?.filter(
     (property) => property.status === "verified"
   );
+
+  const totalAdminAmount = adminRevenueData.reduce((total, item) => {
+    return total + (item.adminChargeAmount || 0);
+  }, 0);
+
+  console.log(totalAdminAmount);
 
   const totalLandlord = landlordData?.length;
   const totalTenant = tenantData?.length;
@@ -53,11 +67,11 @@ const Dashboard = () => {
   // console.log("tenantData:", totalTenant);
   console.log("totalProperties", totalProperties);
 
-  if (isLoading || propertyLoading) {
+  if (isLoading || propertyLoading || loadingRevenue) {
     return <p>Loading...</p>;
   }
 
-  if (isError || isErrorProperty) {
+  if (isError || isErrorProperty || revenueError) {
     return <p>Error loading data</p>;
   }
 
@@ -144,7 +158,7 @@ const Dashboard = () => {
                     Total Revenue
                   </p>
                   <p className="text-sm lg:text-base xl:text-3xl font-medium text-primary-color">
-                    {/* {allCustomer?.data?.allBusinessCount} */} $ 5000
+                    ${totalAdminAmount}
                   </p>
                 </div>
               </div>
