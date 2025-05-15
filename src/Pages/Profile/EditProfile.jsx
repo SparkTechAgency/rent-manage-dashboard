@@ -13,31 +13,28 @@ import {
   useUserProfileQuery,
 } from "../../Redux/api/userApi";
 import { toast } from "sonner";
+import { getImageUrl } from "../../utils/baseUrl";
 
 const EditProfile = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { profileData } = location.state || {};
-  console.log(profileData);
+  console.log("profileData", profileData);
 
   const { refetch } = useUserProfileQuery();
-  const [imageUrl, setImageUrl] = useState(<FaRegUser />);
-  const [uploadedFile, setUploadedFile] = useState(null);
-
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const imageUrl = getImageUrl();
   const [updateProfile, { isLoading }] = useEditProfileMutation();
 
-  const handleUploadChange = (info) => {
-    console.log("info", info.file);
-
-    setImageUrl(info.file);
-    setUploadedFile(info.file);
-
+  const handleImageChange = (file) => {
+    setImageFile(file);
     const reader = new FileReader();
-    reader.onload = (e) => {
-      setImageUrl(e.target.result);
+    reader.onloadend = () => {
+      setImagePreview(reader.result);
     };
-    console.log("info.file.originFileObj", info.file.originFileObj);
-    reader.readAsDataURL(info.file);
+    reader.readAsDataURL(file);
+    return false;
   };
 
   const onFinish = async (values) => {
@@ -45,19 +42,18 @@ const EditProfile = () => {
     navigate("/profile");
     const formData = new FormData();
     formData.append("fullName", values.fullName);
-    formData.append("email", values.email);
+    formData.append("phone", values.phone);
     formData.append("address", values.address);
-    if (uploadedFile) {
-      formData.append("image", uploadedFile);
+    if (imageFile) {
+      formData.append("image", imageFile);
     }
 
     try {
       const response = await updateProfile(formData).unwrap();
       if (response.success) {
         toast.success("Profile updated successfully!");
-        setImageUrl(imageUrl);
 
-        await refetch();
+        // refetch();
         navigate("/profile", { state: { updated: true } });
       } else {
         toast.error(response.message || "Failed to update profile.");
@@ -90,19 +86,20 @@ const EditProfile = () => {
                     ) : (
                       <img
                         className="h-40 w-40 relative"
-                        src={AllImages.userImage}
+                        src={profileData.image}
                         alt="Profile"
                       />
                     )}
                   </div>
                   <Form.Item name="image" className="text-white ">
                     <Upload
-                      name="avatar"
-                      showUploadList={false}
-                      onChange={handleUploadChange}
-                      beforeUpload={() => false}
+                      maxCount={1}
+                      listType="picture"
+                      beforeUpload={handleImageChange}
+                      accept="image/*"
+                      multiple={false}
                     >
-                      <div className="absolute h-5 lg:h-8 w-10 left-[110px] inset-0 top-8 xl:-top-10 md:top-10 flex items-center justify-center rounded-full opacity-100 cursor-pointer border border-gray-400">
+                      <div className="absolute h-5 lg:h-10 w-10 left-[110px] inset-0 top-8 xl:-top-11 md:top-10 flex items-center justify-center rounded-full opacity-100 cursor-pointer border border-gray-400 hover:bg-white">
                         <EditOutlined
                           style={{ color: "#f5382c", fontSize: "25px" }}
                         />
@@ -129,7 +126,7 @@ const EditProfile = () => {
                 <Input
                   suffix={<MdOutlineEdit />}
                   type="email"
-                  readOnly
+                  disabled
                   placeholder="Enter your email"
                   className="py-2 px-3 text-xl bg-site-color border !border-[#222021] text-base-color hover:bg-transparent hover:border-[#222021] focus:bg-transparent focus:border-[#222021]"
                 />
@@ -166,24 +163,22 @@ const EditProfile = () => {
                   </Form.Item>
                 </>
               )}
-              {profileData?.phoneNumber && (
-                <>
-                  <Typography.Title level={5} style={{ color: "#222222" }}>
-                    Contact number
-                  </Typography.Title>
-                  <Form.Item
-                    initialValue={profileData?.phoneNumber}
-                    name="phoneNumber"
-                    className="text-white"
-                  >
-                    <Input
-                      suffix={<MdOutlineEdit />}
-                      placeholder="Enter your Contact number"
-                      className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border !border-input-color text-base-color hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
-                    />
-                  </Form.Item>
-                </>
-              )}
+              <>
+                <Typography.Title level={5} style={{ color: "#222222" }}>
+                  Contact number
+                </Typography.Title>
+                <Form.Item
+                  initialValue={profileData?.phone}
+                  name="phone"
+                  className="text-white"
+                >
+                  <Input
+                    suffix={<MdOutlineEdit />}
+                    placeholder="Enter your Contact number"
+                    className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border !border-input-color text-base-color hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
+                  />
+                </Form.Item>
+              </>
               <Form.Item>
                 <Button
                   className="w-full py-6 border !border-[#222021] hover:border-[#222021] text-xl !text-primary-color bg-[#222021] hover:!bg-[#222021] font-semibold rounded-2xl mt-8"
