@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Button, ConfigProvider, Space, Table, Tooltip } from "antd";
-import dayjs from "dayjs";
+// import dayjs from "dayjs";
 import { GoEye } from "react-icons/go";
 import { getImageUrl } from "../../utils/baseUrl";
 
@@ -27,7 +27,7 @@ const LandlordTable = ({
       key: "fullName",
       align: "center",
       render: (text, record) => (
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-start">
           {record?.image && (
             <img
               src={`${imageUrl}/${record.image}`}
@@ -50,19 +50,19 @@ const LandlordTable = ({
       key: "email",
       align: "center",
     },
-    {
-      title: "Joining date",
-      dataIndex: "joiningDate",
-      key: "joiningDate",
-      align: "center",
-      render: (date) => (date ? dayjs(date).format("DD-MM-YYYY") : "-"),
-    },
+    // {
+    //   title: "Joining date",
+    //   dataIndex: "joiningDate",
+    //   key: "joiningDate",
+    //   align: "center",
+    //   render: (date) => (date ? dayjs(date).format("DD-MM-YYYY") : "-"),
+    // },
     {
       title: "Owned Properties",
-      dataIndex: "ownedProperties",
-      key: "ownedProperties",
+      dataIndex: "properties",
+      key: "properties",
       align: "center",
-      render: (ownedProperties) => ownedProperties?.length || 0,
+      render: (properties) => properties.length || 0,
     },
     {
       title: "Action",

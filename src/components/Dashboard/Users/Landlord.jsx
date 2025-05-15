@@ -7,7 +7,7 @@ import { Input } from "antd";
 import DeleteUserModal from "../../UI/DeleteUserModal";
 import LandlordTable from "../../Tables/LandlordTable";
 import ViewUserModal from "../../UI/ViewUserModal";
-import { useAllUsersQuery } from "../../../Redux/api/userApi";
+import { useAllLandlordQuery } from "../../../Redux/api/userApi";
 
 export default function Landlord() {
   const {
@@ -15,7 +15,7 @@ export default function Landlord() {
     isLoading: userLoading,
     isError,
     refetch,
-  } = useAllUsersQuery();
+  } = useAllLandlordQuery();
   const users = allUsers?.data || [];
   console.log(users);
 

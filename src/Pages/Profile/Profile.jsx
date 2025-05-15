@@ -20,9 +20,9 @@ const Profile = () => {
   });
 
   useEffect(() => {
-    if (userProfile?.data) {
+    if (userProfile && userProfile?.data) {
       const profileDataApi = userProfile.data;
-      console.log(profileDataApi);
+      console.log("profileDataApi", profileDataApi);
 
       setProfileData({
         fullName: profileDataApi.fullName,
@@ -30,7 +30,7 @@ const Profile = () => {
         image: profileDataApi.image,
         // phoneCode: profileDataApi.phoneCode || "BD",
         address: profileDataApi.address,
-        phoneNumber: profileDataApi.phoneNumber,
+        phone: profileDataApi.phone,
         role: profileDataApi.role || "Undefined",
       });
     }
@@ -54,13 +54,13 @@ const Profile = () => {
           <div className="flex items-center justify-center gap-8">
             {profileData?.image ? (
               <img
-                className="h-32 w-36 relative"
+                className="size-40 relative rounded-full"
                 src={`${imageUrl}/${profileData.image}`}
                 alt="Profile"
               />
             ) : (
               <img
-                className="h-40 w-40 relative"
+                className="size-40 relative rounded-full"
                 src={AllImages.userImage}
                 alt="Profile"
               />
@@ -119,7 +119,7 @@ const Profile = () => {
                 </Form.Item>
               </>
             )}
-            {profileData?.phoneNumber && (
+            {profileData?.phone && (
               <>
                 <Typography.Title level={5} style={{ color: "#222222" }}>
                   Contact Number
@@ -127,7 +127,7 @@ const Profile = () => {
                 <Form.Item className="text-white">
                   <Input
                     readOnly
-                    value={profileData?.phoneNumber}
+                    value={profileData?.phone}
                     placeholder="Enter your contact number"
                     className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border !border-input-color text-base-color hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
                   />

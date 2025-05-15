@@ -2,7 +2,7 @@ import { baseApi } from "../baseApi";
 
 const earningApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    earnings: builder.query({
+    adminRevenue: builder.query({
       query: () => {
         const accessToken = localStorage.getItem("accessToken");
         return {
@@ -14,7 +14,15 @@ const earningApi = baseApi.injectEndpoints({
         };
       },
     }),
+    revenueRatioByYear: builder.query({
+      query: (year) => {
+        return {
+          url: `/payment/all-income-rasio?year=${year}`,
+          method: "get",
+        };
+      },
+    }),
   }),
 });
 
-export const { useEarningsQuery } = earningApi;
+export const { useAdminRevenueQuery, useRevenueRatioByYearQuery } = earningApi;
