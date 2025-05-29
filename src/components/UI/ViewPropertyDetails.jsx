@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
-import { Image, List, Modal } from "antd";
+import { List, Modal } from "antd";
 import { getImageUrl } from "../../utils/baseUrl";
+import { FaFilePdf } from "react-icons/fa6";
+
 // import dayjs from "dayjs";
 // import { getImageUrl } from "../../utils/baseUrl";
 
@@ -54,16 +56,23 @@ const ViewPropertyDetailsModal = ({
             <div className="flex gap-4 items-center justify-center">
               {currentRecord?.propertyFiles &&
                 Array.isArray(currentRecord.propertyFiles) &&
-                currentRecord?.propertyFiles.map((file, index) => (
-                  <div key={index} className="flex justify-center mb-4">
-                    <Image
-                      width={60}
-                      src={`${imageUrl}/${file}`}
-                      alt={currentRecord?.title}
-                      className="rounded-lg mx-auto"
-                    />
-                  </div>
-                ))}
+                currentRecord.propertyFiles.map((file, index) => {
+                  // Replace backslashes with forward slashes
+                  const fileUrl = `${imageUrl}/${file.replace(/\\/g, "/")}`;
+
+                  return (
+                    <div key={index} className="flex flex-col items-center">
+                      <a
+                        href={fileUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-red-500 hover:text-red-700 underline"
+                      >
+                        <FaFilePdf className="text-3xl mx-5" />
+                      </a>
+                    </div>
+                  );
+                })}
             </div>
           </div>
 
