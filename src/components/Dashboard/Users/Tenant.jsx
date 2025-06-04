@@ -36,6 +36,16 @@ export default function Landlord() {
     );
   }, [tenantData, searchText]);
 
+  useEffect(() => {
+    const refetchFlag = localStorage.getItem("refetchStoreData");
+
+    if (refetchFlag === "true") {
+      refetch();
+
+      localStorage.removeItem("refetchStoreData");
+    }
+  }, [refetch]);
+
   const onSearch = (value) => {
     setSearchText(value);
   };

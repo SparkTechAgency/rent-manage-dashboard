@@ -59,16 +59,21 @@ const ViewPropertyDetailsModal = ({
                 currentRecord.propertyFiles.map((file, index) => {
                   // Replace backslashes with forward slashes
                   const fileUrl = `${imageUrl}/${file.replace(/\\/g, "/")}`;
-
+                  const fileName = file.replace(/\\/g, "/").split("/").pop();
+                  const shortFileName =
+                    fileName.length > 15
+                      ? fileName.slice(0, 15) + "..."
+                      : fileName;
                   return (
                     <div key={index} className="flex flex-col items-center">
                       <a
                         href={fileUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-red-500 hover:text-red-700 underline"
+                        className="text-red-500 hover:text-red-700 underline flex items-center gap-2 mx-5"
                       >
-                        <FaFilePdf className="text-3xl mx-5" />
+                        <FaFilePdf className="text-xl" />
+                        <p>{shortFileName}</p>
                       </a>
                     </div>
                   );

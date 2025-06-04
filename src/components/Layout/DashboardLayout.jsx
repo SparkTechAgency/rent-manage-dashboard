@@ -1,19 +1,8 @@
 import Topbar from "../Shared/Topbar";
 
-// import logo from "/images/logo.png";
-// import dashboardLogo from "../../../public/images/dashboard-logo/dashboard.svg";
-// import user from "../../../public/images/dashboard-logo/user.svg";
-// import business from "../../../public/images/dashboard-logo/business.svg";
-// import service from "../../../public/images/dashboard-logo/beauty.svg";
-// import income from "../../../public/images/dashboard-logo/income.svg";
-// import policyScreen from "../../../public/images/dashboard-logo/policyScreen.svg";
-// import setting from "../../../public/images/dashboard-logo/setting.svg";
-// import profile from "../../../public/images/dashboard-logo/profile.svg";
-// import logout from "../../../public/images/dashboard-logo/logout.svg";
-
 import { MdOutlineDashboard } from "react-icons/md";
 import { BsFillHousesFill } from "react-icons/bs";
-// import { FaUsers } from "react-icons/fa";
+import { MdGroupAdd } from "react-icons/md";
 import { GrAnnounce } from "react-icons/gr";
 import { VscTerminalUbuntu } from "react-icons/vsc";
 import { SiGnuprivacyguard } from "react-icons/si";
@@ -22,6 +11,7 @@ import { TbPasswordUser } from "react-icons/tb";
 import { VscSignOut } from "react-icons/vsc";
 import { FaBuildingUser } from "react-icons/fa6";
 import { FaUserTag } from "react-icons/fa";
+import { RiAdminFill } from "react-icons/ri";
 
 import {
   Link,
@@ -102,6 +92,24 @@ const DashboardLayout = () => {
       label: (
         <NavLink className="font-semibold" to="tenant">
           Tenant
+        </NavLink>
+      ),
+    },
+    {
+      key: "admin",
+      icon: <RiAdminFill size={25} backgroundColor="white" />,
+      label: (
+        <NavLink className="font-semibold" to="admin">
+          Admin
+        </NavLink>
+      ),
+    },
+    {
+      key: "add-people",
+      icon: <MdGroupAdd size={25} backgroundColor="white" />,
+      label: (
+        <NavLink className="font-semibold" to="add-people">
+          Add People
         </NavLink>
       ),
     },

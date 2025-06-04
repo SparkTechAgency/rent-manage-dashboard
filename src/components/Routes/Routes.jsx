@@ -25,6 +25,8 @@ import Properties from "../Dashboard/Properties";
 import Landlord from "../Dashboard/Users/Landlord";
 import Tenant from "../Dashboard/Users/Tenant";
 import ProtectedRoute from "../../utils/ProtectedRoute";
+import AddPeople from "../Dashboard/AddPeople";
+import Admin from "../Dashboard/Users/Admin";
 
 //
 
@@ -72,6 +74,14 @@ const router = createBrowserRouter([
           {
             path: "/tenant",
             element: <Tenant />,
+          },
+          {
+            path: "/admin",
+            element: <Admin />,
+          },
+          {
+            path: "/add-people",
+            element: <AddPeople />,
           },
           // {
           //   path: "",
