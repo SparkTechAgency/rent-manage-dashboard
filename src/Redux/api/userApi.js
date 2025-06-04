@@ -57,6 +57,26 @@ const userApi = baseApi.injectEndpoints({
       }),
       providesTags: ["user"],
     }),
+    addPeople: builder.mutation({
+      query: (formData) => {
+        console.log(formData);
+        const accessToken = localStorage.getItem("accessToken");
+        console.log({ accessToken });
+
+        if (!accessToken) {
+          console.error("Access token not found.");
+        }
+        return {
+          url: "/users/create-admin",
+          method: "post",
+          body: formData,
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        };
+      },
+      invalidatesTags: ["profile"],
+    }),
   }),
 });
 
@@ -65,4 +85,5 @@ export const {
   useUserProfileQuery,
   useEditProfileMutation,
   useAllLandlordQuery,
+  useAddPeopleMutation,
 } = userApi;
