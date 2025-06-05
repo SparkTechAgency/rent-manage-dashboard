@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+
 import { Form, Input, Typography } from "antd";
 // import profileImage from "/images/profileImage.png";
 import { EditOutlined } from "@ant-design/icons";

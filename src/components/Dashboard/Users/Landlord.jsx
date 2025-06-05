@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-// eslint-disable-next-line no-unused-vars
+
 import { useState, useMemo, useEffect } from "react";
 
 import { SearchOutlined } from "@ant-design/icons";
@@ -13,7 +12,6 @@ export default function Landlord() {
   const {
     data: allUsers,
     isLoading: userLoading,
-    isError,
     refetch,
   } = useAllLandlordQuery();
   const users = allUsers?.data || [];
@@ -26,7 +24,7 @@ export default function Landlord() {
   const [isViewCustomer, setIsViewCustomer] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState(null);
-  const [loadingUser, setLoadingUser] = useState(false);
+  // const [loadingUser, setLoadingUser] = useState(false);
 
   const filteredData = useMemo(() => {
     if (!searchText) return landlordData;
@@ -99,7 +97,7 @@ export default function Landlord() {
         <div className="px-2 lg:px-6">
           <LandlordTable
             data={filteredData}
-            loading={loadingUser}
+            // loading={loadingUser}
             showCustomerViewModal={showCustomerViewModal}
             showDeleteModal={showDeleteModal}
             pageSize={8}
